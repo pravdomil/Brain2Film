@@ -22,6 +22,20 @@ end
 
 function run()
     fcp:launch()
+
+    local info = fcp.inspector.info
+    info:show()
+
+    local filename = emptyToNil(info.filename():value()) or emptyToNil(info.displayName():value()) or ""
+    local notes = info.notes():value()
+
+    local data = filename .. "\n" .. notes
+
+    local file = io.popen("../Plugins/AI\\ Cut\\ Ultra/script.sh", "w")
+    file:write(data)
+    file:close()
+
+    hs.alert.show("AI Cut Ultra!" .. "\n" .. data)
 end
 
 function emptyToNil(a)
