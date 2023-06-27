@@ -22,7 +22,6 @@ end
 
 function run()
     fcp:launch()
-    hs.alert.show("AI Cut Ultra here!")
 end
 
 return plugin
