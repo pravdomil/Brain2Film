@@ -45,6 +45,11 @@ if [ ! -d "$input_dir" ]; then
   osascript -e 'tell app "System Events" to display dialog "Please create folder \"~/My Drive/AI Cut Pro/input\"."'
   exit 1
 fi
+output_dir="$HOME/My Drive/AI Cut Pro/output"
+if [ ! -d "$output_dir" ]; then
+  osascript -e 'tell app "System Events" to display dialog "Please create folder \"~/My Drive/AI Cut Pro/output\"."'
+  exit 1
+fi
 
 # Copy
 filename="$(shasum --algorithm 256 "$filepath" | awk '{print $1}').${filepath##*.}"
