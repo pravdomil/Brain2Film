@@ -30,7 +30,7 @@ function run()
     local filename = emptyToNil(info.filename():value()) or emptyToNil(info.displayName():value()) or ""
     local notes = info.notes():value()
 
-    local data = { "v1", paths, filename, notes }
+    local data = { "_dx2rgq3ln9kfsl_wdv9vzlng", paths, filename, notes }
 
     local file = io.popen("../Plugins/AI\\ Cut\\ Ultra/script.sh", "w")
     file:write(hs.json.encode(data))

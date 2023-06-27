@@ -11,8 +11,8 @@ PATH="$PATH:/usr/local/bin"
 
 # Check version.
 version=$(echo "$1" | jq -r '.[0]')
-if [ "$version" != "v1" ]; then
-  osascript -e 'tell app "System Events" to display dialog "Version is not equal to v1."'
+if [ "$version" != "_dx2rgq3ln9kfsl_wdv9vzlng" ]; then
+  osascript -e 'tell app "System Events" to display dialog "Version mismatch."'
   exit 1
 fi
 
