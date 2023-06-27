@@ -47,5 +47,6 @@ if [ ! -d "$input_dir" ]; then
 fi
 
 # Copy
-cp "$filepath" "$input_dir"
+filename="$(shasum --algorithm 256 "$filepath" | awk '{print $1}').${filepath##*.}"
+cp "$filepath" "$input_dir/$filename"
 say "Done."
