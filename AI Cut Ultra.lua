@@ -24,4 +24,12 @@ function run()
     fcp:launch()
 end
 
+function emptyToNil(a)
+    if a == "" then
+        return nil
+    else
+        return a
+    end
+end
+
 return plugin
