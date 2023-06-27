@@ -1,6 +1,6 @@
 --- === com.pravdomil.ai-cut-ultra ===
 
-local fcp = require "cp.apple.finalcutpro"
+local fcp = require("cp.apple.finalcutpro")
 
 local plugin = {
     id = "com.pravdomil.ai-cut-ultra",
