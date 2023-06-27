@@ -54,4 +54,10 @@ fi
 # Copy file.
 filename="$(shasum --algorithm 256 "$filepath" | awk '{print $1}').${filepath##*.}"
 cp "$filepath" "$input_dir/$filename"
+
+# Create JSON.
+json=$(echo "[]" | jq '$ARGS.positional' --args "tdqt9rkbrsv7bf5bz16gy2p19" "$filename" "$notes")
+echo "$json" > "$output_dir/$(date +%s)-$RANDOM.json"
+
+# Done.
 say "Done."
