@@ -36,7 +36,7 @@ function run()
     file:write(hs.json.encode(data))
     file:close()
 
-    hs.alert.show("AI Cut Ultra!")
+    hs.alert.show("Processing " .. filename)
 end
 
 function emptyToNil(a)
