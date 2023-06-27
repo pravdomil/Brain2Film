@@ -35,7 +35,7 @@ function run()
     file:write(data)
     file:close()
 
-    hs.alert.show("AI Cut Ultra!" .. "\n" .. data)
+    hs.alert.show("AI Cut Ultra!")
 end
 
 function emptyToNil(a)
