@@ -6,6 +6,9 @@ set -e
 # Stop on unset variables.
 set -u
 
+# Make jq working.
+PATH="$PATH:/usr/local/bin"
+
 # Debug.
 echo "$1"
 say "$1"
