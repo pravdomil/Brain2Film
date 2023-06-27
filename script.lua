@@ -26,13 +26,14 @@ function run()
     local info = fcp.inspector.info
     info:show()
 
+    local paths = fcp:activeLibraryPaths()
     local filename = emptyToNil(info.filename():value()) or emptyToNil(info.displayName():value()) or ""
     local notes = info.notes():value()
 
-    local data = filename .. "\n" .. notes
+    local data = { "v1", paths, filename, notes }
 
     local file = io.popen("../Plugins/AI\\ Cut\\ Ultra/script.sh", "w")
-    file:write(data)
+    file:write(hs.json.encode(data))
     file:close()
 
     hs.alert.show("AI Cut Ultra!")
