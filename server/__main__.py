@@ -3,7 +3,7 @@ import os
 import sys
 import time
 from dataclasses import dataclass
-from typing import List, Tuple
+from typing import List, Tuple, Union
 
 # noinspection PyUnresolvedReferences
 from google.colab import drive
@@ -93,8 +93,9 @@ def step(a):
         files = list_task_filenames()
         json_strings = list(map(read_task_json, files))
         tasks = list(map(parse_task_json, json_strings))
-        if tasks:
-            do_task(tasks[0])
+        ok_tasks = list(filter(is_not_none, tasks))
+        if ok_tasks:
+            do_task(ok_tasks[0])
         else:
             time.sleep(1)
 
@@ -116,7 +117,11 @@ def step(a):
 
 # Helpers
 
-def parse_task_json(arg: Tuple[str, any]) -> Tuple[str, Task]:
+def is_not_none(a: Union[None, Tuple[str, Task]]) -> bool:
+    return not (a is None)
+
+
+def parse_task_json(arg: Tuple[str, any]) -> Union[None, Tuple[str, Task]]:
     filename, a = arg
     if a[0] == "tdqt9rkbrsv7bf5bz16gy2p19" \
             and isinstance(a[1], str) \
@@ -127,7 +132,9 @@ def parse_task_json(arg: Tuple[str, any]) -> Tuple[str, Task]:
             and isinstance(a[6], str):
         return filename, Task(a[1], a[2], a[3], a[4], a[5], a[6])
     else:
-        raise ValueError("Cannot parse JSON.")
+        print("Cannot parse \"" + filename + "\".")
+        os.rename(os.path.join(tasks_dir, filename), os.path.join(tasks_error_dir, filename))
+        return None
 
 
 def read_task_json(filename: str) -> Tuple[str, any]:
