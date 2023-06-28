@@ -153,7 +153,7 @@ def do_task(a: Task):
         time.sleep(1)
 
     else:
-        print("Unknown instructions.")
+        print("Unknown instructions. It should be either pix2pix, bark, audioldm or audiocraft.")
         time.sleep(1)
 
 
