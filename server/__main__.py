@@ -80,8 +80,8 @@ def state_step(a):
         print("Checking...")
         files = list_json_files(output_dir)
         json_strings = list(map(read_json, files))
-        jsons = list(map(parse_json, json_strings))
-        to_be_done = list(filter(is_not_finished, jsons))
+        jsons = list(map(parse_task, json_strings))
+        to_be_done = list(filter(task_is_not_finished, jsons))
         if to_be_done:
             task = to_be_done[0]
             print("Doing task: " + task.notes)
@@ -101,11 +101,11 @@ def state_step(a):
 
 # Helpers
 
-def is_not_finished(a: Task) -> bool:
+def task_is_not_finished(a: Task) -> bool:
     return not os.path.exists(os.path.join(output_dir, a.output_filename))
 
 
-def parse_json(a: any) -> Task:
+def parse_task(a: any) -> Task:
     if a[0] == "tdqt9rkbrsv7bf5bz16gy2p19" \
             and isinstance(a[1], str) \
             and isinstance(a[2], str) \
