@@ -141,7 +141,8 @@ def list_json_files(directory: str) -> List[str]:
 
 # Task
 
-def do_task(a: Task):
+def do_task(arg: Tuple[str, Task]):
+    filename, a = arg
     if a.instructions.lower().startswith("pix2pix"):
         print("Doing instruct InstructPix2Pix")
         time.sleep(1)
@@ -160,6 +161,7 @@ def do_task(a: Task):
 
     else:
         print("Unknown instructions. It should be either pix2pix, bark, audioldm or audiocraft.")
+        os.rename(os.path.join(tasks_dir, filename), os.path.join(tasks_error_dir, filename))
         time.sleep(1)
 
 
