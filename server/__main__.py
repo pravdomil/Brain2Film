@@ -92,7 +92,7 @@ def state_step(a):
 # Helpers
 
 def is_not_finished(a: Json) -> bool:
-    return not (os.path.exists(os.path.join(output_dir, a.output_filename)))
+    return not os.path.exists(os.path.join(output_dir, a.output_filename))
 
 
 def parse_json(a: any) -> Json:
