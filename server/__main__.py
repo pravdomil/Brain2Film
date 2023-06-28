@@ -59,6 +59,7 @@ def __main__():
 
 def state_step(a):
     if isinstance(a, Initializing):
+        print("Initializing...")
         if os.path.exists(drive_dir):
             state_step(Ready(None))
         else:
