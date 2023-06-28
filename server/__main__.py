@@ -85,7 +85,6 @@ def step(a):
         return Ready(None)
 
     elif isinstance(a, Ready):
-        print("Ready.")
         return Checking(None)
 
     elif isinstance(a, Checking):
