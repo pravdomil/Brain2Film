@@ -1,6 +1,7 @@
 accelerate==0.20.3
 certifi==2023.5.7
 charset-normalizer==3.1.0
+dataclasses==0.6
 decorator==4.4.2
 diffusers==0.17.1
 filelock==3.12.2
