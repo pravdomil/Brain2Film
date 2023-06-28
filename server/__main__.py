@@ -109,7 +109,8 @@ def state_step(a):
 
 # Helpers
 
-def task_is_not_finished(a: Task) -> bool:
+def task_is_not_finished(arg: Tuple[str, any]) -> bool:
+    filename, a = arg
     return not os.path.exists(os.path.join(output_dir, a.output_filename))
 
 
