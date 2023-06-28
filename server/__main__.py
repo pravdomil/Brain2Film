@@ -42,6 +42,7 @@ class Exiting:
 
 @dataclass
 class Json:
+    name: str
     input_filename: str
     output_filename: str
     clip_start: str
