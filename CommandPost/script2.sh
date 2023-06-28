@@ -53,6 +53,11 @@ if [ ! -d "$output_dir" ]; then
   osascript -e 'tell app "System Events" to display dialog "Please create folder \"~/My Drive/AI Cut Ultra/output\"."'
   exit 1
 fi
+tasks_dir="$HOME/My Drive/AI Cut Ultra/tasks"
+if [ ! -d "$tasks_dir" ]; then
+  osascript -e 'tell app "System Events" to display dialog "Please create folder \"~/My Drive/AI Cut Ultra/tasks\"."'
+  exit 1
+fi
 
 # Compute filenames.
 id="$(date +%s)-$RANDOM"
