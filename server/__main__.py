@@ -96,16 +96,16 @@ def parse_json(a) -> Json:
         raise ValueError("Cannot parse JSON.")
 
 
+def read_json(path: str) -> object:
+    return json.load(open(path))
+
+
 def list_json_files(directory: str) -> List[str]:
     acc = []
     for filename in os.listdir(directory):
         if filename.endswith(".json"):
             acc.append(os.path.join(directory, filename))
     return acc
-
-
-def read_json(path: str) -> object:
-    return json.load(open(path))
 
 
 __main__()
