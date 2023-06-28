@@ -93,9 +93,8 @@ def step(a):
         files = list_task_filenames()
         json_strings = list(map(read_task_json, files))
         tasks = list(map(parse_task_json, json_strings))
-        to_be_done = list(filter(task_is_not_finished, tasks))
-        if to_be_done:
-            do_task(to_be_done[0])
+        if tasks:
+            do_task(tasks[0])
         else:
             time.sleep(1)
 
@@ -117,12 +116,7 @@ def step(a):
 
 # Helpers
 
-def task_is_not_finished(arg: Tuple[str, any]) -> bool:
-    filename, a = arg
-    return not os.path.exists(os.path.join(output_dir, a.output_filename))
-
-
-def parse_task_json(arg: Tuple[str, any]) -> Tuple[str, object]:
+def parse_task_json(arg: Tuple[str, any]) -> Tuple[str, Task]:
     filename, a = arg
     if a[0] == "tdqt9rkbrsv7bf5bz16gy2p19" \
             and isinstance(a[1], str) \
