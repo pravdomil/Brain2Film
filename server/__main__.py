@@ -11,6 +11,7 @@ from google.colab import drive
 drive_dir = "/content/drive"
 input_dir = "/content/drive/MyDrive/AI Cut Ultra/input"
 output_dir = "/content/drive/MyDrive/AI Cut Ultra/output"
+tasks_dir = "/content/drive/MyDrive/AI Cut Ultra/tasks"
 
 
 # Types
@@ -78,7 +79,7 @@ def state_step(a):
 
     elif isinstance(a, Checking):
         print("Checking...")
-        files = list_json_files(output_dir)
+        files = list_json_files(tasks_dir)
         json_strings = list(map(read_json, files))
         jsons = list(map(parse_task, json_strings))
         to_be_done = list(filter(task_is_not_finished, jsons))
