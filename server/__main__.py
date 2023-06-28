@@ -88,7 +88,7 @@ def state_step(a):
             print("Nothing to be done.")
             time.sleep(1)
 
-        return Checking(None)
+        return Ready(None)
 
     elif isinstance(a, Exiting):
         print("Quiting...")
