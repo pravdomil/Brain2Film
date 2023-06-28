@@ -12,6 +12,8 @@ drive_dir = "/content/drive"
 input_dir = "/content/drive/MyDrive/AI Cut Ultra/input"
 output_dir = "/content/drive/MyDrive/AI Cut Ultra/output"
 tasks_dir = "/content/drive/MyDrive/AI Cut Ultra/tasks"
+tasks_done_dir = "/content/drive/MyDrive/AI Cut Ultra/tasks/done"
+tasks_error_dir = "/content/drive/MyDrive/AI Cut Ultra/tasks/error"
 
 
 # Types
@@ -63,6 +65,12 @@ def __main__():
 def state_step(a):
     if isinstance(a, Initializing):
         print("Initializing...")
+        if not os.path.exists(tasks_done_dir):
+            os.makedirs(tasks_done_dir)
+
+        if not os.path.exists(tasks_error_dir):
+            os.makedirs(tasks_error_dir)
+
         if os.path.exists(drive_dir):
             state_step(Ready(None))
         else:
