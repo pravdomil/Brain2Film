@@ -22,7 +22,7 @@ file=$(echo "$1" | jq -r '.[2]')
 name=$(echo "$1" | jq -r '.[3]')
 clip_start=$(echo "$1" | jq -r '.[4]')
 clip_duration=$(echo "$1" | jq -r '.[5]')
-notes=$(echo "$1" | jq -r '.[6]')
+instructions=$(echo "$1" | jq -r '.[6]')
 
 # Find source file.
 for directory in "${directories[@]}"; do
@@ -68,7 +68,7 @@ output_filename="${name//[^[:alnum:-_]]/ } $id.${filepath##*.}"
 cp "$filepath" "$input_dir/$input_filename"
 
 # Create task.
-task=$(echo "[]" | jq '$ARGS.positional' --args "tdqt9rkbrsv7bf5bz16gy2p19" "$name" "$input_filename" "$output_filename" "$clip_start" "$clip_duration" "$notes")
+task=$(echo "[]" | jq '$ARGS.positional' --args "tdqt9rkbrsv7bf5bz16gy2p19" "$name" "$input_filename" "$output_filename" "$clip_start" "$clip_duration" "$instructions")
 echo "$task" > "$tasks_dir/$id.json"
 
 # Done.
