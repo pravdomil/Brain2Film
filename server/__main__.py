@@ -41,7 +41,7 @@ class Exiting:
 
 
 @dataclass
-class Json:
+class Task:
     name: str
     input_filename: str
     output_filename: str
@@ -101,18 +101,18 @@ def state_step(a):
 
 # Helpers
 
-def is_not_finished(a: Json) -> bool:
+def is_not_finished(a: Task) -> bool:
     return not os.path.exists(os.path.join(output_dir, a.output_filename))
 
 
-def parse_json(a: any) -> Json:
+def parse_json(a: any) -> Task:
     if a[0] == "tdqt9rkbrsv7bf5bz16gy2p19" \
             and isinstance(a[1], str) \
             and isinstance(a[2], str) \
             and isinstance(a[3], str) \
             and isinstance(a[4], str) \
             and isinstance(a[5], str):
-        return Json(a[1], a[2], a[3], a[4], a[5])
+        return Task(a[1], a[2], a[3], a[4], a[5])
     else:
         raise ValueError("Cannot parse JSON.")
 
