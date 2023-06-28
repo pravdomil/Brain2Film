@@ -56,12 +56,13 @@ fi
 
 # Compute filenames.
 input_filename="$(shasum --algorithm 256 "$filepath" | awk '{print $1}').${filepath##*.}"
+output_filename="${name//[^[:alnum:-_]]/ }.${filepath##*.}"
 
 # Copy file.
 cp "$filepath" "$input_dir/$input_filename"
 
 # Create JSON.
-json=$(echo "[]" | jq '$ARGS.positional' --args "tdqt9rkbrsv7bf5bz16gy2p19" "$input_filename" "$name" "$clipStart" "$clipDuration" "$notes")
+json=$(echo "[]" | jq '$ARGS.positional' --args "tdqt9rkbrsv7bf5bz16gy2p19" "$input_filename" "$output_filename" "$clipStart" "$clipDuration" "$notes")
 echo "$json" > "$output_dir/$(date +%s)-$RANDOM.json"
 
 # Done.
