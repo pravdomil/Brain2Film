@@ -44,8 +44,8 @@ class Exiting:
 class Json:
     input_filename: str
     output_filename: str
-    clipStart: str
-    clipDuration: str
+    clip_start: str
+    clip_duration: str
     notes: str
 
 
