@@ -6,6 +6,9 @@ from dataclasses import dataclass
 # noinspection PyUnresolvedReferences
 from google.colab import drive
 
+input_dir = "/content/drive/MyDrive/AI Cut Ultra/input"
+output_dir = "/content/drive/MyDrive/AI Cut Ultra/output"
+
 
 # Types
 
@@ -67,7 +70,7 @@ def state_step(a):
 
     elif isinstance(a, Checking):
         print("Checking...")
-        files = list(map(parse_json, load_json_files("/content/drive/MyDrive/AI Cut Ultra/output")))
+        files = list(map(parse_json, load_json_files(input_dir)))
         print(list(files))
 
     elif isinstance(a, Exiting):
