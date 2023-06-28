@@ -172,7 +172,6 @@ def do_task(arg: Tuple[str, Task]):
     else:
         print("Unknown instructions. It should be either pix2pix, bark, audioldm or audiocraft.")
         os.rename(os.path.join(tasks_dir, filename), os.path.join(tasks_error_dir, filename))
-        time.sleep(1)
 
 
 __main__()
