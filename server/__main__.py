@@ -72,18 +72,18 @@ def state_step(a):
             os.makedirs(tasks_error_dir)
 
         if os.path.exists(drive_dir):
-            state_step(Ready(None))
+            return Ready(None)
         else:
-            state_step(MountingDrive(None))
+            return MountingDrive(None)
 
     elif isinstance(a, MountingDrive):
         print("Mounting Drive...")
         drive.mount(drive_dir)
-        state_step(Ready(None))
+        return Ready(None)
 
     elif isinstance(a, Ready):
         print("Ready.")
-        state_step(Checking(None))
+        return Checking(None)
 
     elif isinstance(a, Checking):
         print("Checking...")
@@ -97,11 +97,12 @@ def state_step(a):
             print("Nothing to be done.")
             time.sleep(1)
 
-        state_step(Checking(None))
+        return Checking(None)
 
     elif isinstance(a, Exiting):
         print("Quiting...")
         sys.exit()
+        return Exiting(None)
 
     else:
         raise ValueError("Unknown variant.")
