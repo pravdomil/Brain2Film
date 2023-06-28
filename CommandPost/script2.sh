@@ -20,8 +20,8 @@ fi
 readarray -t directories <<< "$(echo "$1" | jq -r '.[1][]')"
 file=$(echo "$1" | jq -r '.[2]')
 name=$(echo "$1" | jq -r '.[3]')
-clipStart=$(echo "$1" | jq -r '.[4]')
-clipDuration=$(echo "$1" | jq -r '.[5]')
+clip_start=$(echo "$1" | jq -r '.[4]')
+clip_duration=$(echo "$1" | jq -r '.[5]')
 notes=$(echo "$1" | jq -r '.[6]')
 
 # Find source file.
@@ -63,7 +63,7 @@ output_filename="${name//[^[:alnum:-_]]/ } $id.${filepath##*.}"
 cp "$filepath" "$input_dir/$input_filename"
 
 # Create JSON.
-json=$(echo "[]" | jq '$ARGS.positional' --args "tdqt9rkbrsv7bf5bz16gy2p19" "$input_filename" "$output_filename" "$clipStart" "$clipDuration" "$notes")
+json=$(echo "[]" | jq '$ARGS.positional' --args "tdqt9rkbrsv7bf5bz16gy2p19" "$input_filename" "$output_filename" "$clip_start" "$clip_duration" "$notes")
 echo "$json" > "$output_dir/$id.json"
 
 # Done.
