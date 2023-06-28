@@ -102,7 +102,6 @@ def state_step(a):
     elif isinstance(a, Exiting):
         print("Quiting...")
         sys.exit()
-        return Exiting(None)
 
     else:
         raise ValueError("Unknown variant.")
