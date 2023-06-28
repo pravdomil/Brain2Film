@@ -87,7 +87,7 @@ def state_step(a):
 
     elif isinstance(a, Checking):
         print("Checking...")
-        files = list_json_files(tasks_dir)
+        files = list_json_filenames(tasks_dir)
         json_strings = list(map(read_json, files))
         tasks = list(map(parse_task, json_strings))
         to_be_done = list(filter(task_is_not_finished, tasks))
@@ -131,7 +131,7 @@ def read_json(path: str) -> object:
     return json.load(open(path))
 
 
-def list_json_files(directory: str) -> List[str]:
+def list_json_filenames(directory: str) -> List[str]:
     acc = []
     for filename in os.listdir(directory):
         if filename.endswith(".json"):
