@@ -2,6 +2,7 @@ import json
 import os
 import sys
 from dataclasses import dataclass
+from typing import List
 
 # noinspection PyUnresolvedReferences
 from google.colab import drive
@@ -59,7 +60,7 @@ def state_step(a):
 
 
 # Helpers
-def load_json_files(directory: str) -> object:
+def load_json_files(directory: str) -> List[object]:
     json_data = []
     for filename in os.listdir(directory):
         if filename.endswith(".json"):
