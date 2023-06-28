@@ -51,10 +51,15 @@ class Task:
 # Functions
 
 def __main__():
+    state = Initializing(None)
+
     try:
-        state_step(Initializing(None))
+        while 1:
+            state = state_step(state)
+
     except KeyboardInterrupt:
-        state_step(Exiting(None))
+        while 1:
+            state = state_step(state)
 
 
 def state_step(a):
