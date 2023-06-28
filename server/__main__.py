@@ -97,7 +97,6 @@ def step(a):
         if to_be_done:
             do_task(to_be_done[0])
         else:
-            print("Nothing to be done.")
             time.sleep(1)
 
         return Ready(None)
