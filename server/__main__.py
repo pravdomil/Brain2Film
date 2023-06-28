@@ -5,7 +5,7 @@ from dataclasses import dataclass
 from google.colab import drive
 
 
-# State
+# Types
 
 @dataclass
 class Initializing:
