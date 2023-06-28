@@ -2,7 +2,6 @@ import json
 import os
 import sys
 from dataclasses import dataclass
-from typing import List
 
 # noinspection PyUnresolvedReferences
 from google.colab import drive
@@ -22,6 +21,11 @@ class MountingDrive:
 
 @dataclass
 class Ready:
+    _: None
+
+
+@dataclass
+class Checking:
     _: None
 
 
@@ -58,7 +62,13 @@ def state_step(a):
         state_step(Ready(None))
 
     elif isinstance(a, Ready):
-        print("Ready")
+        print("Ready.")
+        state_step(Checking(None))
+
+    elif isinstance(a, Checking):
+        print("Checking...")
+        files = list(map(parse_json, load_json_files("/content/drive/MyDrive/AI Cut Ultra/output")))
+        print(list(files))
 
     elif isinstance(a, Exiting):
         print("Quiting...")
@@ -81,7 +91,7 @@ def parse_json(a) -> Json:
         raise ValueError("Cannot parse JSON.")
 
 
-def load_json_files(directory: str) -> List[object]:
+def load_json_files(directory: str) -> any:
     json_data = []
     for filename in os.listdir(directory):
         if filename.endswith(".json"):
