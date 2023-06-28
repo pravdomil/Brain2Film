@@ -48,7 +48,7 @@ class Task:
     output_filename: str
     clip_start: str
     clip_duration: str
-    notes: str
+    instructions: str
 
 
 # Functions
