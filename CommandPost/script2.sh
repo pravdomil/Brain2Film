@@ -57,7 +57,7 @@ fi
 # Compute filenames.
 id="$(date +%s)-$RANDOM"
 input_filename="$(shasum --algorithm 256 "$filepath" | awk '{print $1}').${filepath##*.}"
-output_filename="${name//[^[:alnum:-_]]/ }.${filepath##*.}"
+output_filename="${name//[^[:alnum:-_]]/ } $id.${filepath##*.}"
 
 # Copy file.
 cp "$filepath" "$input_dir/$input_filename"
