@@ -42,7 +42,7 @@ def state_step(a):
 
     elif isinstance(a, MountingDrive):
         print("Mounting Drive...")
-        drive.mount('/content/drive')
+        drive.mount("/content/drive")
         state_step(Ready(None))
 
     elif isinstance(a, Ready):
