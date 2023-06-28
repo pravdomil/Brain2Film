@@ -127,8 +127,8 @@ def parse_task(a: any) -> Task:
         raise ValueError("Cannot parse JSON.")
 
 
-def read_json(path: str) -> object:
-    return json.load(open(path))
+def read_json(filename: str) -> Tuple[str, any]:
+    return filename, json.load(open(os.path.join(tasks_dir, filename)))
 
 
 def list_json_filenames(directory: str) -> List[str]:
