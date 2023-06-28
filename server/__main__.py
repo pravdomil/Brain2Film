@@ -40,8 +40,8 @@ class Exiting:
 
 @dataclass
 class Json:
-    filename: None
-    name: None
+    input_filename: None
+    output_filename: None
     clipStart: None
     clipDuration: None
     notes: None
