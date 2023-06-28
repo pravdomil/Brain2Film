@@ -71,7 +71,7 @@ def state_step(a):
 
     elif isinstance(a, Checking):
         print("Checking...")
-        files = list_json_files(input_dir)
+        files = list_json_files(output_dir)
         json_strings = list(map(read_json, files))
         jsons = list(map(parse_json, json_strings))
 
