@@ -30,6 +30,15 @@ class Exiting:
     _: None
 
 
+@dataclass
+class Json:
+    filename: None
+    name: None
+    clipStart: None
+    clipDuration: None
+    notes: None
+
+
 # Functions
 
 def __main__():
