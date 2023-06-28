@@ -1,3 +1,5 @@
+import json
+import os
 import sys
 from dataclasses import dataclass
 
@@ -54,6 +56,18 @@ def state_step(a):
 
     else:
         raise ValueError("Unknown variant.")
+
+
+# Helpers
+def load_json_files(directory):
+    json_data = []
+    for filename in os.listdir(directory):
+        if filename.endswith(".json"):
+            file_path = os.path.join(directory, filename)
+            with open(file_path) as file:
+                data = json.load(file)
+                json_data.append(data)
+    return json_data
 
 
 __main__()
