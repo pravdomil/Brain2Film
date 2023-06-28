@@ -81,8 +81,8 @@ def state_step(a):
         print("Checking...")
         files = list_json_files(tasks_dir)
         json_strings = list(map(read_json, files))
-        jsons = list(map(parse_task, json_strings))
-        to_be_done = list(filter(task_is_not_finished, jsons))
+        tasks = list(map(parse_task, json_strings))
+        to_be_done = list(filter(task_is_not_finished, tasks))
         if to_be_done:
             task = to_be_done[0]
             print("Doing task: " + task.name)
