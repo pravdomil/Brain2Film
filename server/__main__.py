@@ -4,7 +4,6 @@ import sys
 import time
 from dataclasses import dataclass
 from typing import List, Tuple, Union
-
 # noinspection PyUnresolvedReferences
 import google.colab
 
