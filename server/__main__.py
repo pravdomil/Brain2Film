@@ -86,6 +86,7 @@ def state_step(a):
         if to_be_done:
             task = to_be_done[0]
             print("Doing task: " + task.name)
+            do_task(task)
         else:
             print("Nothing to be done.")
 
@@ -130,6 +131,12 @@ def list_json_files(directory: str) -> List[str]:
             acc.append(os.path.join(directory, filename))
     acc.sort()
     return acc
+
+
+# Task
+
+def do_task(a: Task):
+    print(a)
 
 
 __main__()
