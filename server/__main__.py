@@ -111,8 +111,9 @@ def parse_task(a: any) -> Task:
             and isinstance(a[2], str) \
             and isinstance(a[3], str) \
             and isinstance(a[4], str) \
-            and isinstance(a[5], str):
-        return Task(a[1], a[2], a[3], a[4], a[5])
+            and isinstance(a[5], str) \
+            and isinstance(a[6], str):
+        return Task(a[1], a[2], a[3], a[4], a[5], a[6])
     else:
         raise ValueError("Cannot parse JSON.")
 
