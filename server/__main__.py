@@ -60,7 +60,7 @@ def __main__():
 
     while 1:
         try:
-            state = state_step(state)
+            state = step(state)
 
         except KeyboardInterrupt:
             state = Exiting(None)
@@ -69,7 +69,7 @@ def __main__():
             state = Error(e)
 
 
-def state_step(a):
+def step(a):
     if isinstance(a, Initializing):
         print("Initializing...")
 
