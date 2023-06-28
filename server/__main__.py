@@ -1,6 +1,7 @@
 import json
 import os
 import sys
+import time
 from dataclasses import dataclass
 from typing import List
 
@@ -80,8 +81,14 @@ def state_step(a):
         json_strings = list(map(read_json, files))
         jsons = list(map(parse_json, json_strings))
         to_be_done = list(filter(is_not_finished, jsons))
+        if to_be_done:
+            task = to_be_done[0]
+            print("Doing task: " + task.notes)
+        else:
+            print("Nothing to be done.")
 
-        print("Tasks: " + str(len(to_be_done)))
+        time.sleep(1)
+        state_step(Checking(None))
 
     elif isinstance(a, Exiting):
         print("Quiting...")
