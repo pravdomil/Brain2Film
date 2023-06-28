@@ -74,7 +74,9 @@ def state_step(a):
         files = list_json_files(output_dir)
         json_strings = list(map(read_json, files))
         jsons = list(map(parse_json, json_strings))
+        to_be_done = list(filter(is_not_finished, jsons))
 
+        print("Tasks: " + str(len(to_be_done)))
     elif isinstance(a, Exiting):
         print("Quiting...")
         sys.exit()
