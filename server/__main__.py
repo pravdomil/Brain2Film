@@ -114,7 +114,8 @@ def task_is_not_finished(arg: Tuple[str, any]) -> bool:
     return not os.path.exists(os.path.join(output_dir, a.output_filename))
 
 
-def parse_task(a: any) -> Task:
+def parse_task(arg: Tuple[str, any]) -> Tuple[str, object]:
+    filename, a = arg
     if a[0] == "tdqt9rkbrsv7bf5bz16gy2p19" \
             and isinstance(a[1], str) \
             and isinstance(a[2], str) \
@@ -122,7 +123,7 @@ def parse_task(a: any) -> Task:
             and isinstance(a[4], str) \
             and isinstance(a[5], str) \
             and isinstance(a[6], str):
-        return Task(a[1], a[2], a[3], a[4], a[5], a[6])
+        return filename, Task(a[1], a[2], a[3], a[4], a[5], a[6])
     else:
         raise ValueError("Cannot parse JSON.")
 
