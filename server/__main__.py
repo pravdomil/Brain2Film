@@ -3,7 +3,7 @@ import os
 import sys
 import time
 from dataclasses import dataclass
-from typing import List, Tuple, Union
+from typing import List, Tuple, Union, TextIO
 # noinspection PyUnresolvedReferences
 import google.colab
 
@@ -112,16 +112,20 @@ def step(a):
 
 # Helpers
 
-def parse_task_json(a: any) -> Union[None, Task]:
-    if a[0] == "tdqt9rkbrsv7bf5bz16gy2p19" \
-            and isinstance(a[1], str) \
-            and isinstance(a[2], str) \
-            and isinstance(a[3], str) \
-            and isinstance(a[4], str) \
-            and isinstance(a[5], str) \
-            and isinstance(a[6], str):
-        return Task(a[1], a[2], a[3], a[4], a[5], a[6])
-    else:
+def parse_task_json(a: TextIO) -> Union[None, Task]:
+    try:
+        data = json.load(a)
+        if data[0] == "tdqt9rkbrsv7bf5bz16gy2p19" \
+                and isinstance(data[1], str) \
+                and isinstance(data[2], str) \
+                and isinstance(data[3], str) \
+                and isinstance(data[4], str) \
+                and isinstance(data[5], str) \
+                and isinstance(data[6], str):
+            return Task(data[1], data[2], data[3], data[4], data[5], data[6])
+        else:
+            return None
+    except:
         return None
 
 
@@ -137,8 +141,7 @@ def list_task_filenames() -> List[str]:
 # Task
 
 def do_task(filename: str):
-    data = json.load(open(os.path.join(tasks_dir, filename)))
-    task = parse_task_json(data)
+    task = parse_task_json(open(os.path.join(tasks_dir, filename)))
 
     if task is None:
         print("Cannot parse \"" + filename + "\".")
