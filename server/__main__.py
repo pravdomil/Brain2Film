@@ -150,19 +150,19 @@ def do_task(filename: str):
 def do_task2(arg: Tuple[str, Task]):
     filename, a = arg
     if a.instructions.lower().startswith("pix2pix"):
-        print("Doing instruct InstructPix2Pix")
+        print("InstructPix2Pix!")
         time.sleep(1)
 
     elif a.instructions.lower().startswith("bark"):
-        print("Doing Bark")
+        print("Bark!")
         time.sleep(1)
 
     elif a.instructions.lower().startswith("audioldm"):
-        print("Doing AudioLDM")
+        print("AudioLDM!")
         time.sleep(1)
 
     elif a.instructions.lower().startswith("audiocraft"):
-        print("Doing Audiocraft")
+        print("Audiocraft!")
         time.sleep(1)
 
     else:
