@@ -89,6 +89,8 @@ def step(a):
     elif isinstance(a, Checking):
         print("Checking...")
         files = list_task_filenames()
+        files.sort()
+
         if files:
             do_task(files[0])
         else:
@@ -134,7 +136,6 @@ def list_task_filenames() -> List[str]:
     for filename in os.listdir(tasks_dir):
         if filename.endswith(".json"):
             acc.append(filename)
-    acc.sort()
     return acc
 
 
