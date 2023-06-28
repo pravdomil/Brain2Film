@@ -84,7 +84,7 @@ def state_step(a):
         to_be_done = list(filter(task_is_not_finished, jsons))
         if to_be_done:
             task = to_be_done[0]
-            print("Doing task: " + task.notes)
+            print("Doing task: " + task.name)
         else:
             print("Nothing to be done.")
 
