@@ -19,7 +19,10 @@ fi
 # Decode JSON.
 readarray -t directories <<< "$(echo "$1" | jq -r '.[1][]')"
 file=$(echo "$1" | jq -r '.[2]')
-notes=$(echo "$1" | jq -r '.[3]')
+name=$(echo "$1" | jq -r '.[3]')
+clipStart=$(echo "$1" | jq -r '.[4]')
+clipDuration=$(echo "$1" | jq -r '.[5]')
+notes=$(echo "$1" | jq -r '.[6]')
 
 # Find source file.
 for directory in "${directories[@]}"; do
@@ -56,7 +59,7 @@ filename="$(shasum --algorithm 256 "$filepath" | awk '{print $1}').${filepath##*
 cp "$filepath" "$input_dir/$filename"
 
 # Create JSON.
-json=$(echo "[]" | jq '$ARGS.positional' --args "tdqt9rkbrsv7bf5bz16gy2p19" "$filename" "$notes")
+json=$(echo "[]" | jq '$ARGS.positional' --args "tdqt9rkbrsv7bf5bz16gy2p19" "$filename" "$name" "$clipStart" "$clipDuration" "$notes")
 echo "$json" > "$output_dir/$(date +%s)-$RANDOM.json"
 
 # Done.

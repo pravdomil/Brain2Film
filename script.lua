@@ -26,11 +26,17 @@ function run()
     local info = fcp.inspector.info
     info:show()
 
-    local paths = fcp:activeLibraryPaths()
     local filename = emptyToNil(info.filename():value()) or emptyToNil(info.displayName():value()) or ""
-    local notes = info.notes():value()
 
-    local data = { "_dx2rgq3ln9kfsl_wdv9vzlng", paths, filename, notes }
+    local data = {
+        "_dx2rgq3ln9kfsl_wdv9vzlng",
+        fcp:activeLibraryPaths(),
+        filename,
+        info.name():value(),
+        info.clipStart():value(),
+        info.clipDuration():value(),
+        info.notes():value()
+    }
 
     local file = io.popen("../Plugins/AI\\ Cut\\ Ultra/script.sh", "w")
     file:write(hs.json.encode(data))
