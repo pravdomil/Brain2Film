@@ -59,7 +59,7 @@ def state_step(a):
 
 
 # Helpers
-def load_json_files(directory):
+def load_json_files(directory: str) -> object:
     json_data = []
     for filename in os.listdir(directory):
         if filename.endswith(".json"):
