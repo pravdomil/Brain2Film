@@ -7,6 +7,7 @@ from typing import List
 # noinspection PyUnresolvedReferences
 from google.colab import drive
 
+drive_dir = "/content/drive"
 input_dir = "/content/drive/MyDrive/AI Cut Ultra/input"
 output_dir = "/content/drive/MyDrive/AI Cut Ultra/output"
 
@@ -58,11 +59,14 @@ def __main__():
 
 def state_step(a):
     if isinstance(a, Initializing):
-        state_step(MountingDrive(None))
+        if os.path.exists(drive_dir):
+            state_step(Ready(None))
+        else:
+            state_step(MountingDrive(None))
 
     elif isinstance(a, MountingDrive):
         print("Mounting Drive...")
-        drive.mount("/content/drive")
+        drive.mount(drive_dir)
         state_step(Ready(None))
 
     elif isinstance(a, Ready):
