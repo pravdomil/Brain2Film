@@ -89,8 +89,8 @@ def state_step(a):
             do_task(task)
         else:
             print("Nothing to be done.")
+            time.sleep(1)
 
-        time.sleep(1)
         state_step(Checking(None))
 
     elif isinstance(a, Exiting):
@@ -136,7 +136,25 @@ def list_json_files(directory: str) -> List[str]:
 # Task
 
 def do_task(a: Task):
-    print(a)
+    if a.instructions.lower().startswith("pix2pix"):
+        print("Doing instruct InstructPix2Pix")
+        time.sleep(1)
+
+    elif a.instructions.lower().startswith("bark"):
+        print("Doing Bark")
+        time.sleep(1)
+
+    elif a.instructions.lower().startswith("audioldm"):
+        print("Doing AudioLDM")
+        time.sleep(1)
+
+    elif a.instructions.lower().startswith("audiocraft"):
+        print("Doing Audiocraft")
+        time.sleep(1)
+
+    else:
+        print("Unknown instructions.")
+        time.sleep(1)
 
 
 __main__()
