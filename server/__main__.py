@@ -72,14 +72,14 @@ def step(a):
     if isinstance(a, Initializing):
         print("Initializing...")
 
+        if not os.path.exists(drive_dir):
+            google.colab.drive.mount(drive_dir)
+
         if not os.path.exists(tasks_done_dir):
             os.makedirs(tasks_done_dir)
 
         if not os.path.exists(tasks_error_dir):
             os.makedirs(tasks_error_dir)
-
-        if not os.path.exists(drive_dir):
-            google.colab.drive.mount(drive_dir)
 
         return Ready(None)
 
