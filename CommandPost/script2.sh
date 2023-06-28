@@ -67,7 +67,7 @@ output_filename="${name//[^[:alnum:-_]]/ } $id.${filepath##*.}"
 # Copy file.
 cp "$filepath" "$input_dir/$input_filename"
 
-# Create JSON.
+# Create task.
 json=$(echo "[]" | jq '$ARGS.positional' --args "tdqt9rkbrsv7bf5bz16gy2p19" "$input_filename" "$output_filename" "$clip_start" "$clip_duration" "$notes")
 echo "$json" > "$output_dir/$id.json"
 
