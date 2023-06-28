@@ -39,6 +39,11 @@ class Exiting:
 
 
 @dataclass
+class Error:
+    exception: Exception
+
+
+@dataclass
 class Task:
     name: str
     input_filename: str
@@ -98,6 +103,12 @@ def state_step(a):
     elif isinstance(a, Exiting):
         print("Quiting...")
         sys.exit()
+
+    elif isinstance(a, Error):
+        print(a.exception)
+        print("Retrying in a second.")
+        time.sleep(1)
+        return Ready(None)
 
     else:
         raise ValueError("Unknown variant.")
