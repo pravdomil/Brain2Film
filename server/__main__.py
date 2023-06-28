@@ -3,7 +3,7 @@ import os
 import sys
 import time
 from dataclasses import dataclass
-from typing import List
+from typing import List, Tuple
 
 # noinspection PyUnresolvedReferences
 from google.colab import drive
