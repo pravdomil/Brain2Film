@@ -6,7 +6,7 @@ from dataclasses import dataclass
 from typing import List, Tuple, Union
 
 # noinspection PyUnresolvedReferences
-from google.colab import drive
+import google.colab
 
 drive_dir = "/content/drive"
 input_dir = "/content/drive/MyDrive/AI Cut Ultra/input"
@@ -80,7 +80,7 @@ def step(a):
             os.makedirs(tasks_error_dir)
 
         if not os.path.exists(drive_dir):
-            drive.mount(drive_dir)
+            google.colab.drive.mount(drive_dir)
 
         return Ready(None)
 
