@@ -87,8 +87,8 @@ def state_step(a):
 
     elif isinstance(a, Checking):
         print("Checking...")
-        files = list_json_filenames(tasks_dir)
-        json_strings = list(map(read_json, files))
+        files = list_task_filenames(tasks_dir)
+        json_strings = list(map(read_task_json, files))
         tasks = list(map(parse_task, json_strings))
         to_be_done = list(filter(task_is_not_finished, tasks))
         if to_be_done:
@@ -127,11 +127,11 @@ def parse_task(a: any) -> Task:
         raise ValueError("Cannot parse JSON.")
 
 
-def read_json(filename: str) -> Tuple[str, any]:
+def read_task_json(filename: str) -> Tuple[str, any]:
     return filename, json.load(open(os.path.join(tasks_dir, filename)))
 
 
-def list_json_filenames(directory: str) -> List[str]:
+def list_task_filenames(directory: str) -> List[str]:
     acc = []
     for filename in os.listdir(directory):
         if filename.endswith(".json"):
