@@ -134,7 +134,7 @@ def list_json_files(directory: str) -> List[str]:
     acc = []
     for filename in os.listdir(directory):
         if filename.endswith(".json"):
-            acc.append(os.path.join(directory, filename))
+            acc.append(filename)
     acc.sort()
     return acc
 
