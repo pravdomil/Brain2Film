@@ -84,7 +84,7 @@ def state_step(a):
 
 
 # Helpers
-def parse_json(a) -> Json:
+def parse_json(a: any) -> Json:
     if a[0] == "tdqt9rkbrsv7bf5bz16gy2p19" \
             and isinstance(a[1], str) \
             and isinstance(a[2], str) \
