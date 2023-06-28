@@ -42,11 +42,11 @@ class Exiting:
 
 @dataclass
 class Json:
-    input_filename: None
-    output_filename: None
-    clipStart: None
-    clipDuration: None
-    notes: None
+    input_filename: str
+    output_filename: str
+    clipStart: str
+    clipDuration: str
+    notes: str
 
 
 # Functions
