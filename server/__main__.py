@@ -2,6 +2,7 @@ import json
 import os
 import sys
 from dataclasses import dataclass
+from typing import List
 
 # noinspection PyUnresolvedReferences
 from google.colab import drive
@@ -70,8 +71,9 @@ def state_step(a):
 
     elif isinstance(a, Checking):
         print("Checking...")
-        files = list(map(parse_json, load_json_files(input_dir)))
-        print(list(files))
+        files = list_json_files(input_dir)
+        json_strings = list(map(read_json, files))
+        jsons = list(map(parse_json, json_strings))
 
     elif isinstance(a, Exiting):
         print("Quiting...")
@@ -94,15 +96,16 @@ def parse_json(a) -> Json:
         raise ValueError("Cannot parse JSON.")
 
 
-def load_json_files(directory: str) -> any:
-    json_data = []
+def list_json_files(directory: str) -> List[str]:
+    acc = []
     for filename in os.listdir(directory):
         if filename.endswith(".json"):
-            file_path = os.path.join(directory, filename)
-            with open(file_path) as file:
-                data = json.load(file)
-                json_data.append(data)
-    return json_data
+            acc.append(os.path.join(directory, filename))
+    return acc
+
+
+def read_json(path: str) -> object:
+    return json.load(open(path))
 
 
 __main__()
