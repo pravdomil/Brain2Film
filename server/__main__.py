@@ -24,11 +24,6 @@ class Initializing:
 
 
 @dataclass
-class MountingDrive:
-    _: None
-
-
-@dataclass
 class Ready:
     _: None
 
@@ -65,20 +60,16 @@ def __main__():
 def state_step(a):
     if isinstance(a, Initializing):
         print("Initializing...")
+
         if not os.path.exists(tasks_done_dir):
             os.makedirs(tasks_done_dir)
 
         if not os.path.exists(tasks_error_dir):
             os.makedirs(tasks_error_dir)
 
-        if os.path.exists(drive_dir):
-            return Ready(None)
-        else:
-            return MountingDrive(None)
+        if not os.path.exists(drive_dir):
+            drive.mount(drive_dir)
 
-    elif isinstance(a, MountingDrive):
-        print("Mounting Drive...")
-        drive.mount(drive_dir)
         return Ready(None)
 
     elif isinstance(a, Ready):
