@@ -1,11 +1,19 @@
 import json
 import os
 import sys
+import tempfile
 import time
 from dataclasses import dataclass
 from typing import List, Tuple, Union, TextIO
+
+import PIL.Image
+import PIL.ImageOps
+import cv2
+import diffusers
 # noinspection PyUnresolvedReferences
 import google.colab
+import moviepy.editor
+import torch
 
 drive_dir = "/content/drive"
 input_dir = "/content/drive/MyDrive/AI Cut Ultra/input"
@@ -50,6 +58,11 @@ class Task:
     clip_start: str
     clip_duration: str
     instructions: str
+
+
+@dataclass
+class InstructPix2Pix:
+    prompt: str
 
 
 # Functions
@@ -154,8 +167,7 @@ def do_task(filename: str):
 def do_task2(arg: Tuple[str, Task]):
     filename, a = arg
     if a.instructions.lower().startswith("pix2pix"):
-        print("InstructPix2Pix!")
-        time.sleep(1)
+        instruct_pix2pix(arg)
 
     elif a.instructions.lower().startswith("bark"):
         print("Bark!")
@@ -172,6 +184,77 @@ def do_task2(arg: Tuple[str, Task]):
     else:
         print("Unknown instructions. It should be either pix2pix, bark, audioldm or audiocraft.")
         os.rename(os.path.join(tasks_dir, filename), os.path.join(tasks_error_dir, filename))
+
+
+def instruct_pix2pix(arg: Tuple[str, Task]):
+    filename, a = arg
+
+    first_line, rest_of_lines = (a.instructions + "\n").split("\n", 1)
+    data = InstructPix2Pix(rest_of_lines.strip())
+
+    print("InstructPix2Pix: \"" + data.prompt.replace("\n", ", ") + "\"")
+
+    temp_dir = tempfile.TemporaryDirectory()
+
+    # noinspection PyUnresolvedReferences
+    capture = cv2.VideoCapture(os.path.join(input_dir, a.input_filename))
+    # noinspection PyUnresolvedReferences
+    fps = capture.get(cv2.CAP_PROP_FPS)
+
+    frames = []
+    while 1:
+        image = capture_read_image(capture)
+        if image is None:
+            break
+
+        else:
+            temp_filename = os.path.join(temp_dir.name, "instruct_pix2pix " + str(len(frames)) + ".png")
+            instruct_pix2pix2(image, data.prompt).save(temp_filename)
+            frames.append(temp_filename)
+
+    capture.release()
+
+    moviepy.editor.ImageSequenceClip(frames, fps=fps) \
+        .write_videofile(os.path.join(output_dir, a.output_filename), fps=fps, logger=None)
+
+
+def instruct_pix2pix2(
+        image: PIL.Image.Image,
+        prompt: str,
+        steps: int = 15,
+        seed: int = 123,
+        text_cfg_scale: float = 7,
+        image_cfg_scale: float = 1,
+) -> PIL.Image.Image:
+    pipe = diffusers.StableDiffusionInstructPix2PixPipeline.from_pretrained(
+        "timbrooks/instruct-pix2pix",
+        torch_dtype=torch.float16,
+        safety_checker=None
+    )
+    pipe.to("cuda")
+
+    width, height = image.size
+    factor = 768 / max(width, height)
+    scaled_width = int(width * factor)
+    scaled_height = int(height * factor)
+
+    PIL.ImageOps.fit(image, (scaled_width, scaled_height), method=PIL.Image.LANCZOS)
+
+    output = pipe(
+        prompt,
+        image=image,
+        guidance_scale=text_cfg_scale,
+        image_guidance_scale=image_cfg_scale,
+        num_inference_steps=steps,
+        generator=torch.manual_seed(seed),
+    )
+
+    return output.images[0]
+
+
+def capture_read_image(a) -> Union[PIL.Image.Image, None]:
+    retval, image = a.read()
+    return PIL.Image.fromarray(image) if retval else None
 
 
 __main__()
