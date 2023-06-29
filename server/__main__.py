@@ -191,7 +191,11 @@ def instruct_pix2pix(arg: Tuple[str, Task]):
     def images_to_video():
         if frames:
             moviepy.editor.ImageSequenceClip(frames, fps=fps) \
-                .write_videofile(os.path.join(output_dir, a.output_filename), fps=fps, logger=None)
+                .write_videofile(os.path.join(output_dir, a.output_filename),
+                                 fps=fps,
+                                 ffmpeg_params=["-crf", "15"],
+                                 logger=None,
+                                 )
             print("Video saved.")
 
     filename, a = arg
