@@ -187,6 +187,10 @@ def do_task2(arg: Tuple[str, Task]):
 
 
 def instruct_pix2pix(arg: Tuple[str, Task]):
+    def save_image():
+        moviepy.editor.ImageSequenceClip(frames, fps=fps) \
+            .write_videofile(os.path.join(output_dir, a.output_filename), fps=fps, logger=None)
+
     filename, a = arg
 
     first_line, rest_of_lines = (a.instructions + "\n").split("\n", 1)
@@ -208,14 +212,16 @@ def instruct_pix2pix(arg: Tuple[str, Task]):
             break
 
         else:
+            if len(frames) == 1 or len(frames) % 10 == 0:
+                save_image()
+
             temp_filename = os.path.join(temp_dir.name, "instruct_pix2pix " + str(len(frames)) + ".png")
             instruct_pix2pix2(image, data.prompt).save(temp_filename)
             frames.append(temp_filename)
 
     capture.release()
 
-    moviepy.editor.ImageSequenceClip(frames, fps=fps) \
-        .write_videofile(os.path.join(output_dir, a.output_filename), fps=fps, logger=None)
+    save_image()
 
 
 def instruct_pix2pix2(
