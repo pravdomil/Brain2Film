@@ -232,7 +232,7 @@ def instruct_pix2pix2(
         steps: int = 15,
         seed: int = 123,
         text_cfg_scale: float = 7,
-        image_cfg_scale: float = 1,
+        image_cfg_scale: float = 1.5,
 ) -> PIL.Image.Image:
     pipe = diffusers.StableDiffusionInstructPix2PixPipeline.from_pretrained(
         "timbrooks/instruct-pix2pix",
