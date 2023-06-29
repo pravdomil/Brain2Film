@@ -3,6 +3,7 @@ import os
 import sys
 import tempfile
 import time
+import traceback
 from dataclasses import dataclass
 from typing import List, Tuple, Union, TextIO
 
@@ -116,7 +117,7 @@ def step(a):
         sys.exit()
 
     elif isinstance(a, Error):
-        print(a.exception)
+        traceback.print_exception(a.exception)
         print("Retrying in a second.")
         time.sleep(1)
         return Ready(None)
