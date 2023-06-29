@@ -78,7 +78,7 @@ class Task:
     output_filename: str
     clip_start: str
     clip_duration: str
-    instructions: Union[InstructPix2Pix, Bark, AudioLDM, Audiocraft]
+    type: Union[InstructPix2Pix, Bark, AudioLDM, Audiocraft]
 
 
 # Functions
@@ -153,7 +153,31 @@ def parse_task_json(a: TextIO) -> Union[None, Task]:
                 and isinstance(data[4], str) \
                 and isinstance(data[5], str) \
                 and isinstance(data[6], str):
-            return Task(data[1], data[2], data[3], data[4], data[5], data[6])
+            instructions = data[6].lower()
+
+            if instructions.startswith("pix2pix"):
+                first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
+                type_ = InstructPix2Pix(rest_of_lines.strip())
+                return Task(data[1], data[2], data[3], data[4], data[5], type_)
+
+            elif instructions.startswith("bark"):
+                first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
+                type_ = Bark(rest_of_lines.strip())
+                return Task(data[1], data[2], data[3], data[4], data[5], type_)
+
+            elif instructions.startswith("audioldm"):
+                first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
+                type_ = AudioLDM(rest_of_lines.strip())
+                return Task(data[1], data[2], data[3], data[4], data[5], type_)
+
+            elif instructions.startswith("audiocraft"):
+                first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
+                type_ = Audiocraft(rest_of_lines.strip())
+                return Task(data[1], data[2], data[3], data[4], data[5], type_)
+
+            else:
+                return None
+
         else:
             return None
     except:
