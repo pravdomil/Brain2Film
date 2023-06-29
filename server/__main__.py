@@ -189,8 +189,9 @@ def do_task2(arg: Tuple[str, Task]):
 
 def instruct_pix2pix(arg: Tuple[str, Task]):
     def save_image():
-        moviepy.editor.ImageSequenceClip(frames, fps=fps) \
-            .write_videofile(os.path.join(output_dir, a.output_filename), fps=fps, logger=None)
+        if frames:
+            moviepy.editor.ImageSequenceClip(frames, fps=fps) \
+                .write_videofile(os.path.join(output_dir, a.output_filename), fps=fps, logger=None)
 
     filename, a = arg
 
