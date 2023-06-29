@@ -225,7 +225,7 @@ def do_task2(arg: Tuple[str, Task]):
         raise ValueError("Unknown variant.")
 
 
-def instruct_pix2pix(arg: Tuple[str, Task]):
+def instruct_pix2pix(arg: Tuple[str, Task], data: InstructPix2Pix):
     def images_to_video():
         if frames:
             moviepy.editor.ImageSequenceClip(frames, fps=fps) \
@@ -237,9 +237,6 @@ def instruct_pix2pix(arg: Tuple[str, Task]):
             print("Video saved.")
 
     filename, a = arg
-
-    first_line, rest_of_lines = (a.instructions + "\n").split("\n", 1)
-    data = InstructPix2Pix(rest_of_lines.strip())
 
     print("InstructPix2Pix: \"" + data.prompt.replace("\n", ", ") + "\"")
 
