@@ -52,6 +52,11 @@ class Error:
 
 
 @dataclass
+class InstructPix2Pix:
+    prompt: str
+
+
+@dataclass
 class Task:
     name: str
     input_filename: str
@@ -59,11 +64,6 @@ class Task:
     clip_start: str
     clip_duration: str
     instructions: str
-
-
-@dataclass
-class InstructPix2Pix:
-    prompt: str
 
 
 # Functions
