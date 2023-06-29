@@ -219,7 +219,8 @@ def instruct_pix2pix(arg: Tuple[str, Task]):
                 images_to_video()
 
             temp_filename = os.path.join(temp_dir.name, "instruct_pix2pix " + str(len(frames)) + ".png")
-            instruct_pix2pix2(image, data.prompt).save(temp_filename)
+            output_image = instruct_pix2pix2(image, data.prompt)
+            output_image.save(temp_filename)
             frames.append(temp_filename)
 
     capture.release()
