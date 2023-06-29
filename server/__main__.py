@@ -206,24 +206,23 @@ def do_task(filename: str):
 
 def do_task2(arg: Tuple[str, Task]):
     filename, a = arg
-    if a.instructions.lower().startswith("pix2pix"):
-        instruct_pix2pix(arg)
+    if isinstance(a.type, InstructPix2Pix):
+        instruct_pix2pix(arg, a.type)
 
-    elif a.instructions.lower().startswith("bark"):
+    elif isinstance(a.type, Bark):
         print("Bark!")
         time.sleep(1)
 
-    elif a.instructions.lower().startswith("audioldm"):
+    elif isinstance(a.type, AudioLDM):
         print("AudioLDM!")
         time.sleep(1)
 
-    elif a.instructions.lower().startswith("audiocraft"):
+    elif isinstance(a.type, Audiocraft):
         print("Audiocraft!")
         time.sleep(1)
 
     else:
-        print("Unknown instructions. It should be either pix2pix, bark, audioldm or audiocraft.")
-        os.rename(os.path.join(tasks_dir, filename), os.path.join(tasks_error_dir, filename))
+        raise ValueError("Unknown variant.")
 
 
 def instruct_pix2pix(arg: Tuple[str, Task]):
