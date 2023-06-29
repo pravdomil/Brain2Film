@@ -238,11 +238,11 @@ def instruct_pix2pix2(
     scaled_width = int(width * factor)
     scaled_height = int(height * factor)
 
-    PIL.ImageOps.fit(image, (scaled_width, scaled_height), method=PIL.Image.LANCZOS)
+    resized_image = PIL.ImageOps.fit(image, (scaled_width, scaled_height), method=PIL.Image.LANCZOS)
 
     output = pipe(
         prompt,
-        image=image,
+        image=resized_image,
         guidance_scale=text_cfg_scale,
         image_guidance_scale=image_cfg_scale,
         num_inference_steps=steps,
