@@ -57,13 +57,28 @@ class InstructPix2Pix:
 
 
 @dataclass
+class Bark:
+    prompt: str
+
+
+@dataclass
+class AudioLDM:
+    prompt: str
+
+
+@dataclass
+class Audiocraft:
+    prompt: str
+
+
+@dataclass
 class Task:
     name: str
     input_filename: str
     output_filename: str
     clip_start: str
     clip_duration: str
-    instructions: str
+    instructions: Union[InstructPix2Pix, Bark, AudioLDM, Audiocraft]
 
 
 # Functions
