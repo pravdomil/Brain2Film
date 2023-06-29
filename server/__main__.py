@@ -254,7 +254,12 @@ def instruct_pix2pix2(
 
 def capture_read_image(a) -> Union[PIL.Image.Image, None]:
     retval, image = a.read()
-    return PIL.Image.fromarray(image) if retval else None
+    if retval:
+        # noinspection PyUnresolvedReferences
+        rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
+        return PIL.Image.fromarray(rgb_image)
+    else:
+        return None
 
 
 __main__()
