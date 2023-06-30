@@ -261,8 +261,6 @@ def do_task(arg: tuple[str, Task]):
 def instruct_pix2pix(arg: tuple[str, Task], b: InstructPix2Pix):
     filename, a = arg
 
-    print("InstructPix2Pix: \"" + b.prompt.replace("\n", ", ") + "\"")
-
     # noinspection PyUnresolvedReferences
     capture = cv2.VideoCapture(os.path.join(input_dir, a.input_filename))
 
@@ -270,12 +268,15 @@ def instruct_pix2pix(arg: tuple[str, Task], b: InstructPix2Pix):
     frame_indexes, final_fps = compute_frame_indexes(
         arg, b, int(capture.get(cv2.CAP_PROP_FRAME_COUNT)), capture.get(cv2.CAP_PROP_FPS)
     )
+    groups = group_by(frame_indexes, batch_size)
 
     temp_dir = tempfile.TemporaryDirectory()
 
+    print("InstructPix2Pix: \"" + b.prompt.replace("\n", ", ") + "\", " + str(len(groups)) + " batches")
+
     frames = []
     first_run = True
-    for group in group_by(frame_indexes, batch_size):
+    for group in groups:
         batch: list[tuple[str, Image]] = []
         for i in group:
             image = capture_read_image(capture, i)
