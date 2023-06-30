@@ -15,6 +15,7 @@ import diffusers
 import google.colab
 import moviepy.editor
 import torch
+import yaml
 from PIL.Image import Image
 
 batch_size = 8
@@ -161,9 +162,15 @@ def parse_task_json(a: TextIO) -> Union[None, Task]:
             instructions = b[6].lower()
 
             if instructions.startswith("pix2pix:"):
-                first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
-                type_ = InstructPix2Pix(rest_of_lines.strip(), None)
-                return Task(b[1], b[2], b[3], b[4], b[5], type_)
+                c = yaml.safe_load(instructions)
+                prompt = c["pix2pix"]
+                fps = c["fps"] if "fps" in c else None
+
+                if isinstance(prompt, str) and (fps is None or isinstance(fps, int)):
+                    type_ = InstructPix2Pix(prompt, fps)
+                    return Task(b[1], b[2], b[3], b[4], b[5], type_)
+                else:
+                    return None
 
             elif instructions.startswith("bark:"):
                 first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
