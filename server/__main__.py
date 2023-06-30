@@ -226,19 +226,19 @@ def do_task2(arg: Tuple[str, Task]):
         raise ValueError("Unknown variant.")
 
 
-def instruct_pix2pix(arg: Tuple[str, Task], data: InstructPix2Pix):
+def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
     filename, a = arg
 
     def images_to_video():
         if frames:
-            moviepy.editor.ImageSequenceClip(frames, fps=fps // data.skip) \
+            moviepy.editor.ImageSequenceClip(frames, fps=fps // b.skip) \
                 .write_videofile(os.path.join(output_dir, a.output_filename),
                                  ffmpeg_params=["-crf", "15"],
                                  logger=None,
                                  )
             print("Video saved.")
 
-    print("InstructPix2Pix: \"" + data.prompt.replace("\n", ", ") + "\"")
+    print("InstructPix2Pix: \"" + b.prompt.replace("\n", ", ") + "\"")
 
     temp_dir = tempfile.TemporaryDirectory()
 
@@ -246,7 +246,7 @@ def instruct_pix2pix(arg: Tuple[str, Task], data: InstructPix2Pix):
     capture = cv2.VideoCapture(os.path.join(input_dir, a.input_filename))
     # noinspection PyUnresolvedReferences
     fps = capture.get(cv2.CAP_PROP_FPS)
-    frame_skip = max(1, fps / data.fps)
+    frame_skip = max(1, fps / b.fps)
     i = -1
     frames = []
     while 1:
@@ -263,7 +263,7 @@ def instruct_pix2pix(arg: Tuple[str, Task], data: InstructPix2Pix):
                 images_to_video()
 
             temp_filename = os.path.join(temp_dir.name, "instruct_pix2pix " + str(len(frames)) + ".png")
-            output_image = instruct_pix2pix2(image, data.prompt)
+            output_image = instruct_pix2pix2(image, b.prompt)
             output_image.save(temp_filename)
             frames.append(temp_filename)
 
