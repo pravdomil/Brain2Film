@@ -150,35 +150,35 @@ def step(a):
 
 def parse_task_json(a: TextIO) -> Union[None, Task]:
     try:
-        data = json.load(a)
-        if data[0] == "tdqt9rkbrsv7bf5bz16gy2p19" \
-                and isinstance(data[1], str) \
-                and isinstance(data[2], str) \
-                and isinstance(data[3], str) \
-                and isinstance(data[4], str) \
-                and isinstance(data[5], str) \
-                and isinstance(data[6], str):
-            instructions = data[6].lower()
+        b = json.load(a)
+        if b[0] == "tdqt9rkbrsv7bf5bz16gy2p19" \
+                and isinstance(b[1], str) \
+                and isinstance(b[2], str) \
+                and isinstance(b[3], str) \
+                and isinstance(b[4], str) \
+                and isinstance(b[5], str) \
+                and isinstance(b[6], str):
+            instructions = b[6].lower()
 
             if instructions.startswith("pix2pix:"):
                 first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
                 type_ = InstructPix2Pix(rest_of_lines.strip(), None)
-                return Task(data[1], data[2], data[3], data[4], data[5], type_)
+                return Task(b[1], b[2], b[3], b[4], b[5], type_)
 
             elif instructions.startswith("bark:"):
                 first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
                 type_ = Bark(rest_of_lines.strip())
-                return Task(data[1], data[2], data[3], data[4], data[5], type_)
+                return Task(b[1], b[2], b[3], b[4], b[5], type_)
 
             elif instructions.startswith("audioldm:"):
                 first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
                 type_ = AudioLDM(rest_of_lines.strip())
-                return Task(data[1], data[2], data[3], data[4], data[5], type_)
+                return Task(b[1], b[2], b[3], b[4], b[5], type_)
 
             elif instructions.startswith("audiocraft:"):
                 first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
                 type_ = Audiocraft(rest_of_lines.strip())
-                return Task(data[1], data[2], data[3], data[4], data[5], type_)
+                return Task(b[1], b[2], b[3], b[4], b[5], type_)
 
             else:
                 return None
