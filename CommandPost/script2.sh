@@ -48,17 +48,17 @@ if [ ! -d "$base_dir" ]; then
   osascript -e 'tell app "System Events" to display dialog "Please create folder \"~/My Drive/AI Cut Ultra\"."'
   exit 1
 fi
-input_dir="$HOME/My Drive/AI Cut Ultra/input"
+input_dir="$base_dir/input"
 if [ ! -d "$input_dir" ]; then
   osascript -e 'tell app "System Events" to display dialog "Please create folder \"~/My Drive/AI Cut Ultra/input\"."'
   exit 1
 fi
-output_dir="$HOME/My Drive/AI Cut Ultra/output"
+output_dir="$base_dir/output"
 if [ ! -d "$output_dir" ]; then
   osascript -e 'tell app "System Events" to display dialog "Please create folder \"~/My Drive/AI Cut Ultra/output\"."'
   exit 1
 fi
-tasks_dir="$HOME/My Drive/AI Cut Ultra/tasks"
+tasks_dir="$base_dir/tasks"
 if [ ! -d "$tasks_dir" ]; then
   osascript -e 'tell app "System Events" to display dialog "Please create folder \"~/My Drive/AI Cut Ultra/tasks\"."'
   exit 1
