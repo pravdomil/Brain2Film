@@ -142,7 +142,7 @@ def step(a):
         raise ValueError("Unknown variant.")
 
 
-# Helpers
+# Task
 
 def parse_task_json(a: TextIO) -> Union[None, Task]:
     try:
@@ -193,8 +193,6 @@ def list_task_filenames() -> List[str]:
     return acc
 
 
-# Task
-
 def do_task_from_filename(filename: str):
     task = parse_task_json(open(os.path.join(tasks_dir, filename)))
 
@@ -231,6 +229,8 @@ def do_task(arg: Tuple[str, Task]):
     else:
         raise ValueError("Unknown variant.")
 
+
+# InstructPix2Pix
 
 def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
     filename, a = arg
