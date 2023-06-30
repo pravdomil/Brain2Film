@@ -341,4 +341,8 @@ def capture_read_image(a) -> Union[PIL.Image.Image, None]:
         return None
 
 
+def group_by_eight(a):
+    return [a[i:i + 8] for i in range(0, len(a), 8)]
+
+
 __main__()
