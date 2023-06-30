@@ -203,6 +203,11 @@ def do_task(filename: str):
         move_task_to_error_folder(filename)
     else:
         do_task2((filename, task))
+        move_task_to_done_folder(filename)
+
+
+def move_task_to_done_folder(filename: str):
+    os.rename(os.path.join(tasks_dir, filename), os.path.join(tasks_done_dir, filename))
 
 
 def move_task_to_error_folder(filename: str):
