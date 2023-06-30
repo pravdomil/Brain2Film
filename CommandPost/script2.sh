@@ -56,7 +56,7 @@ tasks_dir="$base_dir/tasks"
 mkdir -p "$tasks_dir"
 
 # Compute filenames.
-id="$(date +%s)-$RANDOM"
+id="$(date +%s)$RANDOM"
 input_filename="$(shasum --algorithm 256 "$filepath" | awk '{print $1}').${filepath##*.}"
 output_filename="${name//[^[:alnum:-_]]/ } $id.${filepath##*.}"
 
