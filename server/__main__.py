@@ -299,10 +299,11 @@ def compute_frame_indexes(
         frame_skip = max(1, round(fps / b.fps))
         final_fps = round(fps / frame_skip)
 
+    start_frame = a.clip_start[0] * fps + a.clip_start[1]
     frame_indexes = []
     i = 0
     while 1:
-        frame_index = i * frame_skip
+        frame_index = start_frame + i * frame_skip
         if frame_index > frame_count - 1:
             break
         frame_indexes.append(frame_index)
