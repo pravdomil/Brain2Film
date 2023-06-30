@@ -331,7 +331,9 @@ def instruct_pix2pix2(
     return output.images[0]
 
 
-def capture_read_image(a) -> Union[PIL.Image.Image, None]:
+def capture_read_image(a, index: int) -> Union[PIL.Image.Image, None]:
+    # noinspection PyUnresolvedReferences
+    a.set(cv2.CAP_PROP_POS_FRAMES, index)
     retval, image = a.read()
     if retval:
         # noinspection PyUnresolvedReferences
