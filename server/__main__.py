@@ -17,7 +17,7 @@ import moviepy.editor
 import torch
 from PIL.Image import Image
 
-batch_size = 4
+batch_size = 8
 drive_dir = "/content/drive"
 base_dir = os.path.join(drive_dir, "MyDrive/AI Cut Ultra")
 input_dir = os.path.join(base_dir, "input")
