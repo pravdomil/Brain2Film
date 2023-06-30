@@ -17,6 +17,7 @@ import moviepy.editor
 import torch
 from PIL.Image import Image
 
+batch_size = 4
 drive_dir = "/content/drive"
 base_dir = os.path.join(drive_dir, "MyDrive/AI Cut Ultra")
 input_dir = os.path.join(base_dir, "input")
@@ -253,7 +254,7 @@ def instruct_pix2pix(arg: tuple[str, Task], b: InstructPix2Pix):
 
     frames = []
     first_run = True
-    for group in group_by_eight(frame_indexes):
+    for group in group_by(frame_indexes, batch_size):
         batch: list[tuple[str, Image]] = []
         for i in group:
             image = capture_read_image(capture, i)
@@ -346,8 +347,8 @@ def capture_read_image(a, index: int) -> Union[PIL.Image.Image, None]:
         return None
 
 
-def group_by_eight(a):
-    return [a[i:i + 8] for i in range(0, len(a), 8)]
+def group_by(a: list, size: int):
+    return [a[i:i + size] for i in range(0, len(a), size)]
 
 
 __main__()
