@@ -227,6 +227,8 @@ def do_task2(arg: Tuple[str, Task]):
 
 
 def instruct_pix2pix(arg: Tuple[str, Task], data: InstructPix2Pix):
+    filename, a = arg
+
     def images_to_video():
         if frames:
             moviepy.editor.ImageSequenceClip(frames, fps=fps // data.skip) \
@@ -235,8 +237,6 @@ def instruct_pix2pix(arg: Tuple[str, Task], data: InstructPix2Pix):
                                  logger=None,
                                  )
             print("Video saved.")
-
-    filename, a = arg
 
     print("InstructPix2Pix: \"" + data.prompt.replace("\n", ", ") + "\"")
 
