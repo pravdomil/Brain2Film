@@ -252,7 +252,7 @@ def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
     temp_dir = tempfile.TemporaryDirectory()
 
     frames = []
-    first_run = False
+    first_run = True
     for i in frame_indexes:
         # noinspection PyUnresolvedReferences
         capture.set(cv2.CAP_PROP_POS_FRAMES, i)
