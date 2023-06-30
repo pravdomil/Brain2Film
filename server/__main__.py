@@ -5,7 +5,7 @@ import tempfile
 import time
 import traceback
 from dataclasses import dataclass
-from typing import List, Tuple, Union, TextIO
+from typing import Union, TextIO
 
 import PIL.Image
 import PIL.ImageOps
@@ -15,6 +15,7 @@ import diffusers
 import google.colab
 import moviepy.editor
 import torch
+from PIL.Image import Image
 
 drive_dir = "/content/drive"
 base_dir = os.path.join(drive_dir, "MyDrive/AI Cut Ultra")
@@ -185,7 +186,7 @@ def parse_task_json(a: TextIO) -> Union[None, Task]:
         return None
 
 
-def list_task_filenames() -> List[str]:
+def list_task_filenames() -> list[str]:
     acc = []
     for filename in os.listdir(tasks_dir):
         if filename.endswith(".json"):
@@ -212,7 +213,7 @@ def move_task_to_error_folder(filename: str):
     os.rename(os.path.join(tasks_dir, filename), os.path.join(tasks_error_dir, filename))
 
 
-def do_task(arg: Tuple[str, Task]):
+def do_task(arg: tuple[str, Task]):
     filename, a = arg
     if isinstance(a.type, InstructPix2Pix):
         instruct_pix2pix(arg, a.type)
@@ -232,7 +233,7 @@ def do_task(arg: Tuple[str, Task]):
 
 # InstructPix2Pix
 
-def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
+def instruct_pix2pix(arg: tuple[str, Task], b: InstructPix2Pix):
     filename, a = arg
 
     print("InstructPix2Pix: \"" + b.prompt.replace("\n", ", ") + "\"")
@@ -272,7 +273,7 @@ def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
     images_to_video(arg, frames, final_fps)
 
 
-def compute_frame_indexes(b: InstructPix2Pix, frame_count: int, fps: int) -> Tuple[List[int], int]:
+def compute_frame_indexes(b: InstructPix2Pix, frame_count: int, fps: int) -> tuple[list[int], int]:
     frame_skip = max(1, round(fps / b.fps))
     final_fps = round(fps / frame_skip)
 
@@ -284,7 +285,7 @@ def compute_frame_indexes(b: InstructPix2Pix, frame_count: int, fps: int) -> Tup
     return frame_indexes, final_fps
 
 
-def images_to_video(arg: Tuple[str, Task], frames: List[str], fps: int):
+def images_to_video(arg: tuple[str, Task], frames: list[str], fps: int):
     filename, a = arg
 
     if frames:
