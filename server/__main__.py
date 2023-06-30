@@ -330,10 +330,11 @@ def images_to_video(arg: tuple[str, Task], frames: list[str], fps: int):
 
     if frames:
         moviepy.editor.ImageSequenceClip(frames, fps=fps) \
-            .write_videofile(os.path.join(output_dir, a.output_filename),
-                             ffmpeg_params=["-crf", "15"],
-                             logger=None,
-                             )
+            .write_videofile(
+            os.path.join(output_dir, a.output_filename),
+            ffmpeg_params=["-crf", "15"],
+            logger=None,
+        )
         print("Video saved.")
 
 
