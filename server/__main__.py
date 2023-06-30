@@ -231,7 +231,7 @@ def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
 
     def images_to_video():
         if frames:
-            moviepy.editor.ImageSequenceClip(frames, fps=fps // b.skip) \
+            moviepy.editor.ImageSequenceClip(frames, fps=fps // frame_skip) \
                 .write_videofile(os.path.join(output_dir, a.output_filename),
                                  ffmpeg_params=["-crf", "15"],
                                  logger=None,
