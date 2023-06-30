@@ -287,7 +287,10 @@ def instruct_pix2pix(arg: tuple[str, Task], b: InstructPix2Pix):
             if image is not None:
                 input_images.append(("instruct_pix2pix " + str(i) + ".png", resize_image(image)))
 
-        output_images = instruct_pix2pix2([x[1] for x in input_images], b.prompt)
+        output_images = instruct_pix2pix2(
+            [x[1] for x in input_images],
+            b.prompt
+        )
         for (image_filename, _), image in zip(input_images, output_images):
             temp_filename = os.path.join(temp_dir.name, image_filename)
             image.save(temp_filename)
