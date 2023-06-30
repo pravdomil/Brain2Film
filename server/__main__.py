@@ -235,24 +235,26 @@ def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
     capture = cv2.VideoCapture(os.path.join(input_dir, a.input_filename))
 
     # noinspection PyUnresolvedReferences
-    frame_skip, final_fps = compute_frames(b, capture.get(cv2.CAP_PROP_FPS))
+    frame_indexes, final_fps = compute_frame_indexes(b,
+                                                     capture.get(cv2.CAP_PROP_FRAME_COUNT),
+                                                     capture.get(cv2.CAP_PROP_FPS)
+                                                     )
 
     temp_dir = tempfile.TemporaryDirectory()
 
-    i = -1
     frames = []
-    while 1:
-        i = i + 1
+    first_run = False
+    for i in frame_indexes:
+        # noinspection PyUnresolvedReferences
+        capture.set(cv2.CAP_PROP_POS_FRAMES, i)
         image = capture_read_image(capture)
         if image is None:
             break
 
         else:
-            if i % frame_skip != 0:
-                continue
-
-            if len(frames) == 1 or len(frames) % 10 == 0:
+            if first_run:
                 images_to_video(arg, frames, final_fps)
+                first_run = False
 
             temp_filename = os.path.join(temp_dir.name, "instruct_pix2pix " + str(len(frames)) + ".png")
             output_image = instruct_pix2pix2(image, b.prompt)
@@ -264,10 +266,16 @@ def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
     images_to_video(arg, frames, final_fps)
 
 
-def compute_frames(b: InstructPix2Pix, fps: int):
+def compute_frame_indexes(b: InstructPix2Pix, frame_count: int, fps: int) -> Tuple[List[int], int]:
     frame_skip = max(1, round(fps / b.fps))
     final_fps = round(fps / frame_skip)
-    return frame_skip, final_fps
+
+    frame_indexes = []
+    for i in range(0, frame_count - 1):
+        if i % frame_skip == 0:
+            frame_indexes.append(i)
+
+    return frame_indexes, final_fps
 
 
 def images_to_video(arg: Tuple[str, Task], frames: List[str], fps: int):
