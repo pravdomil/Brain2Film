@@ -297,6 +297,14 @@ def images_to_video(arg: tuple[str, Task], frames: list[str], fps: int):
         print("Video saved.")
 
 
+def resize_image(a: PIL.Image.Image) -> PIL.Image.Image:
+    width, height = a.size
+    factor = 768 / max(width, height)
+    scaled_width = int(width * factor)
+    scaled_height = int(height * factor)
+    return PIL.ImageOps.fit(a, (scaled_width, scaled_height), method=PIL.Image.LANCZOS)
+
+
 def instruct_pix2pix2(
         images: list[PIL.Image.Image],
         prompt: str,
