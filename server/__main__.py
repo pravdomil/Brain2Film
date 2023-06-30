@@ -284,7 +284,12 @@ def instruct_pix2pix(arg: tuple[str, Task], b: InstructPix2Pix):
     images_to_video(arg, frames, final_fps)
 
 
-def compute_frame_indexes(arg: tuple[str, Task], b: InstructPix2Pix, frame_count: int, fps: int) -> tuple[list[int], int]:
+def compute_frame_indexes(
+        arg: tuple[str, Task],
+        b: InstructPix2Pix,
+        frame_count: int,
+        fps: int
+) -> tuple[list[int], int]:
     filename, a = arg
 
     if b.fps is None:
