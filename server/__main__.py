@@ -261,14 +261,14 @@ def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
             break
 
         else:
-            if first_run:
-                images_to_video(arg, frames, final_fps)
-                first_run = False
-
             temp_filename = os.path.join(temp_dir.name, "instruct_pix2pix " + str(len(frames)) + ".png")
             output_image = instruct_pix2pix2(image, b.prompt)
             output_image.save(temp_filename)
             frames.append(temp_filename)
+
+            if first_run:
+                images_to_video(arg, frames, final_fps)
+                first_run = False
 
     capture.release()
 
