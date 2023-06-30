@@ -236,9 +236,8 @@ def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
     # noinspection PyUnresolvedReferences
     capture = cv2.VideoCapture(os.path.join(input_dir, a.input_filename))
     # noinspection PyUnresolvedReferences
-    fps = capture.get(cv2.CAP_PROP_FPS)
-    frame_skip = max(1, round(fps / b.fps))
-    final_fps = round(fps / frame_skip)
+    frame_skip, final_fps = compute_frames(b, capture.get(cv2.CAP_PROP_FPS))
+
     i = -1
     frames = []
     while 1:
@@ -262,6 +261,12 @@ def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
     capture.release()
 
     images_to_video(arg, frames, final_fps)
+
+
+def compute_frames(b: InstructPix2Pix, fps: int):
+    frame_skip = max(1, round(fps / b.fps))
+    final_fps = round(fps / frame_skip)
+    return frame_skip, final_fps
 
 
 def images_to_video(arg: Tuple[str, Task], frames: List[str], fps: int):
