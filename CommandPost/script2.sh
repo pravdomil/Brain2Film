@@ -43,6 +43,11 @@ fi
 filepath="${candidates[0]}"
 
 # Check drive.
+base_dir="$HOME/My Drive/AI Cut Ultra"
+if [ ! -d "$base_dir" ]; then
+  osascript -e 'tell app "System Events" to display dialog "Please create folder \"~/My Drive/AI Cut Ultra\"."'
+  exit 1
+fi
 input_dir="$HOME/My Drive/AI Cut Ultra/input"
 if [ ! -d "$input_dir" ]; then
   osascript -e 'tell app "System Events" to display dialog "Please create folder \"~/My Drive/AI Cut Ultra/input\"."'
