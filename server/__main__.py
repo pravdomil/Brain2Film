@@ -54,7 +54,7 @@ class Error:
 @dataclass
 class InstructPix2Pix:
     prompt: str
-    skip: int
+    fps: int
 
 
 @dataclass
@@ -246,7 +246,7 @@ def instruct_pix2pix(arg: Tuple[str, Task], data: InstructPix2Pix):
     capture = cv2.VideoCapture(os.path.join(input_dir, a.input_filename))
     # noinspection PyUnresolvedReferences
     fps = capture.get(cv2.CAP_PROP_FPS)
-
+    frame_skip = max(1, fps / data.fps)
     i = -1
     frames = []
     while 1:
@@ -256,7 +256,7 @@ def instruct_pix2pix(arg: Tuple[str, Task], data: InstructPix2Pix):
             break
 
         else:
-            if i % data.skip != 0:
+            if i % frame_skip != 0:
                 continue
 
             if len(frames) == 1 or len(frames) % 10 == 0:
