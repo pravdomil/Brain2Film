@@ -222,15 +222,12 @@ def do_task(arg: Tuple[str, Task]):
 
     elif isinstance(a.type, Bark):
         print("Bark!")
-        time.sleep(1)
 
     elif isinstance(a.type, AudioLDM):
         print("AudioLDM!")
-        time.sleep(1)
 
     elif isinstance(a.type, Audiocraft):
         print("Audiocraft!")
-        time.sleep(1)
 
     else:
         raise ValueError("Unknown variant.")
