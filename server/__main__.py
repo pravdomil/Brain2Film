@@ -159,40 +159,43 @@ def parse_task_json(a: TextIO) -> Union[None, Task]:
                 and isinstance(b[4], str) \
                 and isinstance(b[5], str) \
                 and isinstance(b[6], str):
-            instructions = b[6].lower()
 
-            if instructions.startswith("pix2pix:"):
-                c = yaml.safe_load(instructions)
-                prompt = c["pix2pix"]
-                fps = c["fps"] if "fps" in c else None
-
-                if isinstance(prompt, str) and (fps is None or isinstance(fps, int)):
-                    type_ = InstructPix2Pix(prompt, fps)
-                    return Task(b[1], b[2], b[3], b[4], b[5], type_)
-                else:
-                    return None
-
-            elif instructions.startswith("bark:"):
-                first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
-                type_ = Bark(rest_of_lines.strip())
-                return Task(b[1], b[2], b[3], b[4], b[5], type_)
-
-            elif instructions.startswith("audioldm:"):
-                first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
-                type_ = AudioLDM(rest_of_lines.strip())
-                return Task(b[1], b[2], b[3], b[4], b[5], type_)
-
-            elif instructions.startswith("audiocraft:"):
-                first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
-                type_ = Audiocraft(rest_of_lines.strip())
-                return Task(b[1], b[2], b[3], b[4], b[5], type_)
-
-            else:
+            type_ = parse_type(b[6])
+            if type_ is None:
                 return None
+            else:
+                return Task(b[1], b[2], b[3], b[4], b[5], type_)
 
         else:
             return None
     except:
+        return None
+
+
+def parse_type(a: str):
+    if a.lower().startswith("pix2pix:"):
+        c = yaml.safe_load(a)
+        prompt = c["pix2pix"]
+        fps = c["fps"] if "fps" in c else None
+
+        if isinstance(prompt, str) and (fps is None or isinstance(fps, int)):
+            return InstructPix2Pix(prompt, fps)
+        else:
+            return None
+
+    elif a.lower().startswith("bark:"):
+        first_line, rest_of_lines = (a + "\n").split("\n", 1)
+        return Bark(rest_of_lines.strip())
+
+    elif a.lower().startswith("audioldm:"):
+        first_line, rest_of_lines = (a + "\n").split("\n", 1)
+        return AudioLDM(rest_of_lines.strip())
+
+    elif a.lower().startswith("audiocraft:"):
+        first_line, rest_of_lines = (a + "\n").split("\n", 1)
+        return Audiocraft(rest_of_lines.strip())
+
+    else:
         return None
 
 
