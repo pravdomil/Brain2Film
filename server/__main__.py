@@ -54,6 +54,7 @@ class Error:
 @dataclass
 class InstructPix2Pix:
     prompt: str
+    skip: int
 
 
 @dataclass
@@ -157,7 +158,7 @@ def parse_task_json(a: TextIO) -> Union[None, Task]:
 
             if instructions.startswith("pix2pix"):
                 first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
-                type_ = InstructPix2Pix(rest_of_lines.strip())
+                type_ = InstructPix2Pix(rest_of_lines.strip(), 1)
                 return Task(data[1], data[2], data[3], data[4], data[5], type_)
 
             elif instructions.startswith("bark"):
@@ -228,7 +229,7 @@ def do_task2(arg: Tuple[str, Task]):
 def instruct_pix2pix(arg: Tuple[str, Task], data: InstructPix2Pix):
     def images_to_video():
         if frames:
-            moviepy.editor.ImageSequenceClip(frames, fps=fps) \
+            moviepy.editor.ImageSequenceClip(frames, fps=fps // data.skip) \
                 .write_videofile(os.path.join(output_dir, a.output_filename),
                                  ffmpeg_params=["-crf", "15"],
                                  logger=None,
@@ -246,13 +247,18 @@ def instruct_pix2pix(arg: Tuple[str, Task], data: InstructPix2Pix):
     # noinspection PyUnresolvedReferences
     fps = capture.get(cv2.CAP_PROP_FPS)
 
+    i = -1
     frames = []
     while 1:
+        i = i + 1
         image = capture_read_image(capture)
         if image is None:
             break
 
         else:
+            if i % data.skip != 0:
+                continue
+
             if len(frames) == 1 or len(frames) % 10 == 0:
                 images_to_video()
 
