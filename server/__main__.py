@@ -253,22 +253,22 @@ def instruct_pix2pix(arg: tuple[str, Task], b: InstructPix2Pix):
 
     frames = []
     first_run = True
-    for i in frame_indexes:
-        # noinspection PyUnresolvedReferences
-        capture.set(cv2.CAP_PROP_POS_FRAMES, i)
-        image = capture_read_image(capture)
-        if image is None:
-            break
+    for group in group_by_eight(frame_indexes):
+        batch: list[tuple[str, Image]] = []
+        for i in group:
+            image = capture_read_image(capture, i)
+            if image is not None:
+                batch.append(("instruct_pix2pix " + str(i) + ".png", resize_image(image)))
 
-        else:
-            temp_filename = os.path.join(temp_dir.name, "instruct_pix2pix " + str(len(frames)) + ".png")
-            output_image = instruct_pix2pix2(image, b.prompt)
-            output_image.save(temp_filename)
+        images = instruct_pix2pix2([x[1] for x in batch], b.prompt)
+        for image, (image_filename, _) in zip(images, batch):
+            temp_filename = os.path.join(temp_dir.name, image_filename)
+            image.save(temp_filename)
             frames.append(temp_filename)
 
-            if first_run:
-                images_to_video(arg, frames, final_fps)
-                first_run = False
+        if first_run:
+            images_to_video(arg, frames, final_fps)
+            first_run = False
 
     capture.release()
 
