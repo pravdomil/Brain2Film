@@ -168,7 +168,15 @@ def parse_task_json(a: TextIO) -> Union[None, Task]:
                 and isinstance(clip_start, str) \
                 and isinstance(clip_duration, str) \
                 and isinstance(type_, str):
-            return Task(name, input_filename, output_filename,parse_time(clip_start), parse_time(clip_duration), type_)
+            type__ = parse_type(type_)
+            if type__ is not None:
+                return Task(
+                    name, input_filename, output_filename,
+                    parse_time(clip_start), parse_time(clip_duration),
+                    type__
+                )
+            else:
+                return None
         else:
             return None
 
