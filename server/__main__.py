@@ -237,9 +237,10 @@ def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
     # noinspection PyUnresolvedReferences
     frame_skip, final_fps = compute_frames(b, capture.get(cv2.CAP_PROP_FPS))
 
+    temp_dir = tempfile.TemporaryDirectory()
+
     i = -1
     frames = []
-    temp_dir = tempfile.TemporaryDirectory()
     while 1:
         i = i + 1
         image = capture_read_image(capture)
