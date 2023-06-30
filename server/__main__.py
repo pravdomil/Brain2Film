@@ -236,7 +236,7 @@ def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
 
     # noinspection PyUnresolvedReferences
     frame_indexes, final_fps = compute_frame_indexes(b,
-                                                     capture.get(cv2.CAP_PROP_FRAME_COUNT),
+                                                     int(capture.get(cv2.CAP_PROP_FRAME_COUNT)),
                                                      capture.get(cv2.CAP_PROP_FPS)
                                                      )
 
