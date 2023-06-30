@@ -57,7 +57,7 @@ class Error:
 @dataclass
 class InstructPix2Pix:
     prompt: str
-    fps: int
+    fps: Union[int, None]
 
 
 @dataclass
@@ -162,7 +162,7 @@ def parse_task_json(a: TextIO) -> Union[None, Task]:
 
             if instructions.startswith("pix2pix"):
                 first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
-                type_ = InstructPix2Pix(rest_of_lines.strip(), 1)
+                type_ = InstructPix2Pix(rest_of_lines.strip(), None)
                 return Task(data[1], data[2], data[3], data[4], data[5], type_)
 
             elif instructions.startswith("bark"):
@@ -277,8 +277,12 @@ def instruct_pix2pix(arg: tuple[str, Task], b: InstructPix2Pix):
 
 
 def compute_frame_indexes(b: InstructPix2Pix, frame_count: int, fps: int) -> tuple[list[int], int]:
-    frame_skip = max(1, round(fps / b.fps))
-    final_fps = round(fps / frame_skip)
+    if b.fps is None:
+        frame_skip = 1
+        final_fps = fps
+    else:
+        frame_skip = max(1, round(fps / b.fps))
+        final_fps = round(fps / frame_skip)
 
     frame_indexes = []
     for i in range(0, frame_count - 1):
