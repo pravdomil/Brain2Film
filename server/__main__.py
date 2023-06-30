@@ -17,11 +17,12 @@ import moviepy.editor
 import torch
 
 drive_dir = "/content/drive"
-input_dir = "/content/drive/MyDrive/AI Cut Ultra/input"
-output_dir = "/content/drive/MyDrive/AI Cut Ultra/output"
-tasks_dir = "/content/drive/MyDrive/AI Cut Ultra/tasks"
-tasks_done_dir = "/content/drive/MyDrive/AI Cut Ultra/tasks/done"
-tasks_error_dir = "/content/drive/MyDrive/AI Cut Ultra/tasks/error"
+base_dir = os.path.join(drive_dir, "MyDrive/AI Cut Ultra")
+input_dir = os.path.join(base_dir, "input")
+output_dir = os.path.join(base_dir, "output")
+tasks_dir = os.path.join(base_dir, "tasks")
+tasks_done_dir = os.path.join(base_dir, "tasks/done")
+tasks_error_dir = os.path.join(base_dir, "tasks/error")
 
 
 # Types
