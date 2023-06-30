@@ -276,9 +276,9 @@ def instruct_pix2pix(arg: tuple[str, Task], b: InstructPix2Pix):
 
     frames = []
     first_run = True
-    for group in batches:
+    for batch in batches:
         input_images: list[tuple[str, Image]] = []
-        for i in group:
+        for i in batch:
             image = capture_read_image(capture, i)
             if image is not None:
                 input_images.append(("instruct_pix2pix " + str(i) + ".png", resize_image(image)))
