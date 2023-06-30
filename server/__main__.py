@@ -118,7 +118,6 @@ def step(a):
         return Checking(None)
 
     elif isinstance(a, Checking):
-        print("Checking...")
         files = list_task_filenames()
         files.sort()
 
