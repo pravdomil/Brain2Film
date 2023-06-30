@@ -81,8 +81,8 @@ class Task:
     name: str
     input_filename: str
     output_filename: str
-    clip_start: str
-    clip_duration: str
+    clip_start: tuple[int, int]
+    clip_duration: tuple[int, int]
     type: Union[InstructPix2Pix, Bark, AudioLDM, Audiocraft]
 
 
@@ -365,8 +365,15 @@ def capture_read_image(a, index: int) -> Union[PIL.Image.Image, None]:
         return None
 
 
+# Helpers
+
 def group_by(a: list, size: int):
     return [a[i:i + size] for i in range(0, len(a), size)]
+
+
+def parse_time(a: str) -> tuple[int, int]:
+    h, m, s, rest = map(int, a.split(":"))
+    return h * 60 * 60 + m * 60 + s, rest
 
 
 __main__()
