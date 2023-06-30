@@ -231,15 +231,15 @@ def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
 
     print("InstructPix2Pix: \"" + b.prompt.replace("\n", ", ") + "\"")
 
-    temp_dir = tempfile.TemporaryDirectory()
-
     # noinspection PyUnresolvedReferences
     capture = cv2.VideoCapture(os.path.join(input_dir, a.input_filename))
+
     # noinspection PyUnresolvedReferences
     frame_skip, final_fps = compute_frames(b, capture.get(cv2.CAP_PROP_FPS))
 
     i = -1
     frames = []
+    temp_dir = tempfile.TemporaryDirectory()
     while 1:
         i = i + 1
         image = capture_read_image(capture)
