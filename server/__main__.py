@@ -292,9 +292,13 @@ def compute_frame_indexes(b: InstructPix2Pix, frame_count: int, fps: int) -> tup
         final_fps = round(fps / frame_skip)
 
     frame_indexes = []
-    for i in range(0, frame_count - 1):
-        if i % frame_skip == 0:
-            frame_indexes.append(i)
+    i = 0
+    while 1:
+        frame_index = i * frame_skip
+        if frame_index > frame_count - 1:
+            break
+        frame_indexes.append(frame_index)
+        i = i + 1
 
     return frame_indexes, final_fps
 
