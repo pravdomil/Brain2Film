@@ -49,17 +49,11 @@ if [ ! -d "$base_dir" ]; then
   exit 1
 fi
 input_dir="$base_dir/input"
-if [ ! -d "$input_dir" ]; then
-  mkdir -r "$input_dir"
-fi
+mkdir -p "$input_dir"
 output_dir="$base_dir/output"
-if [ ! -d "$output_dir" ]; then
-  mkdir -r "$output_dir"
-fi
+mkdir -p "$output_dir"
 tasks_dir="$base_dir/tasks"
-if [ ! -d "$tasks_dir" ]; then
-  mkdir -r "$tasks_dir"
-fi
+mkdir -p "$tasks_dir"
 
 # Compute filenames.
 id="$(date +%s)-$RANDOM"
