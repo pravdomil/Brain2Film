@@ -277,14 +277,14 @@ def instruct_pix2pix(arg: tuple[str, Task], b: InstructPix2Pix):
     frames = []
     first_run = True
     for group in batches:
-        batch: list[tuple[str, Image]] = []
+        input_images: list[tuple[str, Image]] = []
         for i in group:
             image = capture_read_image(capture, i)
             if image is not None:
-                batch.append(("instruct_pix2pix " + str(i) + ".png", resize_image(image)))
+                input_images.append(("instruct_pix2pix " + str(i) + ".png", resize_image(image)))
 
-        images = instruct_pix2pix2([x[1] for x in batch], b.prompt)
-        for (image_filename, _), image in zip(batch, images):
+        output_images = instruct_pix2pix2([x[1] for x in input_images], b.prompt)
+        for (image_filename, _), image in zip(input_images, output_images):
             temp_filename = os.path.join(temp_dir.name, image_filename)
             image.save(temp_filename)
             frames.append(temp_filename)
