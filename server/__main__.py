@@ -192,7 +192,9 @@ def parse_type(a: str):
         fps = c["fps"] if "fps" in c else None
         image_cfg = c["image_cfg"] if "image_cfg" in c else None
 
-        if isinstance(prompt, str) and (fps is None or isinstance(fps, int)) and (image_cfg is None or isinstance(image_cfg, int)):
+        if isinstance(prompt, str) \
+                and (fps is None or isinstance(fps, int)) \
+                and (image_cfg is None or isinstance(image_cfg, int)):
             return InstructPix2Pix(prompt, fps, image_cfg)
         else:
             return None
