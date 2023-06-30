@@ -123,7 +123,7 @@ def step(a):
         files.sort()
 
         if files:
-            do_task(files[0])
+            do_task_from_filename(files[0])
         else:
             time.sleep(1)
 
@@ -196,14 +196,14 @@ def list_task_filenames() -> List[str]:
 
 # Task
 
-def do_task(filename: str):
+def do_task_from_filename(filename: str):
     task = parse_task_json(open(os.path.join(tasks_dir, filename)))
 
     if task is None:
         print("Cannot parse \"" + filename + "\".")
         move_task_to_error_folder(filename)
     else:
-        do_task2((filename, task))
+        do_task((filename, task))
         move_task_to_done_folder(filename)
 
 
@@ -215,7 +215,7 @@ def move_task_to_error_folder(filename: str):
     os.rename(os.path.join(tasks_dir, filename), os.path.join(tasks_error_dir, filename))
 
 
-def do_task2(arg: Tuple[str, Task]):
+def do_task(arg: Tuple[str, Task]):
     filename, a = arg
     if isinstance(a.type, InstructPix2Pix):
         instruct_pix2pix(arg, a.type)
