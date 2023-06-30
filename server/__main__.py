@@ -298,13 +298,13 @@ def images_to_video(arg: tuple[str, Task], frames: list[str], fps: int):
 
 
 def instruct_pix2pix2(
-        image: PIL.Image.Image,
+        images: list[PIL.Image.Image],
         prompt: str,
         steps: int = 15,
         seed: int = 123,
         text_cfg_scale: float = 7,
         image_cfg_scale: float = 1,
-) -> PIL.Image.Image:
+) -> list[PIL.Image.Image]:
     pipe = diffusers.StableDiffusionInstructPix2PixPipeline.from_pretrained(
         "timbrooks/instruct-pix2pix",
         torch_dtype=torch.float16,
@@ -312,23 +312,16 @@ def instruct_pix2pix2(
     )
     pipe.to("cuda")
 
-    width, height = image.size
-    factor = 768 / max(width, height)
-    scaled_width = int(width * factor)
-    scaled_height = int(height * factor)
-
-    resized_image = PIL.ImageOps.fit(image, (scaled_width, scaled_height), method=PIL.Image.LANCZOS)
-
     output = pipe(
-        prompt,
-        image=resized_image,
+        [prompt] * len(images),
+        image=images,
         guidance_scale=text_cfg_scale,
         image_guidance_scale=image_cfg_scale,
         num_inference_steps=steps,
         generator=torch.manual_seed(seed),
     )
 
-    return output.images[0]
+    return output.images
 
 
 def capture_read_image(a, index: int) -> Union[PIL.Image.Image, None]:
