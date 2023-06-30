@@ -162,11 +162,11 @@ def parse_task_json(a: TextIO) -> Union[None, Task]:
         type_ = b[6]
 
         if version == "tdqt9rkbrsv7bf5bz16gy2p19" \
-                and isinstance(name, str)\
-                and isinstance(input_filename, str)\
-                and isinstance(output_filename, str)\
-                and isinstance(clip_start, str)\
-                and isinstance(clip_duration, str)\
+                and isinstance(name, str) \
+                and isinstance(input_filename, str) \
+                and isinstance(output_filename, str) \
+                and isinstance(clip_start, str) \
+                and isinstance(clip_duration, str) \
                 and isinstance(type_, str):
             return Task(name, input_filename, output_filename,parse_time(clip_start), parse_time(clip_duration), type_)
         else:
