@@ -200,9 +200,13 @@ def do_task(filename: str):
 
     if task is None:
         print("Cannot parse \"" + filename + "\".")
-        os.rename(os.path.join(tasks_dir, filename), os.path.join(tasks_error_dir, filename))
+        move_task_to_error_folder(filename)
     else:
         do_task2((filename, task))
+
+
+def move_task_to_error_folder(filename: str):
+    os.rename(os.path.join(tasks_dir, filename), os.path.join(tasks_error_dir, filename))
 
 
 def do_task2(arg: Tuple[str, Task]):
