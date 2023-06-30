@@ -160,22 +160,22 @@ def parse_task_json(a: TextIO) -> Union[None, Task]:
                 and isinstance(data[6], str):
             instructions = data[6].lower()
 
-            if instructions.startswith("pix2pix"):
+            if instructions.startswith("pix2pix:"):
                 first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
                 type_ = InstructPix2Pix(rest_of_lines.strip(), None)
                 return Task(data[1], data[2], data[3], data[4], data[5], type_)
 
-            elif instructions.startswith("bark"):
+            elif instructions.startswith("bark:"):
                 first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
                 type_ = Bark(rest_of_lines.strip())
                 return Task(data[1], data[2], data[3], data[4], data[5], type_)
 
-            elif instructions.startswith("audioldm"):
+            elif instructions.startswith("audioldm:"):
                 first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
                 type_ = AudioLDM(rest_of_lines.strip())
                 return Task(data[1], data[2], data[3], data[4], data[5], type_)
 
-            elif instructions.startswith("audiocraft"):
+            elif instructions.startswith("audiocraft:"):
                 first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
                 type_ = Audiocraft(rest_of_lines.strip())
                 return Task(data[1], data[2], data[3], data[4], data[5], type_)
