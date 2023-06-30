@@ -321,7 +321,7 @@ def compute_frame_indexes(
         frame_index = start_frame + i * frame_skip
         if frame_index > frame_count - 1:
             break
-        if frame_index > end_frame - 2:
+        if frame_index > end_frame - 1:
             break
         frame_indexes.append(frame_index)
         i = i + 1
