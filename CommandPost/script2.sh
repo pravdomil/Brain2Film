@@ -50,18 +50,15 @@ if [ ! -d "$base_dir" ]; then
 fi
 input_dir="$base_dir/input"
 if [ ! -d "$input_dir" ]; then
-  osascript -e 'tell app "System Events" to display dialog "Please create folder \"~/My Drive/AI Cut Ultra/input\"."'
-  exit 1
+  mkdir -r "$input_dir"
 fi
 output_dir="$base_dir/output"
 if [ ! -d "$output_dir" ]; then
-  osascript -e 'tell app "System Events" to display dialog "Please create folder \"~/My Drive/AI Cut Ultra/output\"."'
-  exit 1
+  mkdir -r "$output_dir"
 fi
 tasks_dir="$base_dir/tasks"
 if [ ! -d "$tasks_dir" ]; then
-  osascript -e 'tell app "System Events" to display dialog "Please create folder \"~/My Drive/AI Cut Ultra/tasks\"."'
-  exit 1
+  mkdir -r "$tasks_dir"
 fi
 
 # Compute filenames.
