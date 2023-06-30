@@ -229,15 +229,6 @@ def do_task2(arg: Tuple[str, Task]):
 def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
     filename, a = arg
 
-    def images_to_video():
-        if frames:
-            moviepy.editor.ImageSequenceClip(frames, fps=fps // frame_skip) \
-                .write_videofile(os.path.join(output_dir, a.output_filename),
-                                 ffmpeg_params=["-crf", "15"],
-                                 logger=None,
-                                 )
-            print("Video saved.")
-
     print("InstructPix2Pix: \"" + b.prompt.replace("\n", ", ") + "\"")
 
     temp_dir = tempfile.TemporaryDirectory()
@@ -270,6 +261,18 @@ def instruct_pix2pix(arg: Tuple[str, Task], b: InstructPix2Pix):
     capture.release()
 
     images_to_video()
+
+
+def images_to_video(arg: Tuple[str, Task], frames: List[str], fps: int):
+    filename, a = arg
+
+    if frames:
+        moviepy.editor.ImageSequenceClip(frames, fps=fps) \
+            .write_videofile(os.path.join(output_dir, a.output_filename),
+                             ffmpeg_params=["-crf", "15"],
+                             logger=None,
+                             )
+        print("Video saved.")
 
 
 def instruct_pix2pix2(
