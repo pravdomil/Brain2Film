@@ -292,7 +292,9 @@ def instruct_pix2pix(arg: tuple[str, Task], b: InstructPix2Pix):
 
         output_images = instruct_pix2pix2(
             [x[1] for x in input_images],
-            b.prompt
+            b.prompt,
+            text_cfg_scale=b.text_cfg if b.text_cfg is not None else 7,
+            image_cfg_scale=b.image_cfg if b.image_cfg is not None else 1,
         )
         for (image_filename, _), image in zip(input_images, output_images):
             temp_filename = os.path.join(temp_dir.name, image_filename)
