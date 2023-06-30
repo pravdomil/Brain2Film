@@ -113,6 +113,8 @@ def step(a):
         if not os.path.exists(tasks_error_dir):
             os.makedirs(tasks_error_dir)
 
+        print("Done.")
+
         return Ready(None)
 
     elif isinstance(a, Ready):
