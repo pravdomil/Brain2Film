@@ -55,39 +55,6 @@ class Error:
     exception: Exception
 
 
-@dataclass
-class InstructPix2Pix:
-    prompt: str
-    fps: Union[int, None]
-    text_cfg: Union[int, None]
-    image_cfg: Union[int, None]
-
-
-@dataclass
-class Bark:
-    prompt: str
-
-
-@dataclass
-class AudioLDM:
-    prompt: str
-
-
-@dataclass
-class Audiocraft:
-    prompt: str
-
-
-@dataclass
-class Task:
-    name: str
-    input_filename: str
-    output_filename: str
-    clip_start: tuple[int, int]
-    clip_duration: tuple[int, int]
-    type: Union[InstructPix2Pix, Bark, AudioLDM, Audiocraft]
-
-
 # Functions
 
 def __main__():
