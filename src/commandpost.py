@@ -100,21 +100,21 @@ def parse_task(
                 and ((fps is None) or isinstance(fps, int)) \
                 and ((text_cfg is None) or isinstance(text_cfg, int)) \
                 and ((image_cfg is None) or isinstance(image_cfg, int)):
-            return task.InstructPix2Pix(prompt, fps, text_cfg, image_cfg)
+            return task.Task(task.InstructPix2Pix(prompt, fps, text_cfg, image_cfg))
         else:
             return None
 
     elif instructions.lower().startswith("bark:"):
         first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
-        return task.Bark(rest_of_lines.strip())
+        return task.Task(task.Bark(rest_of_lines.strip()))
 
     elif instructions.lower().startswith("audioldm:"):
         first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
-        return task.AudioLDM(rest_of_lines.strip())
+        return task.Task(task.AudioLDM(rest_of_lines.strip()))
 
     elif instructions.lower().startswith("audiocraft:"):
         first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
-        return task.Audiocraft(rest_of_lines.strip())
+        return task.Task(task.Audiocraft(rest_of_lines.strip()))
 
     else:
         raise "Unknown instructions."
