@@ -9,6 +9,7 @@ import google.colab
 
 import config
 import task
+import tool_audiocraft
 import tool_audioldm
 import tool_bark
 import tool_instruct_pix2pix
@@ -143,16 +144,10 @@ def do_task(arg: tuple[str, task.Task]):
         tool_audioldm.main(a.type)
 
     elif isinstance(a.type, task.Audiocraft):
-        audiocraft(a.type)
+        tool_audiocraft.main(a.type)
 
     else:
         raise ValueError("Unknown variant.")
-
-
-# Audiocraft
-
-def audiocraft(a: task.Audiocraft):
-    print("Audiocraft!")
 
 
 if __name__ == "__main__":
