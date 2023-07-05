@@ -35,7 +35,7 @@ def main():
         clip_duration,
         instructions,
     )
-    with open(os.path.join(tasks_dir, task_id + ".json"), 'w') as f:
+    with open(os.path.join(tasks_dir, task_id + ".json"), "w") as f:
         json.dump(task, f)
 
     subprocess.run(["say", "Done."])
