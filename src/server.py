@@ -201,12 +201,12 @@ def instruct_pix2pix(arg: tuple[str, task.Task], b: task.InstructPix2Pix):
             frames.append(temp_filename)
 
         if first_run:
-            images_to_video(arg, frames, final_fps)
+            images_to_video(b.output_filename, frames, final_fps)
             first_run = False
 
     capture.release()
 
-    images_to_video(arg, frames, final_fps)
+    images_to_video(b.output_filename, frames, final_fps)
 
 
 def compute_frame_indexes(a: task.InstructPix2Pix, frame_count: int, fps: int) -> tuple[list[int], int]:
