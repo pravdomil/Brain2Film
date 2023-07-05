@@ -1,7 +1,8 @@
-import task
 # noinspection PyPackageRequirements
 import bark
 import scipy
+
+import task
 
 
 def main(a: task.Bark):
