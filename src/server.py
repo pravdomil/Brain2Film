@@ -10,8 +10,8 @@ import google.colab
 import config
 import task
 import tool_audioldm
-import tool_instruct_pix2pix
 import tool_bark
+import tool_instruct_pix2pix
 
 
 # Types
