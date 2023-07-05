@@ -6,3 +6,4 @@ PyYAML~=6.0
 torch~=2.0.1
 moviepy~=1.0.3
 opencv-python~=4.8.0.74
+accelerate~=0.20.3
