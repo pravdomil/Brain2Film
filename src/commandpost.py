@@ -100,7 +100,10 @@ def parse_task(
                 and ((fps is None) or isinstance(fps, int)) \
                 and ((text_cfg is None) or isinstance(text_cfg, int)) \
                 and ((image_cfg is None) or isinstance(image_cfg, int)):
-            type_ = task.InstructPix2Pix(prompt, fps, text_cfg, image_cfg)
+            type_ = task.InstructPix2Pix(
+                name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
+                prompt, fps, text_cfg, image_cfg
+            )
             return task.Task(type_)
         else:
             raise "Unknown InstructPix2Pix instructions."
@@ -122,6 +125,11 @@ def parse_task(
 
     else:
         raise "Unknown instructions."
+
+
+def parse_time(a: str) -> tuple[int, int]:
+    h, m, s, rest = map(int, a.split(":"))
+    return int(h * 60 * 60 + m * 60 + s), rest
 
 
 if __name__ == "__main__":
