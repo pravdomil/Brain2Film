@@ -233,13 +233,11 @@ def compute_frame_indexes(a: task.InstructPix2Pix, frame_count: int, fps: int) -
     return frame_indexes, final_fps
 
 
-def images_to_video(arg: tuple[str, task.Task], frames: list[str], fps: int):
-    filename, a = arg
-
+def images_to_video(output_filename: str, frames: list[str], fps: int):
     if frames:
         clip = moviepy.editor.ImageSequenceClip(frames, fps=fps)
         clip.write_videofile(
-            os.path.join(output_dir, a.output_filename),
+            os.path.join(output_dir, output_filename),
             ffmpeg_params=["-crf", "15"],
             logger=None,
         )
