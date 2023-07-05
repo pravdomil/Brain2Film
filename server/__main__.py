@@ -57,7 +57,7 @@ class Error:
 
 # Functions
 
-def __main__():
+def main():
     state = Initializing(None)
 
     while 1:
@@ -379,4 +379,5 @@ def parse_time(a: str) -> tuple[int, int]:
     return int(h * 60 * 60 + m * 60 + s), rest
 
 
-__main__()
+if __name__ == "__main__":
+    main()
