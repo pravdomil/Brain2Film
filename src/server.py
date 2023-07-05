@@ -164,17 +164,17 @@ def do_task(arg: tuple[str, task.Task]):
 
 # InstructPix2Pix
 
-def instruct_pix2pix(b: task.InstructPix2Pix):
-    capture = cv2.VideoCapture(os.path.join(input_dir, b.input_filename))
+def instruct_pix2pix(a: task.InstructPix2Pix):
+    capture = cv2.VideoCapture(os.path.join(input_dir, a.input_filename))
 
     frame_indexes, final_fps = compute_frame_indexes(
-        b, int(capture.get(cv2.CAP_PROP_FRAME_COUNT)), capture.get(cv2.CAP_PROP_FPS)
+        a, int(capture.get(cv2.CAP_PROP_FRAME_COUNT)), capture.get(cv2.CAP_PROP_FPS)
     )
     batches = group_by(frame_indexes, batch_size)
 
     temp_dir = tempfile.TemporaryDirectory()
 
-    print("InstructPix2Pix: \"" + b.prompt.replace("\n", ", ") + "\", " + str(len(batches)) + " batches")
+    print("InstructPix2Pix: \"" + a.prompt.replace("\n", ", ") + "\", " + str(len(batches)) + " batches")
 
     frames = []
     first_run = True
@@ -187,9 +187,9 @@ def instruct_pix2pix(b: task.InstructPix2Pix):
 
         output_images = instruct_pix2pix2(
             [x[1] for x in input_images],
-            b.prompt,
-            text_cfg_scale=b.text_cfg if b.text_cfg is not None else 7,
-            image_cfg_scale=b.image_cfg if b.image_cfg is not None else 1,
+            a.prompt,
+            text_cfg_scale=a.text_cfg if a.text_cfg is not None else 7,
+            image_cfg_scale=a.image_cfg if a.image_cfg is not None else 1,
         )
         for (image_filename, _), image in zip(input_images, output_images):
             temp_filename = os.path.join(temp_dir.name, image_filename)
@@ -197,12 +197,12 @@ def instruct_pix2pix(b: task.InstructPix2Pix):
             frames.append(temp_filename)
 
         if first_run:
-            images_to_video(b.output_filename, frames, final_fps)
+            images_to_video(a.output_filename, frames, final_fps)
             first_run = False
 
     capture.release()
 
-    images_to_video(b.output_filename, frames, final_fps)
+    images_to_video(a.output_filename, frames, final_fps)
 
 
 def compute_frame_indexes(a: task.InstructPix2Pix, frame_count: int, fps: int) -> tuple[list[int], int]:
