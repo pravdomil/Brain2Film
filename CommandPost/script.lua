@@ -26,7 +26,7 @@ function run()
     local info = fcp.inspector.info
     info:show()
 
-    local filename = emptyToNil(info.filename():value()) or emptyToNil(info.displayName():value()) or ""
+    local filename = emptyToNil(info.fileName():value()) or emptyToNil(info.displayName():value()) or ""
 
     local data = {
         "_dx2rgq3ln9kfsl_wdv9vzlng",
