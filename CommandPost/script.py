@@ -43,9 +43,9 @@ def main():
 
 def check_drive():
     base_dir = os.path.join(os.path.expanduser("~"), "My Drive/AI Cut Ultra")
-    input_dir = os.path.join(base_dir + "input")
-    output_dir = os.path.join(base_dir + "output")
-    tasks_dir = os.path.join(base_dir + "tasks")
+    input_dir = os.path.join(base_dir, "input")
+    output_dir = os.path.join(base_dir, "output")
+    tasks_dir = os.path.join(base_dir, "tasks")
 
     if not os.path.isdir(base_dir):
         raise "Please create folder \"~/My Drive/AI Cut Ultra\"."
