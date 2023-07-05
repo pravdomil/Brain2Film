@@ -8,8 +8,8 @@ from dataclasses import dataclass
 import google.colab
 
 import config
-import instruct_pix2pix
 import task
+import tool_instruct_pix2pix
 
 
 # Types
@@ -132,7 +132,7 @@ def move_task_to_error_folder(filename: str):
 def do_task(arg: tuple[str, task.Task]):
     filename, a = arg
     if isinstance(a.type, task.InstructPix2Pix):
-        instruct_pix2pix.main(a.type)
+        tool_instruct_pix2pix.main(a.type)
 
     elif isinstance(a.type, task.Bark):
         bark(a.type)
