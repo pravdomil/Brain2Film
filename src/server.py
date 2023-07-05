@@ -188,8 +188,11 @@ def instruct_pix2pix(a: task.InstructPix2Pix):
         output_images = instruct_pix2pix2(
             [x[1] for x in input_images],
             a.prompt,
-            text_cfg_scale=a.text_cfg if a.text_cfg is not None else 7,
-            image_cfg_scale=a.image_cfg if a.image_cfg is not None else 1,
+            15,
+            123,
+            a.text_cfg if a.text_cfg is not None else 7,
+            a.image_cfg if a.image_cfg is not None else 1,
+
         )
         for (image_filename, _), image in zip(input_images, output_images):
             temp_filename = os.path.join(temp_dir.name, image_filename)
@@ -251,10 +254,10 @@ def resize_image(a: PIL.Image.Image) -> PIL.Image.Image:
 def instruct_pix2pix2(
         images: list[PIL.Image.Image],
         prompt: str,
-        steps: int = 15,
-        seed: int = 123,
-        text_cfg_scale: float = 7,
-        image_cfg_scale: float = 1,
+        steps: int,
+        seed: int,
+        text_cfg_scale: float,
+        image_cfg_scale: float,
 ) -> list[PIL.Image.Image]:
     pipe = diffusers.StableDiffusionInstructPix2PixPipeline.from_pretrained(
         "timbrooks/instruct-pix2pix",
