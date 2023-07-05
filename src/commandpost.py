@@ -117,7 +117,7 @@ def parse_task(
         return task.Audiocraft(rest_of_lines.strip())
 
     else:
-        return None
+        raise "Unknown instructions."
 
 
 if __name__ == "__main__":
