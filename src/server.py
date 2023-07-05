@@ -1,5 +1,4 @@
 import os
-import sys
 import time
 import traceback
 from dataclasses import dataclass
@@ -33,11 +32,6 @@ class Checking:
 
 
 @dataclass
-class Exiting:
-    _: None
-
-
-@dataclass
 class Error:
     exception: Exception
 
@@ -52,7 +46,7 @@ def main():
             state = step(state)
 
         except KeyboardInterrupt:
-            state = Exiting(None)
+            break
 
         except Exception as e:
             state = Error(e)
@@ -88,10 +82,6 @@ def step(a):
             time.sleep(1)
 
         return Ready(None)
-
-    elif isinstance(a, Exiting):
-        print("Quiting...")
-        sys.exit()
 
     elif isinstance(a, Error):
         traceback.print_exception(a.exception)
