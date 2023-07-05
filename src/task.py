@@ -1,3 +1,4 @@
+import json
 from dataclasses import dataclass
 from typing import Union
 
@@ -77,3 +78,30 @@ def encode(a: Task) -> object:
 
     else:
         raise ValueError("Unknown variant.")
+
+
+def decode(a: any) -> Union[None, Task]:
+    try:
+        b = json.load(a)
+
+        if b[0] == "rvb3vnlcmjkhxdsf7yqr45m40":
+            type_ = InstructPix2Pix(b[1], b[2], b[3], b[4], b[5], b[6], b[7], b[8], b[9])
+            return Task(type_)
+
+        elif b[0] == "0f96skf4tvg74wjp6c9nn0sxk":
+            type_ = Bark(b[1], b[2], b[3], b[4], b[5], b[6])
+            return Task(type_)
+
+        elif b[0] == "y7l7hv8w5rq6nffn3tyyb_tfx":
+            type_ = AudioLDM(b[1], b[2], b[3], b[4], b[5], b[6])
+            return Task(type_)
+
+        elif b[0] == "pnt5pvz6x6s3jwjxz2v8pcvy0":
+            type_ = Audiocraft(b[1], b[2], b[3], b[4], b[5], b[6])
+            return Task(type_)
+
+        else:
+            raise ValueError("Unknown variant.")
+
+    except:
+        return None
