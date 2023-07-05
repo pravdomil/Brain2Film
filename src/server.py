@@ -172,7 +172,7 @@ def instruct_pix2pix(arg: tuple[str, task.Task], b: task.InstructPix2Pix):
 
     # noinspection PyUnresolvedReferences
     frame_indexes, final_fps = compute_frame_indexes(
-        arg, b, int(capture.get(cv2.CAP_PROP_FRAME_COUNT)), capture.get(cv2.CAP_PROP_FPS)
+        b, int(capture.get(cv2.CAP_PROP_FRAME_COUNT)), capture.get(cv2.CAP_PROP_FPS)
     )
     batches = group_by(frame_indexes, batch_size)
 
@@ -209,19 +209,12 @@ def instruct_pix2pix(arg: tuple[str, task.Task], b: task.InstructPix2Pix):
     images_to_video(arg, frames, final_fps)
 
 
-def compute_frame_indexes(
-        arg: tuple[str, task.Task],
-        b: task.InstructPix2Pix,
-        frame_count: int,
-        fps: int
-) -> tuple[list[int], int]:
-    filename, a = arg
-
-    if b.fps is None:
+def compute_frame_indexes(a: task.InstructPix2Pix, frame_count: int, fps: int) -> tuple[list[int], int]:
+    if a.fps is None:
         frame_skip = 1
         final_fps = fps
     else:
-        frame_skip = max(1, round(fps / b.fps))
+        frame_skip = max(1, round(fps / a.fps))
         final_fps = round(fps / frame_skip)
 
     start_frame = int(a.clip_start[0] * fps + a.clip_start[1])
