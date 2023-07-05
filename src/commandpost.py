@@ -85,5 +85,40 @@ def find_files_by_name_in_directory(directory: str, filename: str) -> list[str]:
     return acc
 
 
+def parse_task(
+        name: str, input_filename: str, output_filename: str,
+        clip_start: str, clip_duration: str, instructions: str
+) -> task.Task:
+    if instructions.lower().startswith("pix2pix:"):
+        c = yaml.safe_load(instructions)
+        prompt = c["pix2pix"]
+        fps = c["fps"] if "fps" in c else None
+        text_cfg = c["text_cfg"] if "text_cfg" in c else None
+        image_cfg = c["image_cfg"] if "image_cfg" in c else None
+
+        if isinstance(prompt, str) \
+                and ((fps is None) or isinstance(fps, int)) \
+                and ((text_cfg is None) or isinstance(text_cfg, int)) \
+                and ((image_cfg is None) or isinstance(image_cfg, int)):
+            return task.InstructPix2Pix(prompt, fps, text_cfg, image_cfg)
+        else:
+            return None
+
+    elif instructions.lower().startswith("bark:"):
+        first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
+        return task.Bark(rest_of_lines.strip())
+
+    elif instructions.lower().startswith("audioldm:"):
+        first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
+        return task.AudioLDM(rest_of_lines.strip())
+
+    elif instructions.lower().startswith("audiocraft:"):
+        first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
+        return task.Audiocraft(rest_of_lines.strip())
+
+    else:
+        return None
+
+
 if __name__ == "__main__":
     main()
