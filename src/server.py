@@ -205,13 +205,13 @@ def instruct_pix2pix(a: task.InstructPix2Pix):
     images_to_video(a.output_filename, frames, final_fps)
 
 
-def compute_frame_indexes(a: task.InstructPix2Pix, frame_count: int, fps: int) -> tuple[list[int], int]:
+def compute_frame_indexes(a: task.InstructPix2Pix, frame_count: int, fps: float) -> tuple[list[int], float]:
     if a.fps is None:
         frame_skip = 1
         final_fps = fps
     else:
         frame_skip = max(1, round(fps / a.fps))
-        final_fps = round(fps / frame_skip)
+        final_fps = fps / frame_skip
 
     start_frame = int(a.clip_start[0] * fps + a.clip_start[1])
     end_frame = int(start_frame + a.clip_duration[0] * fps + a.clip_duration[1])
@@ -229,7 +229,7 @@ def compute_frame_indexes(a: task.InstructPix2Pix, frame_count: int, fps: int) -
     return frame_indexes, final_fps
 
 
-def images_to_video(output_filename: str, frames: list[str], fps: int):
+def images_to_video(output_filename: str, frames: list[str], fps: float):
     if frames:
         clip = moviepy.editor.ImageSequenceClip(frames, fps=fps)
         clip.write_videofile(
