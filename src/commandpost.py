@@ -102,7 +102,7 @@ def parse_task(
                 and ((image_cfg is None) or isinstance(image_cfg, int)):
             return task.Task(task.InstructPix2Pix(prompt, fps, text_cfg, image_cfg))
         else:
-            return None
+            raise "Unknown InstructPix2Pix instructions."
 
     elif instructions.lower().startswith("bark:"):
         first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
