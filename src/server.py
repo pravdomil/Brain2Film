@@ -150,7 +150,7 @@ def do_task(arg: tuple[str, task.Task]):
         instruct_pix2pix(a.type)
 
     elif isinstance(a.type, task.Bark):
-        print("Bark!")
+        bark(a.type)
 
     elif isinstance(a.type, task.AudioLDM):
         print("AudioLDM!")
@@ -288,6 +288,12 @@ def capture_read_image(a, index: int) -> Union[PIL.Image.Image, None]:
         return PIL.Image.fromarray(rgb_image)
     else:
         return None
+
+
+# Bark
+
+def bark(a: task.Bark):
+    print("Bark!")
 
 
 # Helpers
