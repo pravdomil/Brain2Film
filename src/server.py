@@ -16,7 +16,7 @@ import google.colab
 import moviepy.editor
 import torch
 import yaml
-import shared.task
+import task
 
 batch_size = 8
 drive_dir = "/content/drive"
@@ -118,7 +118,7 @@ def step(a):
 
 # Task
 
-def parse_task_json(a: TextIO) -> Union[None, shared.task.Task]:
+def parse_task_json(a: TextIO) -> Union[None, task.Task]:
     try:
         b = json.load(a)
 
@@ -139,7 +139,7 @@ def parse_task_json(a: TextIO) -> Union[None, shared.task.Task]:
                 and isinstance(type_, str):
             type__ = parse_type(type_)
             if type__ is not None:
-                return shared.task.Task(
+                return task.Task(
                     name, input_filename, output_filename,
                     parse_time(clip_start), parse_time(clip_duration),
                     type__
@@ -165,21 +165,21 @@ def parse_type(a: str):
                 and ((fps is None) or isinstance(fps, int)) \
                 and ((text_cfg is None) or isinstance(text_cfg, int)) \
                 and ((image_cfg is None) or isinstance(image_cfg, int)):
-            return shared.task.InstructPix2Pix(prompt, fps, text_cfg, image_cfg)
+            return task.InstructPix2Pix(prompt, fps, text_cfg, image_cfg)
         else:
             return None
 
     elif a.lower().startswith("bark:"):
         first_line, rest_of_lines = (a + "\n").split("\n", 1)
-        return shared.task.Bark(rest_of_lines.strip())
+        return task.Bark(rest_of_lines.strip())
 
     elif a.lower().startswith("audioldm:"):
         first_line, rest_of_lines = (a + "\n").split("\n", 1)
-        return shared.task.AudioLDM(rest_of_lines.strip())
+        return task.AudioLDM(rest_of_lines.strip())
 
     elif a.lower().startswith("audiocraft:"):
         first_line, rest_of_lines = (a + "\n").split("\n", 1)
-        return shared.task.Audiocraft(rest_of_lines.strip())
+        return task.Audiocraft(rest_of_lines.strip())
 
     else:
         return None
@@ -212,18 +212,18 @@ def move_task_to_error_folder(filename: str):
     os.rename(os.path.join(tasks_dir, filename), os.path.join(tasks_error_dir, filename))
 
 
-def do_task(arg: tuple[str, shared.task.Task]):
+def do_task(arg: tuple[str, task.Task]):
     filename, a = arg
-    if isinstance(a.type, shared.task.InstructPix2Pix):
+    if isinstance(a.type, task.InstructPix2Pix):
         instruct_pix2pix(arg, a.type)
 
-    elif isinstance(a.type, shared.task.Bark):
+    elif isinstance(a.type, task.Bark):
         print("Bark!")
 
-    elif isinstance(a.type, shared.task.AudioLDM):
+    elif isinstance(a.type, task.AudioLDM):
         print("AudioLDM!")
 
-    elif isinstance(a.type, shared.task.Audiocraft):
+    elif isinstance(a.type, task.Audiocraft):
         print("Audiocraft!")
 
     else:
@@ -232,7 +232,7 @@ def do_task(arg: tuple[str, shared.task.Task]):
 
 # InstructPix2Pix
 
-def instruct_pix2pix(arg: tuple[str, shared.task.Task], b: shared.task.InstructPix2Pix):
+def instruct_pix2pix(arg: tuple[str, task.Task], b: task.InstructPix2Pix):
     filename, a = arg
 
     # noinspection PyUnresolvedReferences
@@ -278,8 +278,8 @@ def instruct_pix2pix(arg: tuple[str, shared.task.Task], b: shared.task.InstructP
 
 
 def compute_frame_indexes(
-        arg: tuple[str, shared.task.Task],
-        b: shared.task.InstructPix2Pix,
+        arg: tuple[str, task.Task],
+        b: task.InstructPix2Pix,
         frame_count: int,
         fps: int
 ) -> tuple[list[int], int]:
@@ -308,7 +308,7 @@ def compute_frame_indexes(
     return frame_indexes, final_fps
 
 
-def images_to_video(arg: tuple[str, shared.task.Task], frames: list[str], fps: int):
+def images_to_video(arg: tuple[str, task.Task], frames: list[str], fps: int):
     filename, a = arg
 
     if frames:
