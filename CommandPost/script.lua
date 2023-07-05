@@ -38,7 +38,7 @@ function run()
         info.notes():value()
     }
 
-    local file = io.popen("python ../Plugins/AI\\ Cut\\ Ultra/CommandPost/script.py \"$(cat -)\" &", "w")
+    local file = io.popen("python3 ../Plugins/AI\\ Cut\\ Ultra/CommandPost/script.py \"$(cat -)\" &", "w")
     file:write(hs.json.encode(data))
     file:close()
 
