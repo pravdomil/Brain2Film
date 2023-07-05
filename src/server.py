@@ -10,6 +10,7 @@ import google.colab
 import config
 import task
 import tool_instruct_pix2pix
+import tool_bark
 
 
 # Types
@@ -135,7 +136,7 @@ def do_task(arg: tuple[str, task.Task]):
         tool_instruct_pix2pix.main(a.type)
 
     elif isinstance(a.type, task.Bark):
-        bark(a.type)
+        tool_bark.main(a.type)
 
     elif isinstance(a.type, task.AudioLDM):
         audioldm(a.type)
@@ -145,12 +146,6 @@ def do_task(arg: tuple[str, task.Task]):
 
     else:
         raise ValueError("Unknown variant.")
-
-
-# Bark
-
-def bark(a: task.Bark):
-    print("Bark!")
 
 
 # AudioLDM
