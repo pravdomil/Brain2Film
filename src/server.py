@@ -1,11 +1,10 @@
-import json
 import os
 import sys
 import tempfile
 import time
 import traceback
 from dataclasses import dataclass
-from typing import Union, TextIO
+from typing import Union
 
 import PIL.Image
 import PIL.ImageOps
@@ -15,7 +14,7 @@ import diffusers
 import google.colab
 import moviepy.editor
 import torch
-import yaml
+
 import task
 
 batch_size = 8
@@ -118,73 +117,6 @@ def step(a):
 
 # Task
 
-def parse_task_json(a: TextIO) -> Union[None, task.Task]:
-    try:
-        b = json.load(a)
-
-        version = b[0]
-        name = b[1]
-        input_filename = b[2]
-        output_filename = b[3]
-        clip_start = b[4]
-        clip_duration = b[5]
-        type_ = b[6]
-
-        if version == "tdqt9rkbrsv7bf5bz16gy2p19" \
-                and isinstance(name, str) \
-                and isinstance(input_filename, str) \
-                and isinstance(output_filename, str) \
-                and isinstance(clip_start, str) \
-                and isinstance(clip_duration, str) \
-                and isinstance(type_, str):
-            type__ = parse_type(type_)
-            if type__ is not None:
-                return task.Task(
-                    name, input_filename, output_filename,
-                    parse_time(clip_start), parse_time(clip_duration),
-                    type__
-                )
-            else:
-                return None
-        else:
-            return None
-
-    except:
-        return None
-
-
-def parse_type(a: str):
-    if a.lower().startswith("pix2pix:"):
-        c = yaml.safe_load(a)
-        prompt = c["pix2pix"]
-        fps = c["fps"] if "fps" in c else None
-        text_cfg = c["text_cfg"] if "text_cfg" in c else None
-        image_cfg = c["image_cfg"] if "image_cfg" in c else None
-
-        if isinstance(prompt, str) \
-                and ((fps is None) or isinstance(fps, int)) \
-                and ((text_cfg is None) or isinstance(text_cfg, int)) \
-                and ((image_cfg is None) or isinstance(image_cfg, int)):
-            return task.InstructPix2Pix(prompt, fps, text_cfg, image_cfg)
-        else:
-            return None
-
-    elif a.lower().startswith("bark:"):
-        first_line, rest_of_lines = (a + "\n").split("\n", 1)
-        return task.Bark(rest_of_lines.strip())
-
-    elif a.lower().startswith("audioldm:"):
-        first_line, rest_of_lines = (a + "\n").split("\n", 1)
-        return task.AudioLDM(rest_of_lines.strip())
-
-    elif a.lower().startswith("audiocraft:"):
-        first_line, rest_of_lines = (a + "\n").split("\n", 1)
-        return task.Audiocraft(rest_of_lines.strip())
-
-    else:
-        return None
-
-
 def list_task_filenames() -> list[str]:
     acc = []
     for filename in os.listdir(tasks_dir):
@@ -194,13 +126,13 @@ def list_task_filenames() -> list[str]:
 
 
 def do_task_from_filename(filename: str):
-    task = parse_task_json(open(os.path.join(tasks_dir, filename)))
+    task_ = task.decode(open(os.path.join(tasks_dir, filename)))
 
-    if task is None:
+    if task_ is None:
         print("Cannot parse \"" + filename + "\".")
         move_task_to_error_folder(filename)
     else:
-        do_task((filename, task))
+        do_task((filename, task_))
         move_task_to_done_folder(filename)
 
 
@@ -372,11 +304,6 @@ def capture_read_image(a, index: int) -> Union[PIL.Image.Image, None]:
 
 def group_by(a: list, size: int):
     return [a[i:i + size] for i in range(0, len(a), size)]
-
-
-def parse_time(a: str) -> tuple[int, int]:
-    h, m, s, rest = map(int, a.split(":"))
-    return int(h * 60 * 60 + m * 60 + s), rest
 
 
 if __name__ == "__main__":
