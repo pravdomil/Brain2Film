@@ -52,3 +52,28 @@ class Audiocraft:
 @dataclass
 class Task:
     type: Union[InstructPix2Pix, Bark, AudioLDM, Audiocraft]
+
+
+def encode(a: Task) -> object:
+    if isinstance(a.type, InstructPix2Pix):
+        return (
+            "rvb3vnlcmjkhxdsf7yqr45m40", a.type.name, a.type.input_filename, a.type.output_filename, a.type.clip_start,
+            a.type.clip_duration, a.type.prompt, a.type.fps, a.type.text_cfg, a.type.image_cfg)
+
+    elif isinstance(a.type, Bark):
+        return (
+            "0f96skf4tvg74wjp6c9nn0sxk", a.type.name, a.type.input_filename, a.type.output_filename, a.type.clip_start,
+            a.type.clip_duration, a.type.prompt)
+
+    elif isinstance(a.type, AudioLDM):
+        return (
+            "y7l7hv8w5rq6nffn3tyyb_tfx", a.type.name, a.type.input_filename, a.type.output_filename, a.type.clip_start,
+            a.type.clip_duration, a.type.prompt)
+
+    elif isinstance(a.type, Audiocraft):
+        return (
+            "pnt5pvz6x6s3jwjxz2v8pcvy0", a.type.name, a.type.input_filename, a.type.output_filename, a.type.clip_start,
+            a.type.clip_duration, a.type.prompt)
+
+    else:
+        raise ValueError("Unknown variant.")
