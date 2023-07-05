@@ -256,8 +256,8 @@ def instruct_pix2pix2(
         prompt: str,
         steps: int,
         seed: int,
-        text_cfg_scale: float,
-        image_cfg_scale: float,
+        text_cfg: float,
+        image_cfg: float,
 ) -> list[PIL.Image.Image]:
     pipe = diffusers.StableDiffusionInstructPix2PixPipeline.from_pretrained(
         "timbrooks/instruct-pix2pix",
@@ -269,8 +269,8 @@ def instruct_pix2pix2(
     output = pipe(
         [prompt] * len(images),
         image=images,
-        guidance_scale=text_cfg_scale,
-        image_guidance_scale=image_cfg_scale,
+        guidance_scale=text_cfg,
+        image_guidance_scale=image_cfg,
         num_inference_steps=steps,
         generator=torch.manual_seed(seed),
     )
