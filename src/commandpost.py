@@ -6,6 +6,7 @@ import shutil
 import subprocess
 import sys
 import time
+import traceback
 
 import yaml
 
@@ -33,8 +34,6 @@ def main():
     task_ = parse_task(name, input_filename, output_filename, clip_start, clip_duration, instructions)
     with open(os.path.join(tasks_dir, task_id + ".json"), "w") as f:
         json.dump(task.encode(task_), f)
-
-    subprocess.run(["say", "Done."])
 
 
 def check_drive():
@@ -159,4 +158,9 @@ def parse_time(a: str) -> tuple[int, int]:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+        subprocess.run(["say", "Done."])
+    except Exception as e:
+        traceback.print_exception(e)
+        subprocess.run(["say", "Error."])
