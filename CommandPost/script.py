@@ -20,7 +20,7 @@ def main():
 
     task_id = str(round(time.time() * 1000))
     input_filename = compute_sha256(filepath) + filepath_extension
-    output_filename = re.sub("^[:alnum:-_]", " ", name) + task_id + filepath_extension
+    output_filename = re.sub("^[:alnum:-_]", " ", name) + " " + task_id + filepath_extension
 
     # Copy file.
     shutil.copy(filepath, os.path.join(input_dir, input_filename))
