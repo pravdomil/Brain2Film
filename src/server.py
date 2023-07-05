@@ -192,8 +192,8 @@ def instruct_pix2pix(a: task.InstructPix2Pix):
             123,
             a.text_cfg if a.text_cfg is not None else 7,
             a.image_cfg if a.image_cfg is not None else 1,
-
         )
+
         for (image_filename, _), image in zip(input_images, output_images):
             temp_filename = os.path.join(temp_dir.name, image_filename)
             image.save(temp_filename)
