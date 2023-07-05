@@ -153,10 +153,10 @@ def do_task(arg: tuple[str, task.Task]):
         bark(a.type)
 
     elif isinstance(a.type, task.AudioLDM):
-        print("AudioLDM!")
+        audioldm(a.type)
 
     elif isinstance(a.type, task.Audiocraft):
-        print("Audiocraft!")
+        audiocraft(a.type)
 
     else:
         raise ValueError("Unknown variant.")
@@ -294,6 +294,18 @@ def capture_read_image(a, index: int) -> Union[PIL.Image.Image, None]:
 
 def bark(a: task.Bark):
     print("Bark!")
+
+
+# AudioLDM
+
+def audioldm(a: task.AudioLDM):
+    print("AudioLDM!")
+
+
+# Audiocraft
+
+def audiocraft(a: task.Audiocraft):
+    print("Audiocraft!")
 
 
 # Helpers
