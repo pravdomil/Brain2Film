@@ -167,10 +167,8 @@ def do_task(arg: tuple[str, task.Task]):
 def instruct_pix2pix(arg: tuple[str, task.Task], b: task.InstructPix2Pix):
     filename, a = arg
 
-    # noinspection PyUnresolvedReferences
     capture = cv2.VideoCapture(os.path.join(input_dir, a.input_filename))
 
-    # noinspection PyUnresolvedReferences
     frame_indexes, final_fps = compute_frame_indexes(
         b, int(capture.get(cv2.CAP_PROP_FRAME_COUNT)), capture.get(cv2.CAP_PROP_FPS)
     )
@@ -280,11 +278,9 @@ def instruct_pix2pix2(
 
 
 def capture_read_image(a, index: int) -> Union[PIL.Image.Image, None]:
-    # noinspection PyUnresolvedReferences
     a.set(cv2.CAP_PROP_POS_FRAMES, index)
     retval, image = a.read()
     if retval:
-        # noinspection PyUnresolvedReferences
         rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         return PIL.Image.fromarray(rgb_image)
     else:
