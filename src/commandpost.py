@@ -6,6 +6,8 @@ import shutil
 import subprocess
 import sys
 import time
+import yaml
+import task
 
 
 def main():
@@ -26,17 +28,9 @@ def main():
     shutil.copy(filepath, os.path.join(input_dir, input_filename))
 
     # Create task.
-    task = (
-        "tdqt9rkbrsv7bf5bz16gy2p19",
-        name,
-        input_filename,
-        output_filename,
-        clip_start,
-        clip_duration,
-        instructions,
-    )
+    task_ = parse_task(name, input_filename, output_filename, clip_start, clip_duration, instructions)
     with open(os.path.join(tasks_dir, task_id + ".json"), "w") as f:
-        json.dump(task, f)
+        json.dump(task_, f)
 
     subprocess.run(["say", "Done."])
 
