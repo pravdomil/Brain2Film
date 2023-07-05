@@ -111,19 +111,43 @@ def parse_task(
             raise "Unknown InstructPix2Pix instructions."
 
     elif instructions.lower().startswith("bark:"):
-        first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
-        type_ = task.Bark(rest_of_lines.strip())
-        return task.Task(type_)
+        c = yaml.safe_load(instructions)
+        prompt = c["bark"]
+
+        if isinstance(prompt, str):
+            type_ = task.Bark(
+                name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
+                prompt,
+            )
+            return task.Task(type_)
+        else:
+            raise "Unknown Bark instructions."
 
     elif instructions.lower().startswith("audioldm:"):
-        first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
-        type_ = task.AudioLDM(rest_of_lines.strip())
-        return task.Task(type_)
+        c = yaml.safe_load(instructions)
+        prompt = c["audioldm"]
+
+        if isinstance(prompt, str):
+            type_ = task.AudioLDM(
+                name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
+                prompt,
+            )
+            return task.Task(type_)
+        else:
+            raise "Unknown AudioLDM instructions."
 
     elif instructions.lower().startswith("audiocraft:"):
-        first_line, rest_of_lines = (instructions + "\n").split("\n", 1)
-        type_ = task.Audiocraft(rest_of_lines.strip())
-        return task.Task(type_)
+        c = yaml.safe_load(instructions)
+        prompt = c["audiocraft"]
+
+        if isinstance(prompt, str):
+            type_ = task.Audiocraft(
+                name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
+                prompt,
+            )
+            return task.Task(type_)
+        else:
+            raise "Unknown Audiocraft instructions."
 
     else:
         raise "Unknown instructions."
