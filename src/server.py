@@ -167,7 +167,7 @@ def do_task(arg: tuple[str, task.Task]):
 def instruct_pix2pix(arg: tuple[str, task.Task], b: task.InstructPix2Pix):
     filename, a = arg
 
-    capture = cv2.VideoCapture(os.path.join(input_dir, a.input_filename))
+    capture = cv2.VideoCapture(os.path.join(input_dir, b.input_filename))
 
     frame_indexes, final_fps = compute_frame_indexes(
         b, int(capture.get(cv2.CAP_PROP_FRAME_COUNT)), capture.get(cv2.CAP_PROP_FPS)
