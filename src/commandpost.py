@@ -10,12 +10,12 @@ import time
 
 def main():
     input_dir, output_dir, tasks_dir = check_drive()
-    version, directories, f, name, clip_start, clip_duration, instructions = json.loads(sys.argv[1])
+    version, directories, filename, name, clip_start, clip_duration, instructions = json.loads(sys.argv[1])
 
     if version != "_dx2rgq3ln9kfsl_wdv9vzlng":
         raise "Version mismatch."
 
-    filepath = find_file(directories, f)
+    filepath = find_file(directories, filename)
     filepath_extension = os.path.splitext(filepath)[1]
 
     task_id = str(round(time.time() * 1000))
