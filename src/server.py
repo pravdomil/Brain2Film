@@ -147,7 +147,7 @@ def move_task_to_error_folder(filename: str):
 def do_task(arg: tuple[str, task.Task]):
     filename, a = arg
     if isinstance(a.type, task.InstructPix2Pix):
-        instruct_pix2pix(arg, a.type)
+        instruct_pix2pix(a.type)
 
     elif isinstance(a.type, task.Bark):
         print("Bark!")
@@ -164,9 +164,7 @@ def do_task(arg: tuple[str, task.Task]):
 
 # InstructPix2Pix
 
-def instruct_pix2pix(arg: tuple[str, task.Task], b: task.InstructPix2Pix):
-    filename, a = arg
-
+def instruct_pix2pix(b: task.InstructPix2Pix):
     capture = cv2.VideoCapture(os.path.join(input_dir, b.input_filename))
 
     frame_indexes, final_fps = compute_frame_indexes(
