@@ -9,17 +9,17 @@ import diffusers
 import moviepy.editor
 import torch
 
-import globals
+import config
 import task
 
 
 def main(a: task.InstructPix2Pix):
-    capture = cv2.VideoCapture(os.path.join(globals.input_dir, a.input_filename))
+    capture = cv2.VideoCapture(os.path.join(config.input_dir, a.input_filename))
 
     frame_indexes, final_fps = compute_frame_indexes(
         a, int(capture.get(cv2.CAP_PROP_FRAME_COUNT)), capture.get(cv2.CAP_PROP_FPS)
     )
-    batches = group_by(frame_indexes, globals.batch_size)
+    batches = group_by(frame_indexes, config.batch_size)
 
     temp_dir = tempfile.TemporaryDirectory()
 
@@ -85,7 +85,7 @@ def images_to_video(output_filename: str, frames: list[str], fps: float):
     if frames:
         clip = moviepy.editor.ImageSequenceClip(frames, fps=fps)
         clip.write_videofile(
-            os.path.join(globals.output_dir, output_filename),
+            os.path.join(config.output_dir, output_filename),
             ffmpeg_params=["-crf", "15"],
             logger=None,
         )

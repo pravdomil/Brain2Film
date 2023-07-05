@@ -7,7 +7,7 @@ from dataclasses import dataclass
 # noinspection PyUnresolvedReferences,PyPackageRequirements
 import google.colab
 
-import globals
+import config
 import instruct_pix2pix
 import task
 
@@ -59,14 +59,14 @@ def step(a):
     if isinstance(a, Initializing):
         print("Initializing...")
 
-        if not os.path.exists(globals.drive_dir):
-            google.colab.drive.mount(globals.drive_dir)
+        if not os.path.exists(config.drive_dir):
+            google.colab.drive.mount(config.drive_dir)
 
-        if not os.path.exists(globals.tasks_done_dir):
-            os.makedirs(globals.tasks_done_dir, exist_ok=True)
+        if not os.path.exists(config.tasks_done_dir):
+            os.makedirs(config.tasks_done_dir, exist_ok=True)
 
-        if not os.path.exists(globals.tasks_error_dir):
-            os.makedirs(globals.tasks_error_dir, exist_ok=True)
+        if not os.path.exists(config.tasks_error_dir):
+            os.makedirs(config.tasks_error_dir, exist_ok=True)
 
         print("Done.")
 
@@ -104,14 +104,14 @@ def step(a):
 
 def list_task_filenames() -> list[str]:
     acc = []
-    for filename in os.listdir(globals.tasks_dir):
+    for filename in os.listdir(config.tasks_dir):
         if filename.endswith(".json"):
             acc.append(filename)
     return acc
 
 
 def do_task_from_filename(filename: str):
-    task_ = task.decode(open(os.path.join(globals.tasks_dir, filename)))
+    task_ = task.decode(open(os.path.join(config.tasks_dir, filename)))
 
     if task_ is None:
         print("Cannot parse \"" + filename + "\".")
@@ -122,11 +122,11 @@ def do_task_from_filename(filename: str):
 
 
 def move_task_to_done_folder(filename: str):
-    os.rename(os.path.join(globals.tasks_dir, filename), os.path.join(globals.tasks_done_dir, filename))
+    os.rename(os.path.join(config.tasks_dir, filename), os.path.join(config.tasks_done_dir, filename))
 
 
 def move_task_to_error_folder(filename: str):
-    os.rename(os.path.join(globals.tasks_dir, filename), os.path.join(globals.tasks_error_dir, filename))
+    os.rename(os.path.join(config.tasks_dir, filename), os.path.join(config.tasks_error_dir, filename))
 
 
 def do_task(arg: tuple[str, task.Task]):
