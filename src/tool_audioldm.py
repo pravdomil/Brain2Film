@@ -1,5 +1,5 @@
 import task
 
 
-def audioldm(a: task.AudioLDM):
+def main(a: task.AudioLDM):
     print("AudioLDM!")

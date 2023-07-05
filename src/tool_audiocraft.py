@@ -1,5 +1,5 @@
 import task
 
 
-def audiocraft(a: task.Audiocraft):
+def main(a: task.Audiocraft):
     print("Audiocraft!")
