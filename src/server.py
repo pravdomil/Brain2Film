@@ -266,6 +266,8 @@ def instruct_pix2pix2(
     )
     pipe.to("cuda")
 
+    torch.use_deterministic_algorithms(True)
+
     output = pipe(
         [prompt] * len(images),
         image=images,
