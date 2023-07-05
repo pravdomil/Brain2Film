@@ -78,10 +78,10 @@ def step(a):
             google.colab.drive.mount(drive_dir)
 
         if not os.path.exists(tasks_done_dir):
-            os.makedirs(tasks_done_dir)
+            os.makedirs(tasks_done_dir, exist_ok=True)
 
         if not os.path.exists(tasks_error_dir):
-            os.makedirs(tasks_error_dir)
+            os.makedirs(tasks_error_dir, exist_ok=True)
 
         print("Done.")
 
