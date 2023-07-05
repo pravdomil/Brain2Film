@@ -16,7 +16,6 @@ import google.colab
 import moviepy.editor
 import torch
 import yaml
-from PIL.Image import Image
 
 batch_size = 8
 drive_dir = "/content/drive"
@@ -251,7 +250,7 @@ def instruct_pix2pix(arg: tuple[str, Task], b: InstructPix2Pix):
     frames = []
     first_run = True
     for batch in batches:
-        input_images: list[tuple[str, Image]] = []
+        input_images: list[tuple[str, PIL.Image]] = []
         for i in batch:
             image = capture_read_image(capture, i)
             if image is not None:
