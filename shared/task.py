@@ -9,6 +9,7 @@ class InstructPix2Pix:
     output_filename: str
     clip_start: tuple[int, int]
     clip_duration: tuple[int, int]
+
     prompt: str
     fps: Union[int, None]
     text_cfg: Union[int, None]
@@ -22,6 +23,7 @@ class Bark:
     output_filename: str
     clip_start: tuple[int, int]
     clip_duration: tuple[int, int]
+
     prompt: str
 
 
@@ -32,6 +34,7 @@ class AudioLDM:
     output_filename: str
     clip_start: tuple[int, int]
     clip_duration: tuple[int, int]
+
     prompt: str
 
 
@@ -42,6 +45,7 @@ class Audiocraft:
     output_filename: str
     clip_start: tuple[int, int]
     clip_duration: tuple[int, int]
+
     prompt: str
 
 
