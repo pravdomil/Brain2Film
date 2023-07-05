@@ -32,7 +32,7 @@ def main():
     # Create task.
     task_ = parse_task(name, input_filename, output_filename, clip_start, clip_duration, instructions)
     with open(os.path.join(tasks_dir, task_id + ".json"), "w") as f:
-        json.dump(task_, f)
+        json.dump(task.encode(task_), f)
 
     subprocess.run(["say", "Done."])
 
