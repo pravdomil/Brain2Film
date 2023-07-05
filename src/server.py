@@ -10,7 +10,7 @@ import PIL.Image
 import PIL.ImageOps
 import cv2
 import diffusers
-# noinspection PyUnresolvedReferences
+# noinspection PyUnresolvedReferences,PyPackageRequirements
 import google.colab
 import moviepy.editor
 import torch
