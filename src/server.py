@@ -87,7 +87,7 @@ def step(a):
         traceback.print_exception(a.exception)
         print("Retrying in a second.")
         time.sleep(1)
-        return Ready(None)
+        return Initializing(None)
 
     else:
         raise ValueError("Unknown variant.")
