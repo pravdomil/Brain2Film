@@ -119,8 +119,7 @@ def parse_task(
 
         if isinstance(prompt, str):
             type_ = task.BarkText2Voice(
-                name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
-                prompt, speaker
+                name, output_filename, prompt, speaker
             )
             return task.Task(type_)
         else:
