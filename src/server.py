@@ -10,7 +10,7 @@ import config
 import task
 import tool_audiocraft
 import tool_audioldm
-import tool_bark
+import tool_bark_text2voice
 import tool_instruct_pix2pix
 
 
@@ -130,7 +130,7 @@ def do_task(arg: tuple[str, task.Task]):
         tool_instruct_pix2pix.main(a.type)
 
     elif isinstance(a.type, task.BarkText2Voice):
-        tool_bark.main(a.type)
+        tool_bark_text2voice.main(a.type)
 
     elif isinstance(a.type, task.AudioLDM):
         tool_audioldm.main(a.type)
