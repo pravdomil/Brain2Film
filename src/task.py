@@ -27,6 +27,16 @@ class BarkText2Voice:
 
 
 @dataclass
+class BarkVoice2Voice:
+    name: str
+    input_filename: str
+    output_filename: str
+
+    prompt: str
+    speaker: tuple[str, int]
+
+
+@dataclass
 class AudioLDM:
     name: str
     input_filename: str
@@ -50,7 +60,7 @@ class Audiocraft:
 
 @dataclass
 class Task:
-    type: Union[InstructPix2Pix, BarkText2Voice, AudioLDM, Audiocraft]
+    type: Union[InstructPix2Pix, BarkText2Voice, BarkVoice2Voice, AudioLDM, Audiocraft]
 
 
 def encode(a: Task) -> object:
@@ -62,6 +72,11 @@ def encode(a: Task) -> object:
     elif isinstance(a.type, BarkText2Voice):
         return (
             "0f96skf4tvg74wjp6c9nn0sxk", a.type.name, a.type.output_filename, a.type.prompt, a.type.speaker)
+
+    elif isinstance(a.type, BarkVoice2Voice):
+        return (
+            "8tsbpcdxrrhwdkff3cbk7h8cn", a.type.name, a.type.input_filename, a.type.output_filename, a.type.prompt,
+            a.type.speaker)
 
     elif isinstance(a.type, AudioLDM):
         return (
@@ -86,6 +101,10 @@ def decode(a: any) -> Task:
 
     elif b[0] == "0f96skf4tvg74wjp6c9nn0sxk":
         type_ = BarkText2Voice(b[1], b[2], b[3], b[4])
+        return Task(type_)
+
+    elif b[0] == "8tsbpcdxrrhwdkff3cbk7h8cn":
+        type_ = BarkVoice2Voice(b[1], b[2], b[3], b[4], b[5])
         return Task(type_)
 
     elif b[0] == "y7l7hv8w5rq6nffn3tyyb_tfx":
