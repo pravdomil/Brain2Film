@@ -4,6 +4,7 @@ import os
 import bark
 import numpy
 import pydub
+import torch
 
 import config
 import task
@@ -12,6 +13,7 @@ import task
 def main(a: task.Bark):
     print("Bark: \"" + a.prompt.replace("\n", "\\n") + "\"")
 
+    torch.manual_seed(config.seed)
     audio = bark.generate_audio(a.prompt, history_prompt="v2/en_speaker_1")
     normalized = numpy.int16(audio * 2 ** 15)
 
