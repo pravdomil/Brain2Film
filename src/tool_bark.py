@@ -9,7 +9,7 @@ import task
 
 
 def main(a: task.Bark):
-    print("Bark: \"" + a.prompt.replace("\n", ", ") + "\"")
+    print("Bark: \"" + a.prompt.replace("\n", "\\n") + "\"")
 
     audio = bark.generate_audio(a.prompt, history_prompt="v2/en_speaker_1")
 

@@ -23,7 +23,7 @@ def main(a: task.InstructPix2Pix):
 
     temp_dir = tempfile.TemporaryDirectory()
 
-    print("InstructPix2Pix: \"" + a.prompt.replace("\n", ", ") + "\", " + str(len(batches)) + " batches")
+    print("InstructPix2Pix: \"" + a.prompt.replace("\n", "\\n") + "\", " + str(len(batches)) + " batches")
 
     frames = []
     first_run = True
