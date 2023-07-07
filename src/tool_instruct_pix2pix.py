@@ -38,7 +38,7 @@ def main(a: task.InstructPix2Pix):
             [x[1] for x in input_images],
             a.prompt,
             15,
-            123,
+            config.seed,
             a.text_cfg if a.text_cfg is not None else 7,
             a.image_cfg if a.image_cfg is not None else 1,
         )
