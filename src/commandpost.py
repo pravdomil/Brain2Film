@@ -112,11 +112,15 @@ def parse_task(
     elif instructions.lower().startswith("bark:"):
         c = yaml.safe_load(instructions)
         prompt = c["bark"]
+        if "speaker" in c:
+            speaker = (c["speaker"][:2], int(c["speaker"][2:]) - 1)
+        else:
+            speaker = ("en", 0)
 
         if isinstance(prompt, str):
             type_ = task.Bark(
                 name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
-                prompt,
+                prompt, speaker
             )
             return task.Task(type_)
         else:
