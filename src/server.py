@@ -129,7 +129,7 @@ def do_task(arg: tuple[str, task.Task]):
     if isinstance(a.type, task.InstructPix2Pix):
         tool_instruct_pix2pix.main(a.type)
 
-    elif isinstance(a.type, task.Bark):
+    elif isinstance(a.type, task.BarkText2Voice):
         tool_bark.main(a.type)
 
     elif isinstance(a.type, task.AudioLDM):

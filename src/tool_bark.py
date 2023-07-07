@@ -10,7 +10,7 @@ import config
 import task
 
 
-def main(a: task.Bark):
+def main(a: task.BarkText2Voice):
     print("Bark: \"" + a.prompt.replace("\n", "\\n") + "\"")
 
     torch.manual_seed(config.seed)
