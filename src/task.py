@@ -20,10 +20,7 @@ class InstructPix2Pix:
 @dataclass
 class BarkText2Voice:
     name: str
-    input_filename: str
     output_filename: str
-    clip_start: tuple[int, int]
-    clip_duration: tuple[int, int]
 
     prompt: str
     speaker: tuple[str, int]
@@ -64,8 +61,7 @@ def encode(a: Task) -> object:
 
     elif isinstance(a.type, BarkText2Voice):
         return (
-            "0f96skf4tvg74wjp6c9nn0sxk", a.type.name, a.type.input_filename, a.type.output_filename, a.type.clip_start,
-            a.type.clip_duration, a.type.prompt, a.type.speaker)
+            "0f96skf4tvg74wjp6c9nn0sxk", a.type.name, a.type.output_filename, a.type.prompt, a.type.speaker)
 
     elif isinstance(a.type, AudioLDM):
         return (
@@ -89,7 +85,7 @@ def decode(a: any) -> Task:
         return Task(type_)
 
     elif b[0] == "0f96skf4tvg74wjp6c9nn0sxk":
-        type_ = BarkText2Voice(b[1], b[2], b[3], b[4], b[5], b[6], b[7])
+        type_ = BarkText2Voice(b[1], b[2], b[3], b[4])
         return Task(type_)
 
     elif b[0] == "y7l7hv8w5rq6nffn3tyyb_tfx":
