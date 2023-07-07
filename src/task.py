@@ -26,6 +26,7 @@ class Bark:
     clip_duration: tuple[int, int]
 
     prompt: str
+    speaker: tuple[str, int]
 
 
 @dataclass
@@ -64,7 +65,7 @@ def encode(a: Task) -> object:
     elif isinstance(a.type, Bark):
         return (
             "0f96skf4tvg74wjp6c9nn0sxk", a.type.name, a.type.input_filename, a.type.output_filename, a.type.clip_start,
-            a.type.clip_duration, a.type.prompt)
+            a.type.clip_duration, a.type.prompt, a.type.speaker)
 
     elif isinstance(a.type, AudioLDM):
         return (
@@ -88,7 +89,7 @@ def decode(a: any) -> Task:
         return Task(type_)
 
     elif b[0] == "0f96skf4tvg74wjp6c9nn0sxk":
-        type_ = Bark(b[1], b[2], b[3], b[4], b[5], b[6])
+        type_ = Bark(b[1], b[2], b[3], b[4], b[5], b[6], b[7])
         return Task(type_)
 
     elif b[0] == "y7l7hv8w5rq6nffn3tyyb_tfx":
