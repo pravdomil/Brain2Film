@@ -14,7 +14,7 @@ def main(a: task.Bark):
     print("Bark: \"" + a.prompt.replace("\n", "\\n") + "\"")
 
     torch.manual_seed(config.seed)
-    audio = bark.generate_audio(a.prompt, history_prompt="v2/en_speaker_1")
+    audio = bark.generate_audio(a.prompt, history_prompt="v2/" + a.speaker[0] + "_speaker_" + str(a.speaker[1]))
     normalized = numpy.int16(audio * 2 ** 15)
 
     if a.output_filename.endswith(".mp3"):
