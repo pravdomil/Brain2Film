@@ -108,6 +108,7 @@ def do_task_from_filename(filename: str):
         task_ = task.decode(open(os.path.join(config.tasks_dir, filename)))
         do_task((filename, task_))
         move_task_to_done_folder(filename)
+        print("Task done \"" + filename + "\".")
 
     except Exception as e:
         traceback.print_exception(e)
