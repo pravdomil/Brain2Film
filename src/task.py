@@ -44,10 +44,8 @@ class BarkVoice2Voice:
 @dataclass
 class AudioLDM:
     name: str
-    input_filename: str
     output_filename: str
-    clip_start: tuple[int, int]
-    clip_duration: tuple[int, int]
+    duration: float
 
     prompt: str
 
@@ -86,8 +84,7 @@ def encode(a: Task) -> object:
 
     elif isinstance(a.type, AudioLDM):
         return (
-            "y7l7hv8w5rq6nffn3tyyb_tfx", a.type.name, a.type.input_filename, a.type.output_filename, a.type.clip_start,
-            a.type.clip_duration, a.type.prompt)
+            "y7l7hv8w5rq6nffn3tyyb_tfx", a.type.name, a.type.output_filename, a.type.duration, a.type.prompt)
 
     elif isinstance(a.type, Audiocraft):
         return (
@@ -114,7 +111,7 @@ def decode(a: any) -> Task:
         return Task(type_)
 
     elif b[0] == "y7l7hv8w5rq6nffn3tyyb_tfx":
-        type_ = AudioLDM(b[1], b[2], b[3], tuple(b[4]), tuple(b[5]), b[6])
+        type_ = AudioLDM(b[1], b[2], b[3], b[4])
         return Task(type_)
 
     elif b[0] == "pnt5pvz6x6s3jwjxz2v8pcvy0":
