@@ -20,10 +20,10 @@ def main(a: task.BarkVoice2Voice):
     hubert_filepath = hubert.hubert_manager.ensure_hubert()
     tokenizer_filepath = hubert.hubert_manager.ensure_tokenizer()
 
+    torch.manual_seed(config.seed)
     hubert_ = hubert.pre_kmeans_hubert.CustomHubert(hubert_filepath).to(config.device)
     tokenizer = hubert.customtokenizer.CustomTokenizer.load_from_checkpoint(tokenizer_filepath).to(config.device)
     codec = bark.generation.load_codec_model()
-    torch.manual_seed(config.seed)
 
     wav = load_audio(codec, os.path.join(config.input_dir, a.input_filename))
     semantic_vectors = hubert_.forward(wav, input_sample_hz=codec.sample_rate)
