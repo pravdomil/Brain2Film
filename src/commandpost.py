@@ -129,19 +129,19 @@ def parse_task(
 
     elif instructions.lower().startswith("voice2voice:"):
         c = yaml.safe_load(instructions)
+
         prompt = c["voice2voice"]
+        assert(isinstance(prompt, str))
+
         if "speaker" in c:
             speaker = (c["speaker"][:2], int(c["speaker"][2:]) - 1)
         else:
             speaker = ("en", 0)
 
-        if isinstance(prompt, str):
-            type_ = task.BarkVoice2Voice(
-                name, input_filename, output_filename, prompt, speaker
-            )
-            return task.Task(type_)
-        else:
-            raise "Unknown Bark instructions."
+        type_ = task.BarkVoice2Voice(
+            name, input_filename, output_filename, prompt, speaker
+        )
+        return task.Task(type_)
 
     elif instructions.lower().startswith("audioldm:"):
         c = yaml.safe_load(instructions)
