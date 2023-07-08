@@ -145,16 +145,15 @@ def parse_task(
 
     elif instructions.lower().startswith("audioldm:"):
         c = yaml.safe_load(instructions)
-        prompt = c["audioldm"]
 
-        if isinstance(prompt, str):
-            type_ = task.AudioLDM(
-                name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
-                prompt,
-            )
-            return task.Task(type_)
-        else:
-            raise "Unknown AudioLDM instructions."
+        prompt = c["audioldm"]
+        assert(isinstance(prompt, str))
+
+        type_ = task.AudioLDM(
+            name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
+            prompt,
+        )
+        return task.Task(type_)
 
     elif instructions.lower().startswith("audiocraft:"):
         c = yaml.safe_load(instructions)
