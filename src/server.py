@@ -13,6 +13,7 @@ import tool_audioldm
 import tool_bark_text2voice
 import tool_bark_voice2voice
 import tool_instruct_pix2pix
+import tool_realesrgan
 
 
 # Types
@@ -129,6 +130,9 @@ def do_task(arg: tuple[str, task.Task]):
     filename, a = arg
     if isinstance(a.type, task.InstructPix2Pix):
         tool_instruct_pix2pix.main(a.type)
+
+    elif isinstance(a.type, task.RealESRGAN):
+        tool_realesrgan.main(a.type)
 
     elif isinstance(a.type, task.BarkText2Voice):
         tool_bark_text2voice.main(a.type)
