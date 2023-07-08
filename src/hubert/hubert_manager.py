@@ -14,9 +14,8 @@ def make_sure_hubert_installed(
 
     filepath = os.path.join(directory, file_name)
     if not os.path.isfile(filepath):
-        print('Downloading HuBERT base model')
+        print("Downloading " + download_url)
         urllib.request.urlretrieve(download_url, filepath)
-        print('Downloaded HuBERT')
 
     return filepath
 
@@ -31,9 +30,8 @@ def make_sure_tokenizer_installed(
 
     filepath = os.path.join(directory, local_file)
     if not os.path.isfile(filepath):
-        print('Downloading HuBERT custom tokenizer')
+        print("Downloading " + model)
         huggingface_hub.hf_hub_download(repo, model, local_dir=directory, local_dir_use_symlinks=False)
         shutil.move(os.path.join(directory, model), filepath)
-        print('Downloaded tokenizer')
 
     return filepath
