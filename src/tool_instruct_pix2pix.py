@@ -16,9 +16,7 @@ import utils
 def main(a: task.InstructPix2Pix):
     capture = cv2.VideoCapture(os.path.join(config.input_dir, a.input_filename))
 
-    frame_indexes, final_fps = compute_frame_indexes(
-        a, int(capture.get(cv2.CAP_PROP_FRAME_COUNT)), capture.get(cv2.CAP_PROP_FPS)
-    )
+    frame_indexes, final_fps = compute_frame_indexes(a, capture.get(cv2.CAP_PROP_FPS))
     batches = group_by(frame_indexes, config.batch_size)
 
     temp_dir = tempfile.TemporaryDirectory()
@@ -57,7 +55,7 @@ def main(a: task.InstructPix2Pix):
     utils.images_to_video(os.path.join(config.output_dir, a.output_filename), frames, final_fps)
 
 
-def compute_frame_indexes(a: task.InstructPix2Pix, frame_count: int, fps: float) -> tuple[list[int], float]:
+def compute_frame_indexes(a: task.InstructPix2Pix, fps: float) -> tuple[list[int], float]:
     if a.fps is None:
         frame_skip = 1
         final_fps = fps
@@ -67,18 +65,8 @@ def compute_frame_indexes(a: task.InstructPix2Pix, frame_count: int, fps: float)
 
     start_frame = int(a.clip_start[0] * fps + a.clip_start[1])
     end_frame = int(start_frame + a.clip_duration[0] * fps + a.clip_duration[1])
-    frame_indexes = []
-    i = 0
-    while 1:
-        frame_index = int(start_frame + i * frame_skip)
-        if frame_index > frame_count - 1:
-            break
-        if frame_index > end_frame - 1:
-            break
-        frame_indexes.append(frame_index)
-        i = i + 1
 
-    return frame_indexes, final_fps
+    return list(range(start_frame, end_frame, frame_skip)), final_fps
 
 
 def resize_image(a: PIL.Image.Image) -> PIL.Image.Image:
