@@ -9,6 +9,8 @@ import utils
 
 
 def main(a: task.AudioLDM):
+    print("AudioLDM: \"" + a.prompt.replace("\n", "\\n") + "\"")
+
     pipe = diffusers.AudioLDMPipeline.from_pretrained(
         "cvssp/audioldm-s-full-v2",
         torch_dtype=torch.float16
