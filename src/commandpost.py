@@ -18,7 +18,7 @@ def main():
     version, directories, filename, name, clip_start, clip_duration, instructions = json.loads(sys.argv[1])
 
     if version != "_dx2rgq3ln9kfsl_wdv9vzlng":
-        raise "Version mismatch."
+        raise Exception("Version mismatch.")
 
     filepath = find_file(directories, filename)
     filepath_extension = os.path.splitext(filepath)[1]
@@ -43,7 +43,7 @@ def check_drive():
     tasks_dir = os.path.join(base_dir, "tasks")
 
     if not os.path.isdir(base_dir):
-        raise "Please create folder \"~/My Drive/AI Cut Ultra\"."
+        raise Exception("Please create folder \"~/My Drive/AI Cut Ultra\".")
 
     os.makedirs(input_dir, exist_ok=True)
     os.makedirs(output_dir, exist_ok=True)
@@ -62,10 +62,10 @@ def find_file(directories: list[str], filename: str) -> str:
     candidates = find_files_by_name_in_directories(directories, filename)
 
     if not candidates:
-        raise "File not found."
+        raise Exception("File not found.")
 
     if len(candidates) > 1:
-        raise "Multiple files found."
+        raise Exception("Multiple files found.")
 
     return candidates[0]
 
@@ -151,7 +151,7 @@ def parse_task(
         return task.Task(type_)
 
     else:
-        raise "Unknown instructions."
+        raise Exception("Unknown instructions.")
 
 
 def parse_time(a: str) -> tuple[int, int]:
