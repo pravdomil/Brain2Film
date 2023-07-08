@@ -9,3 +9,4 @@ tasks_dir = os.path.join(base_dir, "tasks")
 tasks_done_dir = os.path.join(base_dir, "tasks/done")
 tasks_error_dir = os.path.join(base_dir, "tasks/error")
 seed = 123
+device = "cuda"

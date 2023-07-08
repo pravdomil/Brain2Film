@@ -112,7 +112,7 @@ def instruct_pix2pix2(
         "timbrooks/instruct-pix2pix",
         torch_dtype=torch.float16,
         safety_checker=None
-    ).to("cuda")
+    ).to(config.device)
 
     output = pipe(
         [prompt] * len(images),
