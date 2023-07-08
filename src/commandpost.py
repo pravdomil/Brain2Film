@@ -94,16 +94,16 @@ def parse_task(
         c = yaml.safe_load(instructions)
 
         prompt = c["pix2pix"]
-        assert(isinstance(prompt, str))
+        assert isinstance(prompt, str)
 
         fps = c["fps"] if "fps" in c else None
-        assert((fps is None) or isinstance(fps, int))
+        assert (fps is None) or isinstance(fps, int)
 
         text_cfg = c["text_cfg"] if "text_cfg" in c else None
-        assert((text_cfg is None) or isinstance(text_cfg, int))
+        assert (text_cfg is None) or isinstance(text_cfg, int)
 
         image_cfg = c["image_cfg"] if "image_cfg" in c else None
-        assert((image_cfg is None) or isinstance(image_cfg, int))
+        assert (image_cfg is None) or isinstance(image_cfg, int)
 
         type_ = task.InstructPix2Pix(
             name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
@@ -115,7 +115,7 @@ def parse_task(
         c = yaml.safe_load(instructions)
 
         prompt = c["bark"]
-        assert(isinstance(prompt, str))
+        assert isinstance(prompt, str)
 
         if "speaker" in c:
             speaker = (c["speaker"][:2], int(c["speaker"][2:]) - 1)
@@ -131,7 +131,7 @@ def parse_task(
         c = yaml.safe_load(instructions)
 
         prompt = c["voice2voice"]
-        assert(isinstance(prompt, str))
+        assert isinstance(prompt, str)
 
         if "speaker" in c:
             speaker = (c["speaker"][:2], int(c["speaker"][2:]) - 1)
@@ -147,7 +147,7 @@ def parse_task(
         c = yaml.safe_load(instructions)
 
         prompt = c["audioldm"]
-        assert(isinstance(prompt, str))
+        assert isinstance(prompt, str)
 
         type_ = task.AudioLDM(
             name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
@@ -159,7 +159,7 @@ def parse_task(
         c = yaml.safe_load(instructions)
 
         prompt = c["audiocraft"]
-        assert(isinstance(prompt, str))
+        assert isinstance(prompt, str)
 
         type_ = task.Audiocraft(
             name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
