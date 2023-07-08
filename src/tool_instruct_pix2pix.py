@@ -6,11 +6,11 @@ import PIL.Image
 import PIL.ImageOps
 import cv2
 import diffusers
-import moviepy.editor
 import torch
 
 import config
 import task
+import utils
 
 
 def main(a: task.InstructPix2Pix):
@@ -49,12 +49,12 @@ def main(a: task.InstructPix2Pix):
             frames.append(temp_filename)
 
         if first_run:
-            images_to_video(a.output_filename, frames, final_fps)
+            utils.images_to_video(os.path.join(config.output_dir, a.output_filename), frames, final_fps)
             first_run = False
 
     capture.release()
 
-    images_to_video(a.output_filename, frames, final_fps)
+    utils.images_to_video(os.path.join(config.output_dir, a.output_filename), frames, final_fps)
 
 
 def compute_frame_indexes(a: task.InstructPix2Pix, frame_count: int, fps: float) -> tuple[list[int], float]:
@@ -79,17 +79,6 @@ def compute_frame_indexes(a: task.InstructPix2Pix, frame_count: int, fps: float)
         i = i + 1
 
     return frame_indexes, final_fps
-
-
-def images_to_video(output_filename: str, frames: list[str], fps: float):
-    if frames:
-        clip = moviepy.editor.ImageSequenceClip(frames, fps=fps)
-        clip.write_videofile(
-            os.path.join(config.output_dir, output_filename),
-            ffmpeg_params=["-crf", "15"],
-            logger=None,
-        )
-        print("Video saved.")
 
 
 def resize_image(a: PIL.Image.Image) -> PIL.Image.Image:

@@ -1,3 +1,4 @@
+import moviepy.editor
 import numpy
 import pydub
 
@@ -13,3 +14,14 @@ def save_to_mp3(audio: numpy.ndarray, filename: str, sample_rate=44100) -> str:
     segment.export(filename, format="mp3", bitrate="320k")
 
     return filename
+
+
+def images_to_video(filename: str, frames: list[str], fps: float):
+    if frames:
+        clip = moviepy.editor.ImageSequenceClip(frames, fps=fps)
+        clip.write_videofile(
+            filename,
+            ffmpeg_params=["-crf", "15"],
+            logger=None,
+        )
+        print("Video saved.")
