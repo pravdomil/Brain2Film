@@ -28,6 +28,6 @@ def main(a: task.AudioLDM):
     utils.save_to_mp3(audio_enhanced, os.path.join(config.output_dir, a.output_filename))
 
 
-def enhance_audio(data: numpy.ndarray):
-    octave_up = librosa.effects.pitch_shift(data, sr=sample_rate, n_steps=12, res_type="soxr_vhq")
-    return data + octave_up
+def enhance_audio(a: numpy.ndarray):
+    octave_up = librosa.effects.pitch_shift(a, sr=sample_rate, n_steps=12, res_type="soxr_vhq")
+    return a + octave_up
