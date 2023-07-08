@@ -157,16 +157,15 @@ def parse_task(
 
     elif instructions.lower().startswith("audiocraft:"):
         c = yaml.safe_load(instructions)
-        prompt = c["audiocraft"]
 
-        if isinstance(prompt, str):
-            type_ = task.Audiocraft(
-                name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
-                prompt,
-            )
-            return task.Task(type_)
-        else:
-            raise "Unknown Audiocraft instructions."
+        prompt = c["audiocraft"]
+        assert(isinstance(prompt, str))
+
+        type_ = task.Audiocraft(
+            name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
+            prompt,
+        )
+        return task.Task(type_)
 
     else:
         raise "Unknown instructions."
