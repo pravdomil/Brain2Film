@@ -172,7 +172,7 @@ def parse_task(
         return task.Task(type_)
 
     else:
-        raise Exception("Notes must start with pix2pix, bark, voice2voice, audio LDM or audiocraft.")
+        raise Exception("Notes must start with pix2pix or bark or voice2voice or audio LDM or audiocraft.")
 
 
 def parse_time(a: str) -> tuple[int, int]:
