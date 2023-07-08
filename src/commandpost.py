@@ -90,9 +90,9 @@ def parse_task(
         name: str, input_filename: str, output_filename: str,
         clip_start: str, clip_duration: str, notes: str
 ) -> task.Task:
-    if notes.lower().startswith("pix2pix:"):
+    if notes.lower().startswith("pix:"):
         c = yaml.safe_load(notes)
-        prompt = c["pix2pix"]
+        prompt = c["pix"]
         fps = c["fps"] if "fps" in c else None
         text_cfg = c["text_cfg"] if "text_cfg" in c else None
         image_cfg = c["image_cfg"] if "image_cfg" in c else None
@@ -127,7 +127,7 @@ def parse_task(
         )
         return task.Task(type_)
 
-    elif notes.lower().startswith("voice2voice:"):
+    elif notes.lower().startswith("voice:"):
         c = yaml.safe_load(notes)
 
         if "speaker" in c:
@@ -143,9 +143,9 @@ def parse_task(
         )
         return task.Task(type_)
 
-    elif notes.lower().startswith("audioldm:"):
+    elif notes.lower().startswith("ldm:"):
         c = yaml.safe_load(notes)
-        prompt = c["audioldm"]
+        prompt = c["ldm"]
         duration = parse_time(clip_duration)
         duration = duration[0] + (duration[1] / 100)
 
@@ -157,9 +157,9 @@ def parse_task(
         )
         return task.Task(type_)
 
-    elif notes.lower().startswith("audiocraft:"):
+    elif notes.lower().startswith("craft:"):
         c = yaml.safe_load(notes)
-        prompt = c["audiocraft"]
+        prompt = c["craft"]
         duration = parse_time(clip_duration)
         duration = duration[0] + (duration[1] / 100)
 
@@ -172,7 +172,7 @@ def parse_task(
         return task.Task(type_)
 
     else:
-        raise Exception("Notes must start with pix2pix or bark or voice2voice or audio LDM or audiocraft.")
+        raise Exception("Notes must start with pix or bark or voice or ldm or craft.")
 
 
 def parse_time(a: str) -> tuple[int, int]:
