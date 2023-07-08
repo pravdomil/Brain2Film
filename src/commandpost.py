@@ -182,7 +182,7 @@ def parse_task(
         return task.Task(type_)
 
     else:
-        raise Exception("Notes must start with pix or bark or voice or ldm or craft.")
+        raise Exception("Notes must start with pix or up or bark or voice or ldm or craft.")
 
 
 def parse_time(a: str) -> tuple[int, int]:
