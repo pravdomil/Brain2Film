@@ -13,3 +13,4 @@ numpy~=1.23.5
 torchaudio~=2.0.2
 fairseq~=0.12.2
 audiolm_pytorch~=1.2.14
+encodec~=0.1.1
