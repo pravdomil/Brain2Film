@@ -37,7 +37,6 @@ class BarkVoice2Voice:
     input_filename: str
     output_filename: str
 
-    prompt: str
     speaker: tuple[str, int]
 
 
@@ -83,8 +82,7 @@ def encode(a: Task) -> object:
 
     elif isinstance(a.type, BarkVoice2Voice):
         return (
-            "8tsbpcdxrrhwdkff3cbk7h8cn", a.type.name, a.type.input_filename, a.type.output_filename, a.type.prompt,
-            a.type.speaker)
+            "8tsbpcdxrrhwdkff3cbk7h8cn", a.type.name, a.type.input_filename, a.type.output_filename, a.type.speaker)
 
     elif isinstance(a.type, AudioLDM):
         return (
@@ -112,7 +110,7 @@ def decode(a: any) -> Task:
         return Task(type_)
 
     elif b[0] == "8tsbpcdxrrhwdkff3cbk7h8cn":
-        type_ = BarkVoice2Voice(b[1], b[2], b[3], b[4], b[5])
+        type_ = BarkVoice2Voice(b[1], b[2], b[3], b[4])
         return Task(type_)
 
     elif b[0] == "y7l7hv8w5rq6nffn3tyyb_tfx":
