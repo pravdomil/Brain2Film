@@ -30,7 +30,7 @@ def main(a: task.BarkVoice2Voice):
     semantic_tokens = tokenizer.get_token(semantic_vectors)
 
     audio = bark.semantic_to_waveform(
-        semantic_tokens.numpy(),
+        semantic_tokens.cpu().numpy(),
         history_prompt="v2/" + a.speaker[0] + "_speaker_" + str(a.speaker[1]),
     )
 
