@@ -5,7 +5,7 @@ import urllib.request
 import huggingface_hub
 
 
-def make_sure_hubert_installed(
+def ensure_hubert(
         download_url: str = 'https://dl.fbaipublicfiles.com/hubert/hubert_base_ls960.pt',
         file_name: str = 'hubert.pt'):
     directory = os.path.join('data', 'models', 'hubert')
@@ -20,7 +20,7 @@ def make_sure_hubert_installed(
     return filepath
 
 
-def make_sure_tokenizer_installed(
+def ensure_tokenizer(
         model: str = 'quantifier_hubert_base_ls960_14.pth',
         repo: str = 'GitMylo/bark-voice-cloning',
         local_file: str = 'tokenizer.pth'):
