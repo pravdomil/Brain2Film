@@ -98,8 +98,15 @@ def parse_task(
         image_cfg = c["image_cfg"] if "image_cfg" in c else None
 
         type_ = task.InstructPix2Pix(
-            name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
-            prompt, fps, text_cfg, image_cfg
+            name,
+            input_filename,
+            parse_time(clip_start),
+            parse_time(clip_duration),
+            prompt,
+            fps,
+            text_cfg,
+            image_cfg,
+            output_filename,
         )
         return task.Task(type_)
 
@@ -113,7 +120,10 @@ def parse_task(
             speaker = ("en", 0)
 
         type_ = task.BarkText2Voice(
-            name, output_filename, prompt, speaker
+            name,
+            prompt,
+            speaker,
+            output_filename,
         )
         return task.Task(type_)
 
@@ -126,27 +136,38 @@ def parse_task(
             speaker = ("en", 0)
 
         type_ = task.BarkVoice2Voice(
-            name, input_filename, output_filename, speaker
+            name,
+            input_filename,
+            speaker,
+            output_filename,
         )
         return task.Task(type_)
 
     elif notes.lower().startswith("audioldm:"):
         c = yaml.safe_load(notes)
         prompt = c["audioldm"]
+        duration = parse_time(clip_duration)
+        duration = duration[0] + (duration[1] / 100)
 
         type_ = task.AudioLDM(
-            name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
+            name,
             prompt,
+            duration,
+            output_filename,
         )
         return task.Task(type_)
 
     elif notes.lower().startswith("audiocraft:"):
         c = yaml.safe_load(notes)
         prompt = c["audiocraft"]
+        duration = parse_time(clip_duration)
+        duration = duration[0] + (duration[1] / 100)
 
         type_ = task.Audiocraft(
-            name, input_filename, output_filename, parse_time(clip_start), parse_time(clip_duration),
+            name,
             prompt,
+            duration,
+            output_filename,
         )
         return task.Task(type_)
 
