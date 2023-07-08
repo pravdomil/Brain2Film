@@ -165,4 +165,4 @@ if __name__ == "__main__":
         subprocess.run(["say", "Done."])
     except Exception as e:
         traceback.print_exception(e)
-        subprocess.run(["say", "Error."])
+        subprocess.run(["say", str(e)])
