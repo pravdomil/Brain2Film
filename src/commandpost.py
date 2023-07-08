@@ -110,6 +110,16 @@ def parse_task(
         )
         return task.Task(type_)
 
+    elif notes.lower().startswith("up:"):
+        type_ = task.RealESRGAN(
+            name,
+            input_filename,
+            parse_time(clip_start),
+            parse_time(clip_duration),
+            output_filename,
+        )
+        return task.Task(type_)
+
     elif notes.lower().startswith("bark:"):
         c = yaml.safe_load(notes)
         prompt = c["bark"]
