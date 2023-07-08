@@ -88,10 +88,10 @@ def find_files_by_name_in_directory(directory: str, filename: str) -> list[str]:
 
 def parse_task(
         name: str, input_filename: str, output_filename: str,
-        clip_start: str, clip_duration: str, instructions: str
+        clip_start: str, clip_duration: str, notes: str
 ) -> task.Task:
-    if instructions.lower().startswith("pix2pix:"):
-        c = yaml.safe_load(instructions)
+    if notes.lower().startswith("pix2pix:"):
+        c = yaml.safe_load(notes)
         prompt = c["pix2pix"]
         fps = c["fps"] if "fps" in c else None
         text_cfg = c["text_cfg"] if "text_cfg" in c else None
@@ -103,8 +103,8 @@ def parse_task(
         )
         return task.Task(type_)
 
-    elif instructions.lower().startswith("bark:"):
-        c = yaml.safe_load(instructions)
+    elif notes.lower().startswith("bark:"):
+        c = yaml.safe_load(notes)
         prompt = c["bark"]
 
         if "speaker" in c:
@@ -117,8 +117,8 @@ def parse_task(
         )
         return task.Task(type_)
 
-    elif instructions.lower().startswith("voice2voice:"):
-        c = yaml.safe_load(instructions)
+    elif notes.lower().startswith("voice2voice:"):
+        c = yaml.safe_load(notes)
 
         if "speaker" in c:
             speaker = (c["speaker"][:2], int(c["speaker"][2:]) - 1)
@@ -130,8 +130,8 @@ def parse_task(
         )
         return task.Task(type_)
 
-    elif instructions.lower().startswith("audioldm:"):
-        c = yaml.safe_load(instructions)
+    elif notes.lower().startswith("audioldm:"):
+        c = yaml.safe_load(notes)
         prompt = c["audioldm"]
 
         type_ = task.AudioLDM(
@@ -140,8 +140,8 @@ def parse_task(
         )
         return task.Task(type_)
 
-    elif instructions.lower().startswith("audiocraft:"):
-        c = yaml.safe_load(instructions)
+    elif notes.lower().startswith("audiocraft:"):
+        c = yaml.safe_load(notes)
         prompt = c["audiocraft"]
 
         type_ = task.Audiocraft(
@@ -151,7 +151,7 @@ def parse_task(
         return task.Task(type_)
 
     else:
-        raise Exception("Unknown instructions.")
+        raise Exception("Unknown notes.")
 
 
 def parse_time(a: str) -> tuple[int, int]:
