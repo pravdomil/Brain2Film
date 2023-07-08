@@ -112,8 +112,7 @@ def instruct_pix2pix2(
         "timbrooks/instruct-pix2pix",
         torch_dtype=torch.float16,
         safety_checker=None
-    )
-    pipe.to("cuda")
+    ).to("cuda")
 
     output = pipe(
         [prompt] * len(images),
