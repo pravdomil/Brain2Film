@@ -2,7 +2,10 @@ import json
 from dataclasses import dataclass
 from typing import Union
 
+from beartype import beartype
 
+
+@beartype
 @dataclass
 class InstructPix2Pix:
     name: str
@@ -17,6 +20,7 @@ class InstructPix2Pix:
     image_cfg: Union[int, None]
 
 
+@beartype
 @dataclass
 class BarkText2Voice:
     name: str
@@ -26,6 +30,7 @@ class BarkText2Voice:
     speaker: tuple[str, int]
 
 
+@beartype
 @dataclass
 class BarkVoice2Voice:
     name: str
@@ -36,6 +41,7 @@ class BarkVoice2Voice:
     speaker: tuple[str, int]
 
 
+@beartype
 @dataclass
 class AudioLDM:
     name: str
@@ -47,6 +53,7 @@ class AudioLDM:
     prompt: str
 
 
+@beartype
 @dataclass
 class Audiocraft:
     name: str
@@ -58,6 +65,7 @@ class Audiocraft:
     prompt: str
 
 
+@beartype
 @dataclass
 class Task:
     type: Union[InstructPix2Pix, BarkText2Voice, BarkVoice2Voice, AudioLDM, Audiocraft]
