@@ -1,6 +1,5 @@
 import os
 
-# noinspection PyPackageRequirements
 import bark
 import torch
 
