@@ -102,23 +102,23 @@ def decode(a: any) -> Task:
     b = json.load(a)
 
     if b[0] == "rvb3vnlcmjkhxdsf7yqr45m40":
-        type_ = InstructPix2Pix(b[1], b[2], b[3], b[4], b[5], b[6], b[7], b[8], b[9])
+        type_ = InstructPix2Pix(b[1], b[2], b[3], tuple(b[4]), tuple(b[5]), b[6], b[7], b[8], b[9])
         return Task(type_)
 
     elif b[0] == "0f96skf4tvg74wjp6c9nn0sxk":
-        type_ = BarkText2Voice(b[1], b[2], b[3], b[4])
+        type_ = BarkText2Voice(b[1], b[2], b[3], tuple(b[4]))
         return Task(type_)
 
     elif b[0] == "8tsbpcdxrrhwdkff3cbk7h8cn":
-        type_ = BarkVoice2Voice(b[1], b[2], b[3], b[4])
+        type_ = BarkVoice2Voice(b[1], b[2], b[3], tuple(b[4]))
         return Task(type_)
 
     elif b[0] == "y7l7hv8w5rq6nffn3tyyb_tfx":
-        type_ = AudioLDM(b[1], b[2], b[3], b[4], b[5], b[6])
+        type_ = AudioLDM(b[1], b[2], b[3], tuple(b[4]), tuple(b[5]), b[6])
         return Task(type_)
 
     elif b[0] == "pnt5pvz6x6s3jwjxz2v8pcvy0":
-        type_ = Audiocraft(b[1], b[2], b[3], b[4], b[5], b[6])
+        type_ = Audiocraft(b[1], b[2], b[3], tuple(b[4]), tuple(b[5]), b[6])
         return Task(type_)
 
     else:
