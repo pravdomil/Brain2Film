@@ -15,7 +15,7 @@ import tool_bark_utils
 
 
 def main(a: task.BarkVoice2Voice):
-    print("Bark voice2voice: \"" + a.prompt.replace("\n", "\\n") + "\"")
+    print("Bark voice2voice: \"" + a.name + "\"")
 
     hubert_filepath = hubert.hubert_manager.ensure_hubert()
     tokenizer_filepath = hubert.hubert_manager.ensure_tokenizer()
