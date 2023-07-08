@@ -23,6 +23,16 @@ class InstructPix2Pix:
 
 @beartype
 @dataclass
+class RealESRGAN:
+    name: str
+    input_filename: str
+    clip_start: tuple[int, int]
+    clip_duration: tuple[int, int]
+    output_filename: str
+
+
+@beartype
+@dataclass
 class BarkText2Voice:
     name: str
     prompt: str
@@ -60,7 +70,7 @@ class Audiocraft:
 @beartype
 @dataclass
 class Task:
-    type: Union[InstructPix2Pix, BarkText2Voice, BarkVoice2Voice, AudioLDM, Audiocraft]
+    type: Union[InstructPix2Pix, RealESRGAN, BarkText2Voice, BarkVoice2Voice, AudioLDM, Audiocraft]
 
 
 def encode(a: Task) -> object:
@@ -77,6 +87,16 @@ def encode(a: Task) -> object:
             a.type.image_cfg,
             a.type.output_filename,
 
+        )
+
+    elif isinstance(a.type, RealESRGAN):
+        return (
+            "v6yhq70lnl6k71kyfj870h1s4",
+            a.type.name,
+            a.type.input_filename,
+            a.type.clip_start,
+            a.type.clip_duration,
+            a.type.output_filename,
         )
 
     elif isinstance(a.type, BarkText2Voice):
@@ -124,6 +144,10 @@ def decode(a: any) -> Task:
 
     if b[0] == "rvb3vnlcmjkhxdsf7yqr45m40":
         type_ = InstructPix2Pix(b[1], b[2], tuple(b[3]), tuple(b[4]), b[5], b[6], b[7], b[8], b[9])
+        return Task(type_)
+
+    elif b[0] == "v6yhq70lnl6k71kyfj870h1s4":
+        type_ = RealESRGAN(b[1], b[2], tuple(b[3]), tuple(b[4]), b[5])
         return Task(type_)
 
     elif b[0] == "0f96skf4tvg74wjp6c9nn0sxk":
