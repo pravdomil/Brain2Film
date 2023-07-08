@@ -1,5 +1,5 @@
 diffusers~=0.17.1
-transformers~=4.30.2
+transformers@ git+https://github.com/huggingface/transformers.git
 dataclasses~=0.6
 Pillow~=10.0.0
 PyYAML~=6.0
