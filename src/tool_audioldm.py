@@ -29,8 +29,10 @@ def main(a: task.AudioLDM):
     utils.save_to_mp3(audio_highpass, os.path.join(config.output_dir, a.output_filename))
 
 
-def apply_highpass_mix(input: numpy.ndarray, highpass_vol=0.2, mix_vol=0.8, cutoff=11000, order=6):
-    octave_up = librosa.effects.pitch_shift(input, sr=sample_rate, n_steps=12, res_type="soxr_vhq") * highpass_vol
+def apply_highpass_mix(data: numpy.ndarray, highpass_vol=0.2, mix_vol=0.8, cutoff=11000, order=6):
+    octave_up = librosa.effects.pitch_shift(data, sr=sample_rate, n_steps=12, res_type="soxr_vhq") * highpass_vol
+    # noinspection PyUnresolvedReferences
     b, a = scipy.signal.butter(order, cutoff, fs=sample_rate, btype="highpass", analog=False)
+    # noinspection PyUnresolvedReferences
     highpass = scipy.signal.lfilter(b, a, octave_up)
-    return input * mix_vol + highpass
+    return data * mix_vol + highpass
