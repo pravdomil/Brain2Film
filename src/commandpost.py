@@ -15,7 +15,7 @@ import task
 
 def main():
     input_dir, output_dir, tasks_dir = check_drive()
-    version, directories, filename, name, clip_start, clip_duration, instructions = json.loads(sys.argv[1])
+    version, directories, filename, name, clip_start, clip_duration, notes = json.loads(sys.argv[1])
 
     if version != "_dx2rgq3ln9kfsl_wdv9vzlng":
         raise Exception("Version mismatch.")
@@ -31,7 +31,7 @@ def main():
     shutil.copy(filepath, os.path.join(input_dir, input_filename))
 
     # Create task.
-    task_ = parse_task(name, input_filename, output_filename, clip_start, clip_duration, instructions)
+    task_ = parse_task(name, input_filename, output_filename, clip_start, clip_duration, notes)
     with open(os.path.join(tasks_dir, task_id + ".json"), "w") as f:
         json.dump(task.encode(task_), f)
 
