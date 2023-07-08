@@ -34,7 +34,7 @@ def main(a: task.BarkVoice2Voice):
         history_prompt="v2/" + a.speaker[0] + "_speaker_" + str(a.speaker[1]),
     )
 
-    utils.save_to_mp3(audio, os.path.join(config.output_dir, a.output_filename))
+    utils.save_to_mp3(audio, os.path.join(config.output_dir, a.output_filename), bark.SAMPLE_RATE)
 
 
 def load_audio(codec, a: str):

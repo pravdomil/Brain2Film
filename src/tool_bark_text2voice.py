@@ -14,4 +14,4 @@ def main(a: task.BarkText2Voice):
     torch.manual_seed(config.seed)
     audio = bark.generate_audio(a.prompt, history_prompt="v2/" + a.speaker[0] + "_speaker_" + str(a.speaker[1]))
 
-    utils.save_to_mp3(audio, os.path.join(config.output_dir, a.output_filename))
+    utils.save_to_mp3(audio, os.path.join(config.output_dir, a.output_filename), bark.SAMPLE_RATE)
