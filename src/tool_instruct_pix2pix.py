@@ -41,7 +41,7 @@ def main(a: task.InstructPix2Pix):
                 input_images.append(resized_image)
 
         output_images = instruct_pix2pix2(
-            [x[1] for x in input_images],
+            input_images,
             a.prompt,
             15,
             config.seed,
