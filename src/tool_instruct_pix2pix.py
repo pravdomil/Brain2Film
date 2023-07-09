@@ -13,7 +13,10 @@ import task
 
 
 def main(a: task.InstructPix2Pix):
-    capture = cv2.VideoCapture(os.path.join(config.input_dir, a.input_filename))
+    input_filepath = os.path.join(config.input_dir, a.input_filename)
+    if not os.path.isfile(input_filepath):
+        raise FileNotFoundError(input_filepath)
+    capture = cv2.VideoCapture(input_filepath)
 
     fps = capture.get(cv2.CAP_PROP_FPS)
     frame_indexes, final_fps = compute_frame_indexes(a, fps)
