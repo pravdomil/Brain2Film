@@ -16,7 +16,8 @@ import utils
 def main(a: task.InstructPix2Pix):
     capture = cv2.VideoCapture(os.path.join(config.input_dir, a.input_filename))
 
-    frame_indexes, final_fps = compute_frame_indexes(a, capture.get(cv2.CAP_PROP_FPS))
+    fps = capture.get(cv2.CAP_PROP_FPS)
+    frame_indexes, final_fps = compute_frame_indexes(a, fps)
     batches = group_by(frame_indexes, config.batch_size)
 
     temp_dir = tempfile.TemporaryDirectory()
