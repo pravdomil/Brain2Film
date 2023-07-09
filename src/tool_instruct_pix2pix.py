@@ -20,10 +20,10 @@ def main(a: task.InstructPix2Pix):
 
     frame_indexes, final_fps = compute_frame_indexes_and_fps(a, capture.get(cv2.CAP_PROP_FPS))
     batches = group_by(frame_indexes, config.batch_size)
+    size = compute_size((capture.get(cv2.CAP_PROP_FRAME_WIDTH), capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
 
     print("InstructPix2Pix: \"" + a.prompt.replace("\n", "\\n") + "\", " + str(len(batches)) + " batches")
 
-    size = compute_size((capture.get(cv2.CAP_PROP_FRAME_WIDTH), capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
     writer = moviepy.video.io.ffmpeg_writer.FFMPEG_VideoWriter(
         os.path.join(config.output_dir, a.output_filename),
         size,
