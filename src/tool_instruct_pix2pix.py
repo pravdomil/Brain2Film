@@ -18,7 +18,7 @@ def main(a: task.InstructPix2Pix):
         raise FileNotFoundError(input_filepath)
     capture = cv2.VideoCapture(input_filepath)
 
-    frame_indexes, final_fps = compute_frame_indexes(a, capture.get(cv2.CAP_PROP_FPS))
+    frame_indexes, final_fps = compute_frame_indexes_and_fps(a, capture.get(cv2.CAP_PROP_FPS))
     batches = group_by(frame_indexes, config.batch_size)
 
     print("InstructPix2Pix: \"" + a.prompt.replace("\n", "\\n") + "\", " + str(len(batches)) + " batches")
@@ -55,7 +55,7 @@ def main(a: task.InstructPix2Pix):
     writer.close()
 
 
-def compute_frame_indexes(a: task.InstructPix2Pix, fps: float) -> tuple[list[int], float]:
+def compute_frame_indexes_and_fps(a: task.InstructPix2Pix, fps: float) -> tuple[list[int], float]:
     if a.fps is None:
         frame_skip = 1
         final_fps = fps
