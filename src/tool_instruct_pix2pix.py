@@ -1,16 +1,15 @@
 import os
-import tempfile
 from typing import Union
 
 import PIL.Image
 import PIL.ImageOps
 import cv2
 import diffusers
+import moviepy.video.io.ffmpeg_writer
 import torch
 
 import config
 import task
-import utils
 
 
 def main(a: task.InstructPix2Pix):
@@ -20,18 +19,23 @@ def main(a: task.InstructPix2Pix):
     frame_indexes, final_fps = compute_frame_indexes(a, fps)
     batches = group_by(frame_indexes, config.batch_size)
 
-    temp_dir = tempfile.TemporaryDirectory()
-
     print("InstructPix2Pix: \"" + a.prompt.replace("\n", "\\n") + "\", " + str(len(batches)) + " batches")
 
-    frames = []
-    first_run = True
+    size = compute_size((capture.get(cv2.CAP_PROP_FRAME_WIDTH), capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+    writer = moviepy.video.io.ffmpeg_writer.FFMPEG_VideoWriter(
+        os.path.join(config.output_dir, a.output_filename),
+        size,
+        fps,
+        ffmpeg_params=["-crf", "15"],
+    )
+
     for batch in batches:
-        input_images: list[tuple[str, PIL.Image]] = []
+        input_images: list[PIL.Image] = []
         for i in batch:
             image = capture_read_image(capture, i)
             if image is not None:
-                input_images.append(("instruct_pix2pix " + str(i) + ".png", resize_image(image)))
+                resized_image = PIL.ImageOps.fit(image, size, method=PIL.Image.LANCZOS)
+                input_images.append(resized_image)
 
         output_images = instruct_pix2pix2(
             [x[1] for x in input_images],
@@ -42,18 +46,11 @@ def main(a: task.InstructPix2Pix):
             a.image_cfg if a.image_cfg is not None else 1,
         )
 
-        for (image_filename, _), image in zip(input_images, output_images):
-            temp_filename = os.path.join(temp_dir.name, image_filename)
-            image.save(temp_filename)
-            frames.append(temp_filename)
-
-        if first_run:
-            utils.images_to_video(os.path.join(config.output_dir, a.output_filename), frames, final_fps)
-            first_run = False
+        for image in output_images:
+            writer.write_frame(image)
 
     capture.release()
-
-    utils.images_to_video(os.path.join(config.output_dir, a.output_filename), frames, final_fps)
+    writer.close()
 
 
 def compute_frame_indexes(a: task.InstructPix2Pix, fps: float) -> tuple[list[int], float]:
@@ -70,12 +67,10 @@ def compute_frame_indexes(a: task.InstructPix2Pix, fps: float) -> tuple[list[int
     return list(range(start_frame, end_frame, frame_skip)), final_fps
 
 
-def resize_image(a: PIL.Image.Image) -> PIL.Image.Image:
-    width, height = a.size
+def compute_size(size: tuple[float, float]) -> tuple[int, int]:
+    width, height = size
     factor = 768 / max(width, height)
-    scaled_width = int(width * factor)
-    scaled_height = int(height * factor)
-    return PIL.ImageOps.fit(a, (scaled_width, scaled_height), method=PIL.Image.LANCZOS)
+    return int(width * factor), int(height * factor)
 
 
 def instruct_pix2pix2(
