@@ -33,10 +33,11 @@ def main(a: task.RealESRGAN):
 
     fps = capture.get(cv2.CAP_PROP_FPS)
     frame_indexes = compute_frame_indexes(a, fps)
+    size = (capture.get(cv2.CAP_PROP_FRAME_WIDTH) * scale, capture.get(cv2.CAP_PROP_FRAME_HEIGHT) * scale)
 
     writer = moviepy.video.io.ffmpeg_writer.FFMPEG_VideoWriter(
         os.path.join(config.output_dir, a.output_filename),
-        (capture.get(cv2.CAP_PROP_FRAME_WIDTH) * scale, capture.get(cv2.CAP_PROP_FRAME_HEIGHT) * scale),
+        size,
         fps,
         ffmpeg_params=["-crf", "15"],
     )
