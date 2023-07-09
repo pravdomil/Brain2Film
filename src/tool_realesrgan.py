@@ -18,14 +18,6 @@ scale = 4
 def main(a: task.RealESRGAN):
     print("RealESRGAN: \"" + a.name + "\"")
 
-    upsampler = realesrgan.RealESRGANer(
-        model_path="https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth",
-        model=basicsr.archs.rrdbnet_arch.RRDBNet(
-            num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=scale),
-        scale=scale,
-        device=config.device,
-    )
-
     input_filepath = os.path.join(config.input_dir, a.input_filename)
     if not os.path.isfile(input_filepath):
         raise FileNotFoundError(input_filepath)
@@ -41,6 +33,13 @@ def main(a: task.RealESRGAN):
         size,
         fps,
         ffmpeg_params=["-crf", "15"],
+    )
+    upsampler = realesrgan.RealESRGANer(
+        model_path="https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth",
+        model=basicsr.archs.rrdbnet_arch.RRDBNet(
+            num_in_ch=3, num_out_ch=3, num_feat=64, num_block=23, num_grow_ch=32, scale=scale),
+        scale=scale,
+        device=config.device,
     )
 
     for i in frame_indexes:
