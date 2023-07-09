@@ -1,16 +1,16 @@
 import os
-import tempfile
 from typing import Union
 
 import PIL.Image
 import basicsr.archs.rrdbnet_arch
 import cv2
+import moviepy.editor
+import moviepy.video.io.ffmpeg_writer
 import numpy
 import realesrgan
 
 import config
 import task
-import utils
 
 scale = 4
 
@@ -30,22 +30,22 @@ def main(a: task.RealESRGAN):
 
     fps = capture.get(cv2.CAP_PROP_FPS)
     frame_indexes = compute_frame_indexes(a, fps)
-    temp_dir = tempfile.TemporaryDirectory()
 
-    frames = []
+    writer = moviepy.video.io.ffmpeg_writer.FFMPEG_VideoWriter(
+        os.path.join(config.output_dir, a.output_filename),
+        (capture.get(cv2.CAP_PROP_FRAME_WIDTH) * scale, capture.get(cv2.CAP_PROP_FRAME_HEIGHT) * scale),
+        fps,
+        ffmpeg_params=["-crf", "15"],
+    )
+
     for i in frame_indexes:
         image = capture_read_image(capture, i)
         if image is not None:
             image = PIL.Image.fromarray(upsampler.enhance(image)[0])
-
-            image_filename = "realesrgan " + str(i) + ".png"
-            temp_filename = os.path.join(temp_dir.name, image_filename)
-            image.save(temp_filename)
-            frames.append(temp_filename)
+            writer.write_frame(image)
 
     capture.release()
-
-    utils.images_to_video(os.path.join(config.output_dir, a.output_filename), frames, fps)
+    writer.close()
 
 
 def compute_frame_indexes(a: task.RealESRGAN, fps: float) -> list[int]:
