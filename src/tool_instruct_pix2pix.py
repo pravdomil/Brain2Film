@@ -18,8 +18,7 @@ def main(a: task.InstructPix2Pix):
         raise FileNotFoundError(input_filepath)
     capture = cv2.VideoCapture(input_filepath)
 
-    fps = capture.get(cv2.CAP_PROP_FPS)
-    frame_indexes, final_fps = compute_frame_indexes(a, fps)
+    frame_indexes, final_fps = compute_frame_indexes(a, capture.get(cv2.CAP_PROP_FPS))
     batches = group_by(frame_indexes, config.batch_size)
 
     print("InstructPix2Pix: \"" + a.prompt.replace("\n", "\\n") + "\", " + str(len(batches)) + " batches")
@@ -28,7 +27,7 @@ def main(a: task.InstructPix2Pix):
     writer = moviepy.video.io.ffmpeg_writer.FFMPEG_VideoWriter(
         os.path.join(config.output_dir, a.output_filename),
         size,
-        fps,
+        final_fps,
         ffmpeg_params=["-crf", "15"],
     )
 
