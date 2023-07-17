@@ -174,10 +174,10 @@ def to_info(a: Task) -> list[str]:
     if isinstance(a.type, InstructPix2Pix):
         return [
             "InstructPix2Pix",
-            a.type.prompt,
-            a.type.fps,
-            a.type.text_cfg,
-            a.type.image_cfg,
+            str(a.type.prompt),
+            str(a.type.fps),
+            str(a.type.text_cfg),
+            str(a.type.image_cfg),
         ]
 
     elif isinstance(a.type, RealESRGAN):
@@ -188,26 +188,26 @@ def to_info(a: Task) -> list[str]:
     elif isinstance(a.type, BarkText2Voice):
         return [
             "Bark text2voice",
-            a.type.prompt,
-            a.type.speaker,
+            str(a.type.prompt),
+            str(a.type.speaker),
         ]
 
     elif isinstance(a.type, BarkVoice2Voice):
         return [
             "Bark voice2voice",
-            a.type.speaker,
+            str(a.type.speaker),
         ]
 
     elif isinstance(a.type, AudioLDM):
         return [
             "AudioLDM",
-            a.type.prompt,
+            str(a.type.prompt),
         ]
 
     elif isinstance(a.type, Audiocraft):
         return [
             "Audiocraft",
-            a.type.prompt,
+            str(a.type.prompt),
         ]
 
     else:
