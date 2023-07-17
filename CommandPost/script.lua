@@ -41,8 +41,6 @@ function run()
     local file = io.popen("/usr/local/bin/python3 ../Plugins/AI\\ Cut\\ Ultra/src/commandpost.py \"$(cat -)\" &", "w")
     file:write(hs.json.encode(data))
     file:close()
-
-    hs.alert.show("Processing " .. filename)
 end
 
 function emptyToNil(a)
