@@ -43,7 +43,7 @@ def main(a: task.RealESRGAN):
 
     for i, frame_index in enumerate(frame_indexes):
         if i % 10 == 0:
-            print(str(round(i / len(frame_indexes) * 100)) + "%", end=" ")
+            print(str(round(i / len(frame_indexes) * 100)) + "%")
         image = capture_read_image(capture, frame_index)
         enhanced_image = PIL.Image.fromarray(upsampler.enhance(image)[0])
         writer.write_frame(enhanced_image)
