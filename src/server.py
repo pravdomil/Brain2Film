@@ -127,7 +127,7 @@ def move_task_to_error_folder(filename: str):
 
 
 def do_task(arg: tuple[str, task.Task]):
-    filename, a = arg
+    id_, a = arg
     if isinstance(a.type, task.InstructPix2Pix):
         tool_instruct_pix2pix.main(a.type)
 
