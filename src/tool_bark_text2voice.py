@@ -18,5 +18,5 @@ def main(a: task.BarkText2Voice):
         audio,
         os.path.join(config.output_dir, a.output_filename),
         bark.SAMPLE_RATE,
-        ", ".join(task.to_info(task.Task(a))),
+        "\n".join(task.to_info(task.Task(a))),
     )

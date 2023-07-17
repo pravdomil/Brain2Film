@@ -31,7 +31,7 @@ def main(a: task.RealESRGAN):
         os.path.join(config.output_dir, a.output_filename),
         size,
         fps,
-        ffmpeg_params=["-crf", "15", "-metadata", "title=" + ", ".join(task.to_info(task.Task(a)))],
+        ffmpeg_params=["-crf", "15", "-metadata", "title=" + "\n".join(task.to_info(task.Task(a)))],
     )
     upsampler = realesrgan.RealESRGANer(
         model_path="https://github.com/xinntao/Real-ESRGAN/releases/download/v0.1.0/RealESRGAN_x4plus.pth",

@@ -27,7 +27,7 @@ def main(a: task.InstructPix2Pix):
         os.path.join(config.output_dir, a.output_filename),
         size,
         fps,
-        ffmpeg_params=["-crf", "15", "-metadata", "title=" + ", ".join(task.to_info(task.Task(a)))],
+        ffmpeg_params=["-crf", "15", "-metadata", "title=" + "\n".join(task.to_info(task.Task(a)))],
     )
 
     for batch in batches:

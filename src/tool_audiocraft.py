@@ -22,5 +22,5 @@ def main(a: task.Audiocraft):
         audio.numpy(),
         os.path.join(config.output_dir, a.output_filename),
         model.config.audio_encoder.sampling_rate,
-        ", ".join(task.to_info(task.Task(a))),
+        "\n".join(task.to_info(task.Task(a))),
     )
