@@ -8,7 +8,9 @@ import task
 import utils
 
 
-def main(a: task.BarkText2Voice):
+def main(arg: tuple[str, task.BarkText2Voice]):
+    id_, a = arg
+
     print("Bark text2voice: \"" + a.prompt.replace("\n", "\\n") + "\"")
 
     torch.manual_seed(config.seed)

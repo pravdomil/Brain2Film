@@ -11,7 +11,9 @@ import config
 import task
 
 
-def main(a: task.InstructPix2Pix):
+def main(arg: tuple[str, task.InstructPix2Pix]):
+    id_, a = arg
+
     input_filepath = os.path.join(config.input_dir, a.input_filename)
     if not os.path.isfile(input_filepath):
         raise FileNotFoundError(input_filepath)

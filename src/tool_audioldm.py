@@ -12,7 +12,9 @@ import utils
 sample_rate = 44100
 
 
-def main(a: task.AudioLDM):
+def main(arg: tuple[str, task.AudioLDM]):
+    id_, a = arg
+
     print("AudioLDM: \"" + a.prompt.replace("\n", "\\n") + "\"")
 
     torch.manual_seed(config.seed)

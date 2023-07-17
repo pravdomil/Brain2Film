@@ -14,7 +14,9 @@ import task
 scale = 4
 
 
-def main(a: task.RealESRGAN):
+def main(arg: tuple[str, task.RealESRGAN]):
+    id_, a = arg
+
     print("RealESRGAN: \"" + a.name + "\"")
 
     input_filepath = os.path.join(config.input_dir, a.input_filename)

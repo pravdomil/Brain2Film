@@ -129,22 +129,22 @@ def move_task_to_error_folder(filename: str):
 def do_task(arg: tuple[str, task.Task]):
     id_, a = arg
     if isinstance(a.type, task.InstructPix2Pix):
-        tool_instruct_pix2pix.main(a.type)
+        tool_instruct_pix2pix.main((id_, a.type))
 
     elif isinstance(a.type, task.RealESRGAN):
-        tool_realesrgan.main(a.type)
+        tool_realesrgan.main((id_, a.type))
 
     elif isinstance(a.type, task.BarkText2Voice):
-        tool_bark_text2voice.main(a.type)
+        tool_bark_text2voice.main((id_, a.type))
 
     elif isinstance(a.type, task.BarkVoice2Voice):
-        tool_bark_voice2voice.main(a.type)
+        tool_bark_voice2voice.main((id_, a.type))
 
     elif isinstance(a.type, task.AudioLDM):
-        tool_audioldm.main(a.type)
+        tool_audioldm.main((id_, a.type))
 
     elif isinstance(a.type, task.Audiocraft):
-        tool_audiocraft.main(a.type)
+        tool_audiocraft.main((id_, a.type))
 
     else:
         raise ValueError("Unknown variant.")

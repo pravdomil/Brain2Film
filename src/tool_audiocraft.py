@@ -8,7 +8,9 @@ import task
 import utils
 
 
-def main(a: task.Audiocraft):
+def main(arg: tuple[str, task.Audiocraft]):
+    id_, a = arg
+
     print("Audiocraft: \"" + a.prompt.replace("\n", "\\n") + "\"")
 
     torch.manual_seed(config.seed)

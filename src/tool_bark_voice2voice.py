@@ -14,7 +14,9 @@ import task
 import utils
 
 
-def main(a: task.BarkVoice2Voice):
+def main(arg: tuple[str, task.BarkVoice2Voice]):
+    id_, a = arg
+
     print("Bark voice2voice: \"" + a.name + "\"")
 
     hubert_filepath = hubert.hubert_manager.ensure_hubert()
