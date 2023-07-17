@@ -177,12 +177,12 @@ def to_info(a: Task) -> list[str]:
             a.type.prompt,
             a.type.fps,
             a.type.text_cfg,
-            a.type.image_cfg
+            a.type.image_cfg,
         ]
 
     elif isinstance(a.type, RealESRGAN):
         return [
-            "RealESRGAN"
+            "RealESRGAN",
         ]
 
     elif isinstance(a.type, BarkText2Voice):
