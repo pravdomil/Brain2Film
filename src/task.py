@@ -19,8 +19,6 @@ class InstructPix2Pix:
     text_cfg: Union[int, None]
     image_cfg: Union[int, None]
 
-    output_filename: str
-
 
 @beartype
 @dataclass
@@ -29,7 +27,6 @@ class RealESRGAN:
     input_filename: str
     clip_start: tuple[int, int]
     clip_duration: tuple[int, int]
-    output_filename: str
 
 
 @beartype
@@ -38,7 +35,6 @@ class BarkText2Voice:
     name: str
     prompt: str
     speaker: tuple[str, int]
-    output_filename: str
 
 
 @beartype
@@ -47,7 +43,6 @@ class BarkVoice2Voice:
     name: str
     input_filename: str
     speaker: tuple[str, int]
-    output_filename: str
 
 
 @beartype
@@ -56,7 +51,6 @@ class AudioLDM:
     name: str
     prompt: str
     duration: float
-    output_filename: str
 
 
 @beartype
@@ -65,7 +59,6 @@ class Audiocraft:
     name: str
     prompt: str
     duration: float
-    output_filename: str
 
 
 @beartype
