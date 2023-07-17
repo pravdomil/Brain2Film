@@ -1,5 +1,4 @@
 import os
-from typing import Union
 
 import PIL.Image
 import PIL.ImageOps
@@ -35,8 +34,6 @@ def main(a: task.InstructPix2Pix):
         input_images: list[PIL.Image] = []
         for i in batch:
             image = capture_read_image(capture, i)
-            if image is None:
-                raise Exception("Cannot read video frame.")
             resized_image = PIL.ImageOps.fit(image, size, method=PIL.Image.LANCZOS)
             input_images.append(resized_image)
 
@@ -102,14 +99,14 @@ def instruct_pix2pix2(
     return output.images
 
 
-def capture_read_image(a, index: int) -> Union[PIL.Image.Image, None]:
+def capture_read_image(a, index: int) -> PIL.Image.Image:
     a.set(cv2.CAP_PROP_POS_FRAMES, index)
     retval, image = a.read()
     if retval:
         rgb_image = cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
         return PIL.Image.fromarray(rgb_image)
     else:
-        return None
+        raise Exception("Cannot read video frame.")
 
 
 def group_by(a: list, size: int):
