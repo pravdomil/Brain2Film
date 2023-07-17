@@ -26,7 +26,7 @@ def main(arg: tuple[str, task.InstructPix2Pix]):
     print("InstructPix2Pix: \"" + a.prompt.replace("\n", "\\n") + "\", " + str(len(batches)) + " batches")
 
     writer = moviepy.video.io.ffmpeg_writer.FFMPEG_VideoWriter(
-        os.path.join(config.output_dir, task.output_filename((id_, task.Task(arg)), "mov")),
+        os.path.join(config.output_dir, task.output_filename((id_, task.Task(a)), "mov")),
         size,
         fps,
         ffmpeg_params=["-crf", "15", "-metadata", "title=" + "\n".join(task.to_info(task.Task(a)))],

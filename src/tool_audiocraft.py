@@ -22,7 +22,7 @@ def main(arg: tuple[str, task.Audiocraft]):
 
     utils.save_to_mp3(
         audio.numpy(),
-        os.path.join(config.output_dir, task.output_filename((id_, task.Task(arg)), "mp3")),
+        os.path.join(config.output_dir, task.output_filename((id_, task.Task(a)), "mp3")),
         model.config.audio_encoder.sampling_rate,
         "\n".join(task.to_info(task.Task(a))),
     )
