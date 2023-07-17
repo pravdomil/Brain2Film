@@ -21,5 +21,6 @@ def main(a: task.Audiocraft):
     utils.save_to_mp3(
         audio.numpy(),
         os.path.join(config.output_dir, a.output_filename),
-        model.config.audio_encoder.sampling_rate
+        model.config.audio_encoder.sampling_rate,
+        ", ".join(task.to_info(task.Task(a))),
     )
