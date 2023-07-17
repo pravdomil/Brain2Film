@@ -44,7 +44,7 @@ def main(a: task.RealESRGAN):
 
     for i, frame_index in enumerate(frame_indexes):
         if i % 10 == 0:
-            print(str(round(i / len(frame_indexes) * 100)) + "%")
+            print(str(round(i / len(frame_indexes) * 100)) + "%", end=" ")
         image = capture_read_image(capture, frame_index)
         if image is None:
             raise Exception("Cannot read video frame.")
