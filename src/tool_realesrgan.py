@@ -46,9 +46,10 @@ def main(a: task.RealESRGAN):
         if i % 10 == 0:
             print(str(round(i / len(frame_indexes) * 100)) + "%")
         image = capture_read_image(capture, frame_index)
-        if image is not None:
-            image = PIL.Image.fromarray(upsampler.enhance(image)[0])
-            writer.write_frame(image)
+        if image is None:
+            raise Exception("Cannot read video frame.")
+        image = PIL.Image.fromarray(upsampler.enhance(image)[0])
+        writer.write_frame(image)
 
     capture.release()
     writer.close()

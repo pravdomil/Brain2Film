@@ -35,9 +35,10 @@ def main(a: task.InstructPix2Pix):
         input_images: list[PIL.Image] = []
         for i in batch:
             image = capture_read_image(capture, i)
-            if image is not None:
-                resized_image = PIL.ImageOps.fit(image, size, method=PIL.Image.LANCZOS)
-                input_images.append(resized_image)
+            if image is None:
+                raise Exception("Cannot read video frame.")
+            resized_image = PIL.ImageOps.fit(image, size, method=PIL.Image.LANCZOS)
+            input_images.append(resized_image)
 
         output_images = instruct_pix2pix2(
             input_images,
