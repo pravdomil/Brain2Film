@@ -1,5 +1,4 @@
 import os
-from typing import Union
 
 import PIL.Image
 import basicsr.archs.rrdbnet_arch
@@ -46,8 +45,6 @@ def main(a: task.RealESRGAN):
         if i % 10 == 0:
             print(str(round(i / len(frame_indexes) * 100)) + "%", end=" ")
         image = capture_read_image(capture, frame_index)
-        if image is None:
-            raise Exception("Cannot read video frame.")
         image = PIL.Image.fromarray(upsampler.enhance(image)[0])
         writer.write_frame(image)
 
@@ -61,10 +58,10 @@ def compute_frame_indexes(a: task.RealESRGAN, fps: float) -> list[int]:
     return list(range(start_frame, end_frame))
 
 
-def capture_read_image(a, index: int) -> Union[numpy.ndarray, None]:
+def capture_read_image(a, index: int) -> numpy.ndarray:
     a.set(cv2.CAP_PROP_POS_FRAMES, index)
     retval, image = a.read()
     if retval:
         return cv2.cvtColor(image, cv2.COLOR_BGR2RGB)
     else:
-        return None
+        raise Exception("Cannot read video frame.")
