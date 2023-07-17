@@ -79,8 +79,6 @@ def encode(a: Task) -> object:
             a.type.fps,
             a.type.text_cfg,
             a.type.image_cfg,
-            a.type.output_filename,
-
         )
 
     elif isinstance(a.type, RealESRGAN):
@@ -90,7 +88,6 @@ def encode(a: Task) -> object:
             a.type.input_filename,
             a.type.clip_start,
             a.type.clip_duration,
-            a.type.output_filename,
         )
 
     elif isinstance(a.type, BarkText2Voice):
@@ -99,7 +96,6 @@ def encode(a: Task) -> object:
             a.type.name,
             a.type.prompt,
             a.type.speaker,
-            a.type.output_filename,
         )
 
     elif isinstance(a.type, BarkVoice2Voice):
@@ -108,7 +104,6 @@ def encode(a: Task) -> object:
             a.type.name,
             a.type.input_filename,
             a.type.speaker,
-            a.type.output_filename,
         )
 
     elif isinstance(a.type, AudioLDM):
@@ -117,7 +112,6 @@ def encode(a: Task) -> object:
             a.type.name,
             a.type.prompt,
             a.type.duration,
-            a.type.output_filename,
         )
 
     elif isinstance(a.type, Audiocraft):
@@ -126,7 +120,6 @@ def encode(a: Task) -> object:
             a.type.name,
             a.type.prompt,
             a.type.duration,
-            a.type.output_filename,
         )
 
     else:
@@ -137,27 +130,27 @@ def decode(a: any) -> Task:
     b = json.load(a)
 
     if b[0] == "rvb3vnlcmjkhxdsf7yqr45m40":
-        type_ = InstructPix2Pix(b[1], b[2], tuple(b[3]), tuple(b[4]), b[5], b[6], b[7], b[8], b[9])
+        type_ = InstructPix2Pix(b[1], b[2], tuple(b[3]), tuple(b[4]), b[5], b[6], b[7], b[8])
         return Task(type_)
 
     elif b[0] == "v6yhq70lnl6k71kyfj870h1s4":
-        type_ = RealESRGAN(b[1], b[2], tuple(b[3]), tuple(b[4]), b[5])
+        type_ = RealESRGAN(b[1], b[2], tuple(b[3]), tuple(b[4]))
         return Task(type_)
 
     elif b[0] == "0f96skf4tvg74wjp6c9nn0sxk":
-        type_ = BarkText2Voice(b[1], b[2], tuple(b[3]), b[4])
+        type_ = BarkText2Voice(b[1], b[2], tuple(b[3]))
         return Task(type_)
 
     elif b[0] == "8tsbpcdxrrhwdkff3cbk7h8cn":
-        type_ = BarkVoice2Voice(b[1], b[2], tuple(b[3]), b[4])
+        type_ = BarkVoice2Voice(b[1], b[2], tuple(b[3]))
         return Task(type_)
 
     elif b[0] == "y7l7hv8w5rq6nffn3tyyb_tfx":
-        type_ = AudioLDM(b[1], b[2], b[3], b[4])
+        type_ = AudioLDM(b[1], b[2], b[3])
         return Task(type_)
 
     elif b[0] == "pnt5pvz6x6s3jwjxz2v8pcvy0":
-        type_ = Audiocraft(b[1], b[2], b[3], b[4])
+        type_ = Audiocraft(b[1], b[2], b[3])
         return Task(type_)
 
     else:
