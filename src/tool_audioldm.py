@@ -29,7 +29,7 @@ def main(a: task.AudioLDM):
         audio_enhanced,
         os.path.join(config.output_dir, a.output_filename),
         sample_rate,
-        ", ".join(task.to_info(task.Task(a)))
+        ", ".join(task.to_info(task.Task(a))),
     )
 
 
