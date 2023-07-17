@@ -38,7 +38,7 @@ def main(arg: tuple[str, task.BarkVoice2Voice]):
 
     utils.save_to_mp3(
         audio,
-        os.path.join(config.output_dir, a.output_filename),
+        os.path.join(config.output_dir, task.output_filename((id_, task.Task(arg)), "mp3")),
         bark.SAMPLE_RATE,
         "\n".join(task.to_info(task.Task(a))),
     )

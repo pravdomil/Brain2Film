@@ -30,7 +30,7 @@ def main(arg: tuple[str, task.RealESRGAN]):
             int(capture.get(cv2.CAP_PROP_FRAME_HEIGHT) * scale))
 
     writer = moviepy.video.io.ffmpeg_writer.FFMPEG_VideoWriter(
-        os.path.join(config.output_dir, a.output_filename),
+        os.path.join(config.output_dir, task.output_filename((id_, task.Task(arg)), "mov")),
         size,
         fps,
         ffmpeg_params=["-crf", "15", "-metadata", "title=" + "\n".join(task.to_info(task.Task(a)))],

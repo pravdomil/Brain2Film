@@ -29,7 +29,7 @@ def main(arg: tuple[str, task.AudioLDM]):
 
     utils.save_to_mp3(
         audio_enhanced,
-        os.path.join(config.output_dir, a.output_filename),
+        os.path.join(config.output_dir, task.output_filename((id_, task.Task(arg)), "mp3")),
         sample_rate,
         "\n".join(task.to_info(task.Task(a))),
     )
