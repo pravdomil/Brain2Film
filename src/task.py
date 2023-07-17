@@ -212,3 +212,20 @@ def to_info(a: Task) -> list[str]:
 
     else:
         raise ValueError("Unknown variant.")
+
+
+def name(a: Task) -> str:
+    if isinstance(a.type, InstructPix2Pix):
+        return a.type.name
+    elif isinstance(a.type, RealESRGAN):
+        return a.type.name
+    elif isinstance(a.type, BarkText2Voice):
+        return a.type.name
+    elif isinstance(a.type, BarkVoice2Voice):
+        return a.type.name
+    elif isinstance(a.type, AudioLDM):
+        return a.type.name
+    elif isinstance(a.type, Audiocraft):
+        return a.type.name
+    else:
+        raise ValueError("Unknown variant.")
