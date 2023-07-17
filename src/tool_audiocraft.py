@@ -19,4 +19,8 @@ def main(a: task.Audiocraft):
     audio = model.generate(**inputs, max_new_tokens=256)[0]
 
     sample_rate = model.config.audio_encoder.sampling_rate
-    utils.save_to_mp3(audio.numpy(), os.path.join(config.output_dir, a.output_filename), sample_rate)
+    utils.save_to_mp3(
+        audio.numpy(),
+        os.path.join(config.output_dir, a.output_filename),
+        sample_rate
+    )
