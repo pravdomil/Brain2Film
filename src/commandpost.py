@@ -1,7 +1,6 @@
 import hashlib
 import json
 import os
-import re
 import shutil
 import subprocess
 import sys
@@ -25,13 +24,12 @@ def main():
 
     task_id = str(round(time.time() * 1000))
     input_filename = compute_sha256(filepath) + filepath_extension
-    output_filename = task_id + " " + re.sub("[^0-9A-Za-z-_]", " ", name) + filepath_extension
 
     # Copy file.
     shutil.copy(filepath, os.path.join(input_dir, input_filename))
 
     # Create task.
-    task_ = parse_task(name, input_filename, output_filename, clip_start, clip_duration, notes)
+    task_ = parse_task(name, input_filename, clip_start, clip_duration, notes)
     with open(os.path.join(tasks_dir, task_id + ".json"), "w") as f:
         json.dump(task.encode(task_), f)
 
@@ -87,7 +85,7 @@ def find_files_by_name_in_directory(directory: str, filename: str) -> list[str]:
 
 
 def parse_task(
-        name: str, input_filename: str, output_filename: str,
+        name: str, input_filename: str,
         clip_start: str, clip_duration: str, notes: str
 ) -> task.Task:
     if notes.lower().startswith("pix:"):
@@ -106,7 +104,6 @@ def parse_task(
             fps,
             text_cfg,
             image_cfg,
-            output_filename,
         )
         return task.Task(type_)
 
@@ -116,7 +113,6 @@ def parse_task(
             input_filename,
             parse_time(clip_start),
             parse_time(clip_duration),
-            output_filename,
         )
         return task.Task(type_)
 
@@ -133,7 +129,6 @@ def parse_task(
             name,
             prompt,
             speaker,
-            output_filename,
         )
         return task.Task(type_)
 
@@ -149,7 +144,6 @@ def parse_task(
             name,
             input_filename,
             speaker,
-            output_filename,
         )
         return task.Task(type_)
 
@@ -163,7 +157,6 @@ def parse_task(
             name,
             prompt,
             duration,
-            output_filename,
         )
         return task.Task(type_)
 
@@ -177,7 +170,6 @@ def parse_task(
             name,
             prompt,
             duration,
-            output_filename,
         )
         return task.Task(type_)
 
