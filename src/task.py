@@ -218,6 +218,6 @@ def name(a: Task) -> str:
         raise ValueError("Unknown variant.")
 
 
-def output_filename(ext: str, arg: tuple[str, Task]) -> str:
+def output_filename(arg: tuple[str, Task], ext: str) -> str:
     id_, a = arg
     return re.sub("[^0-9A-Za-z-_.]", " ", id_ + " " + name(a) + "." + ext)
