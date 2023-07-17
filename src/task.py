@@ -168,3 +168,47 @@ def decode(a: any) -> Task:
 
     else:
         raise ValueError("Unknown variant.")
+
+
+def to_info(a: Task) -> list[str]:
+    if isinstance(a.type, InstructPix2Pix):
+        return [
+            "InstructPix2Pix",
+            a.type.prompt,
+            a.type.fps,
+            a.type.text_cfg,
+            a.type.image_cfg
+        ]
+
+    elif isinstance(a.type, RealESRGAN):
+        return [
+            "RealESRGAN"
+        ]
+
+    elif isinstance(a.type, BarkText2Voice):
+        return [
+            "Bark text2voice",
+            a.type.prompt,
+            a.type.speaker,
+        ]
+
+    elif isinstance(a.type, BarkVoice2Voice):
+        return [
+            "Bark voice2voice",
+            a.type.speaker,
+        ]
+
+    elif isinstance(a.type, AudioLDM):
+        return [
+            "AudioLDM",
+            a.type.prompt,
+        ]
+
+    elif isinstance(a.type, Audiocraft):
+        return [
+            "Audiocraft",
+            a.type.prompt,
+        ]
+
+    else:
+        raise ValueError("Unknown variant.")
