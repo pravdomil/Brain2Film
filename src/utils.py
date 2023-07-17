@@ -2,7 +2,7 @@ import numpy
 import pydub
 
 
-def save_to_mp3(audio: numpy.ndarray, filename: str, sample_rate=44100) -> str:
+def save_to_mp3(audio: numpy.ndarray, filename: str, sample_rate) -> str:
     if filename.endswith(".mp3"):
         filename = filename
     else:

@@ -25,7 +25,7 @@ def main(a: task.AudioLDM):
     audio_resampled = librosa.resample(audio, orig_sr=16000, target_sr=sample_rate)
     audio_enhanced = enhance_audio(audio_resampled)
 
-    utils.save_to_mp3(audio_enhanced, os.path.join(config.output_dir, a.output_filename))
+    utils.save_to_mp3(audio_enhanced, os.path.join(config.output_dir, a.output_filename), sample_rate)
 
 
 def enhance_audio(a: numpy.ndarray):
