@@ -15,9 +15,9 @@ class InstructPix2Pix:
     clip_duration: tuple[int, int]
 
     prompt: str
-    fps: Union[int, None]
-    text_cfg: Union[int, None]
-    image_cfg: Union[int, None]
+    fps: Union[float, None]
+    text_cfg: Union[float, None]
+    image_cfg: Union[float, None]
 
 
 @beartype
@@ -130,7 +130,8 @@ def decode(a: any) -> Task:
     b = json.load(a)
 
     if b[0] == "rvb3vnlcmjkhxdsf7yqr45m40":
-        type_ = InstructPix2Pix(b[1], b[2], tuple(b[3]), tuple(b[4]), b[5], b[6], b[7], b[8])
+        type_ = InstructPix2Pix(b[1], b[2], tuple(b[3]), tuple(b[4]), b[5], maybe_map(float, b[6]),
+                                maybe_map(float, b[7]), maybe_map(float, b[8]))
         return Task(type_)
 
     elif b[0] == "v6yhq70lnl6k71kyfj870h1s4":
@@ -221,3 +222,10 @@ def name(a: Task) -> str:
 def output_filename(arg: tuple[str, Task], ext: str) -> str:
     id_, a = arg
     return re.sub("[^0-9A-Za-z-_.]", " ", id_ + " " + name(a) + "." + ext)
+
+
+def maybe_map(fn, a):
+    if a is None:
+        return a
+    else:
+        return fn(a)

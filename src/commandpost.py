@@ -91,9 +91,9 @@ def parse_task(
     if notes.lower().startswith("pix:"):
         c = yaml.safe_load(notes)
         prompt = c["pix"]
-        fps = c["fps"] if "fps" in c else None
-        text_cfg = c["text_cfg"] if "text_cfg" in c else None
-        image_cfg = c["image_cfg"] if "image_cfg" in c else None
+        fps = float(c["fps"]) if "fps" in c else None
+        text_cfg = float(c["text_cfg"]) if "text_cfg" in c else None
+        image_cfg = float(c["image_cfg"]) if "image_cfg" in c else None
 
         type_ = task.InstructPix2Pix(
             name,
