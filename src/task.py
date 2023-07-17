@@ -1,4 +1,5 @@
 import json
+import re
 from dataclasses import dataclass
 from typing import Union
 
@@ -229,3 +230,8 @@ def name(a: Task) -> str:
         return a.type.name
     else:
         raise ValueError("Unknown variant.")
+
+
+def output_filename(ext: str, arg: tuple[str, Task]) -> str:
+    id_, a = arg
+    return re.sub("[^0-9A-Za-z-_.]", " ", id_ + " " + name(a) + "." + ext)
