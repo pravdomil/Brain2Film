@@ -22,6 +22,19 @@ class InstructPix2Pix:
 
 @beartype
 @dataclass
+class FateZero:
+    name: str
+    input_filename: str
+    clip_start: tuple[int, int]
+    clip_duration: tuple[int, int]
+
+    prompt: str
+    fps: Union[float, None]
+    cfg: Union[float, None]
+
+
+@beartype
+@dataclass
 class RealESRGAN:
     name: str
     input_filename: str
@@ -64,7 +77,7 @@ class Audiocraft:
 @beartype
 @dataclass
 class Task:
-    type: Union[InstructPix2Pix, RealESRGAN, BarkText2Voice, BarkVoice2Voice, AudioLDM, Audiocraft]
+    type: Union[InstructPix2Pix, FateZero, RealESRGAN, BarkText2Voice, BarkVoice2Voice, AudioLDM, Audiocraft]
 
 
 def encode(a: Task) -> object:
@@ -79,6 +92,18 @@ def encode(a: Task) -> object:
             a.type.fps,
             a.type.text_cfg,
             a.type.image_cfg,
+        )
+
+    elif isinstance(a.type, FateZero):
+        return (
+            "s64mtmyv83t4pskjs3fhrsxrx",
+            a.type.name,
+            a.type.input_filename,
+            a.type.clip_start,
+            a.type.clip_duration,
+            a.type.prompt,
+            a.type.fps,
+            a.type.cfg,
         )
 
     elif isinstance(a.type, RealESRGAN):
@@ -134,6 +159,11 @@ def decode(a: any) -> Task:
                                 maybe_map(float, b[7]), maybe_map(float, b[8]))
         return Task(type_)
 
+    elif b[0] == "s64mtmyv83t4pskjs3fhrsxrx":
+        type_ = FateZero(b[1], b[2], tuple(b[3]), tuple(b[4]), b[5], maybe_map(float, b[6]),
+                         maybe_map(float, b[7]))
+        return Task(type_)
+
     elif b[0] == "v6yhq70lnl6k71kyfj870h1s4":
         type_ = RealESRGAN(b[1], b[2], tuple(b[3]), tuple(b[4]))
         return Task(type_)
@@ -166,6 +196,14 @@ def to_info(a: Task) -> list[str]:
             str(a.type.fps),
             str(a.type.text_cfg),
             str(a.type.image_cfg),
+        ]
+
+    elif isinstance(a.type, FateZero):
+        return [
+            "FateZero",
+            str(a.type.prompt),
+            str(a.type.fps),
+            str(a.type.cfg),
         ]
 
     elif isinstance(a.type, RealESRGAN):
@@ -204,6 +242,8 @@ def to_info(a: Task) -> list[str]:
 
 def name(a: Task) -> str:
     if isinstance(a.type, InstructPix2Pix):
+        return a.type.name
+    elif isinstance(a.type, FateZero):
         return a.type.name
     elif isinstance(a.type, RealESRGAN):
         return a.type.name
