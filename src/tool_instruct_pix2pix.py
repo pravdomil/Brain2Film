@@ -20,7 +20,7 @@ def main(arg: tuple[str, task.InstructPix2Pix]):
     capture = cv2.VideoCapture(input_filepath)
 
     frame_indexes, fps = compute_frame_indexes_and_fps(a, capture.get(cv2.CAP_PROP_FPS))
-    batches = group_by(frame_indexes, config.batch_size)
+    batches = group_by(frame_indexes, config.instruct_pix2pix_batch_size)
     size = compute_size((capture.get(cv2.CAP_PROP_FRAME_WIDTH), capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
 
     print("InstructPix2Pix: \"" + a.prompt.replace("\n", "\\n") + "\", " + str(len(batches)) + " batches")
