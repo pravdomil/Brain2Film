@@ -14,6 +14,7 @@ import tool_bark_text2voice
 import tool_bark_voice2voice
 import tool_instruct_pix2pix
 import tool_realesrgan
+import tool_fatezero
 
 
 # Types
@@ -131,6 +132,9 @@ def do_task(arg: tuple[str, task.Task]):
     id_, a = arg
     if isinstance(a.type, task.InstructPix2Pix):
         tool_instruct_pix2pix.main((id_, a.type))
+
+    elif isinstance(a.type, task.FateZero):
+        tool_fatezero.main((id_, a.type))
 
     elif isinstance(a.type, task.RealESRGAN):
         tool_realesrgan.main((id_, a.type))
