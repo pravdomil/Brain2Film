@@ -107,6 +107,23 @@ def parse_task(
         )
         return task.Task(type_)
 
+    elif notes.lower().startswith("fate:"):
+        c = yaml.safe_load(notes)
+        prompt = c["fate"]
+        fps = float(c["fps"]) if "fps" in c else None
+        cfg = float(c["cfg"]) if "cfg" in c else None
+
+        type_ = task.FateZero(
+            name,
+            input_filename,
+            parse_time(clip_start),
+            parse_time(clip_duration),
+            prompt,
+            fps,
+            cfg,
+        )
+        return task.Task(type_)
+
     elif notes.lower().startswith("up:"):
         type_ = task.RealESRGAN(
             name,
@@ -174,7 +191,7 @@ def parse_task(
         return task.Task(type_)
 
     else:
-        raise Exception("Notes must start with pix or up or bark or voice or ldm or craft.")
+        raise Exception("Notes must start with pix or fate or up or bark or voice or ldm or craft.")
 
 
 def parse_time(a: str) -> tuple[int, int]:
