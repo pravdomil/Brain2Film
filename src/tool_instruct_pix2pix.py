@@ -19,7 +19,7 @@ def main(arg: tuple[str, task.InstructPix2Pix]):
         raise FileNotFoundError(input_filepath)
     capture = cv2.VideoCapture(input_filepath)
 
-    fps, frame_indexes = compute_fps_and_frame_indexes(a, capture.get(cv2.CAP_PROP_FPS))
+    frame_indexes, fps = compute_frame_indexes_and_fps(a, capture.get(cv2.CAP_PROP_FPS))
     batches = group_by(frame_indexes, config.batch_size)
     size = compute_size((capture.get(cv2.CAP_PROP_FRAME_WIDTH), capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
 
@@ -55,7 +55,7 @@ def main(arg: tuple[str, task.InstructPix2Pix]):
     writer.close()
 
 
-def compute_fps_and_frame_indexes(a: task.InstructPix2Pix, fps: float) -> tuple[float, list[int]]:
+def compute_frame_indexes_and_fps(a: task.InstructPix2Pix, fps: float) -> tuple[list[int], float]:
     if a.fps is None:
         frame_skip = 1
         final_fps = fps
@@ -66,7 +66,7 @@ def compute_fps_and_frame_indexes(a: task.InstructPix2Pix, fps: float) -> tuple[
     start_frame = int(a.clip_start[0] * fps + a.clip_start[1])
     end_frame = int(start_frame + a.clip_duration[0] * fps + a.clip_duration[1])
 
-    return final_fps, list(range(start_frame, end_frame, frame_skip))
+    return list(range(start_frame, end_frame, frame_skip)), final_fps
 
 
 def compute_size(size: tuple[float, float]) -> tuple[int, int]:
