@@ -35,13 +35,13 @@ def main():
 
 
 def check_drive():
-    base_dir = os.path.join(os.path.expanduser("~"), "My Drive/AI Cut Ultra")
+    base_dir = os.path.join(os.path.expanduser("~"), "My Drive/Brain2Film")
     input_dir = os.path.join(base_dir, "input")
     output_dir = os.path.join(base_dir, "output")
     tasks_dir = os.path.join(base_dir, "tasks")
 
     if not os.path.isdir(base_dir):
-        raise Exception("Please create folder \"~/My Drive/AI Cut Ultra\".")
+        raise Exception("Please create folder \"~/My Drive/Brain2Film\".")
 
     os.makedirs(input_dir, exist_ok=True)
     os.makedirs(output_dir, exist_ok=True)
