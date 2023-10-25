@@ -1,11 +1,11 @@
-# AI Cut Ultra
+# Brain2Film
 
 ## CommandPost Plugin for Final Cut Pro
 
 ```sh
-git clone --depth 1 https://github.com/pravdomil/AI-Cut-Ultra ~/Library/Application\ Support/CommandPost/Plugins/AI\ Cut\ Ultra
+git clone --depth 1 https://github.com/pravdomil/Brain2Film ~/Library/Application\ Support/CommandPost/Plugins/Brain2Film
 ```
 
 ## Server
 
-[Open in Google Colab](https://colab.research.google.com/github/pravdomil/AI-Cut-Ultra/blob/master/AI%20Cut%20Ultra.ipynb).
+[Open in Google Colab](https://colab.research.google.com/github/pravdomil/Brain2Film/blob/master/Brain2Film.ipynb).
