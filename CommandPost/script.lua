@@ -1,9 +1,9 @@
---- === com.pravdomil.ai-cut-ultra ===
+--- === com.pravdomil.brain2film ===
 
 local fcp = require("cp.apple.finalcutpro")
 
 local plugin = {
-    id = "com.pravdomil.ai-cut-ultra",
+    id = "com.pravdomil.brain2film",
     group = "finalcutpro",
     dependencies = {
         ["finalcutpro.commands"] = "fcpxCmds",
