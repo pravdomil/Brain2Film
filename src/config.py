@@ -1,7 +1,7 @@
 import os
 
 drive_dir = "/content/drive"
-base_dir = os.path.join(drive_dir, "MyDrive/AI Cut Ultra")
+base_dir = os.path.join(drive_dir, "MyDrive/Brain2Film")
 input_dir = os.path.join(base_dir, "input")
 output_dir = os.path.join(base_dir, "output")
 tasks_dir = os.path.join(base_dir, "tasks")
