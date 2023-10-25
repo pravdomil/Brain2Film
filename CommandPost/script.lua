@@ -16,7 +16,7 @@ function plugin.init(deps)
     end
 
     deps.fcpxCmds
-        :add("AI Cut Ultra")
+        :add("Brain2Film")
         :whenActivated(run)
 end
 
@@ -38,7 +38,7 @@ function run()
         info.notes():value()
     }
 
-    local file = io.popen("/usr/local/bin/python3 ../Plugins/AI\\ Cut\\ Ultra/src/commandpost.py \"$(cat -)\" &", "w")
+    local file = io.popen("/usr/local/bin/python3 ../Plugins/Brain2Film/src/commandpost.py \"$(cat -)\" &", "w")
     file:write(hs.json.encode(data))
     file:close()
 end
