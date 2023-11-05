@@ -1,5 +1,7 @@
 # Brain2Film
 
+Brain goes in, mp4 goes out.
+
 ## CommandPost Plugin for Final Cut Pro
 
 ```sh
