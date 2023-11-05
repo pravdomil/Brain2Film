@@ -29,7 +29,7 @@ function run()
     local filename = emptyToNil(info.fileName():value()) or emptyToNil(info.displayName():value()) or ""
 
     local data = {
-        "_dx2rgq3ln9kfsl_wdv9vzlng",
+        "01HEGNTBG1SFDYQN1WK843952H",
         fcp:activeLibraryPaths(),
         filename,
         info.name():value(),

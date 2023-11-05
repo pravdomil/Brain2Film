@@ -16,7 +16,7 @@ def main():
     input_dir, output_dir, tasks_dir = check_drive()
     version, directories, filename, name, clip_start, clip_duration, notes = json.loads(sys.argv[1])
 
-    if version != "_dx2rgq3ln9kfsl_wdv9vzlng":
+    if version != "01HEGNTBG1SFDYQN1WK843952H":
         raise Exception("Version mismatch.")
 
     filepath = find_file(directories, filename)
