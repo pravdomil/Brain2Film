@@ -83,7 +83,7 @@ class Task:
 def encode(a: Task) -> object:
     if isinstance(a.type, InstructPix2Pix):
         return (
-            "rvb3vnlcmjkhxdsf7yqr45m40",
+            "01HEGNWE6WT50DKEZ6E0YA10MS",
             a.type.name,
             a.type.input_filename,
             a.type.clip_start,
@@ -96,7 +96,7 @@ def encode(a: Task) -> object:
 
     elif isinstance(a.type, FateZero):
         return (
-            "s64mtmyv83t4pskjs3fhrsxrx",
+            "01HEGNWR360N0HRTDNG5AF458T",
             a.type.name,
             a.type.input_filename,
             a.type.clip_start,
@@ -108,7 +108,7 @@ def encode(a: Task) -> object:
 
     elif isinstance(a.type, RealESRGAN):
         return (
-            "v6yhq70lnl6k71kyfj870h1s4",
+            "01HEGNWZ0SWBXY66TE32A1V5DA",
             a.type.name,
             a.type.input_filename,
             a.type.clip_start,
@@ -117,7 +117,7 @@ def encode(a: Task) -> object:
 
     elif isinstance(a.type, BarkText2Voice):
         return (
-            "0f96skf4tvg74wjp6c9nn0sxk",
+            "01HEGNX5MTGFVYJKGJG4NKMJQV",
             a.type.name,
             a.type.prompt,
             a.type.speaker,
@@ -125,7 +125,7 @@ def encode(a: Task) -> object:
 
     elif isinstance(a.type, BarkVoice2Voice):
         return (
-            "8tsbpcdxrrhwdkff3cbk7h8cn",
+            "01HEGNXCY0C12W70CJZH81VXT9",
             a.type.name,
             a.type.input_filename,
             a.type.speaker,
@@ -133,7 +133,7 @@ def encode(a: Task) -> object:
 
     elif isinstance(a.type, AudioLDM):
         return (
-            "y7l7hv8w5rq6nffn3tyyb_tfx",
+            "01HEGNXK144HABSM294NW2QJN1",
             a.type.name,
             a.type.prompt,
             a.type.duration,
@@ -141,7 +141,7 @@ def encode(a: Task) -> object:
 
     elif isinstance(a.type, Audiocraft):
         return (
-            "pnt5pvz6x6s3jwjxz2v8pcvy0",
+            "01HEGNXRHQ09D9E6AAESK4GMDB",
             a.type.name,
             a.type.prompt,
             a.type.duration,
@@ -154,33 +154,33 @@ def encode(a: Task) -> object:
 def decode(a: any) -> Task:
     b = json.load(a)
 
-    if b[0] == "rvb3vnlcmjkhxdsf7yqr45m40":
+    if b[0] == "01HEGNWE6WT50DKEZ6E0YA10MS":
         type_ = InstructPix2Pix(b[1], b[2], tuple(b[3]), tuple(b[4]), b[5], maybe_map(float, b[6]),
                                 maybe_map(float, b[7]), maybe_map(float, b[8]))
         return Task(type_)
 
-    elif b[0] == "s64mtmyv83t4pskjs3fhrsxrx":
+    elif b[0] == "01HEGNWR360N0HRTDNG5AF458T":
         type_ = FateZero(b[1], b[2], tuple(b[3]), tuple(b[4]), b[5], maybe_map(float, b[6]),
                          maybe_map(float, b[7]))
         return Task(type_)
 
-    elif b[0] == "v6yhq70lnl6k71kyfj870h1s4":
+    elif b[0] == "01HEGNWZ0SWBXY66TE32A1V5DA":
         type_ = RealESRGAN(b[1], b[2], tuple(b[3]), tuple(b[4]))
         return Task(type_)
 
-    elif b[0] == "0f96skf4tvg74wjp6c9nn0sxk":
+    elif b[0] == "01HEGNX5MTGFVYJKGJG4NKMJQV":
         type_ = BarkText2Voice(b[1], b[2], tuple(b[3]))
         return Task(type_)
 
-    elif b[0] == "8tsbpcdxrrhwdkff3cbk7h8cn":
+    elif b[0] == "01HEGNXCY0C12W70CJZH81VXT9":
         type_ = BarkVoice2Voice(b[1], b[2], tuple(b[3]))
         return Task(type_)
 
-    elif b[0] == "y7l7hv8w5rq6nffn3tyyb_tfx":
+    elif b[0] == "01HEGNXK144HABSM294NW2QJN1":
         type_ = AudioLDM(b[1], b[2], b[3])
         return Task(type_)
 
-    elif b[0] == "pnt5pvz6x6s3jwjxz2v8pcvy0":
+    elif b[0] == "01HEGNXRHQ09D9E6AAESK4GMDB":
         type_ = Audiocraft(b[1], b[2], b[3])
         return Task(type_)
 
