@@ -22,6 +22,7 @@ def main(arg: tuple[str, task.InstructPix2Pix]):
     frame_indexes, fps = compute_frame_indexes_and_fps(a, capture.get(cv2.CAP_PROP_FPS))
     batches = group_by(frame_indexes, config.instruct_pix2pix_batch_size)
     size = compute_size((capture.get(cv2.CAP_PROP_FRAME_WIDTH), capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+    pipe = diffusers.StableDiffusionInstructPix2PixPipeline.from_pretrained("timbrooks/instruct-pix2pix", safety_checker=None).to(config.device)
 
     print("InstructPix2Pix: \"" + a.prompt.replace("\n", "\\n") + "\", " + str(len(batches)) + " batches")
 
@@ -40,6 +41,7 @@ def main(arg: tuple[str, task.InstructPix2Pix]):
             input_images.append(resized_image)
 
         output_images = instruct_pix2pix2(
+            pipe,
             input_images,
             a.prompt,
             15,
@@ -76,6 +78,7 @@ def compute_size(size: tuple[float, float]) -> tuple[int, int]:
 
 
 def instruct_pix2pix2(
+        pipe,
         images: list[PIL.Image.Image],
         prompt: str,
         steps: int,
@@ -83,12 +86,6 @@ def instruct_pix2pix2(
         text_cfg: float,
         image_cfg: float,
 ) -> list[PIL.Image.Image]:
-    pipe = diffusers.StableDiffusionInstructPix2PixPipeline.from_pretrained(
-        "timbrooks/instruct-pix2pix",
-        torch_dtype=torch.float16,
-        safety_checker=None
-    ).to(config.device)
-
     output = pipe(
         [prompt] * len(images),
         image=images,
