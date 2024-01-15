@@ -1,4 +1,4 @@
-diffusers~=0.17.1
+diffusers@ git+https://github.com/huggingface/diffusers.git
 transformers~=4.31.0
 dataclasses~=0.6
 Pillow~=10.0.0
