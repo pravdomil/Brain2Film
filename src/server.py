@@ -59,8 +59,8 @@ def step(a):
     if isinstance(a, Initializing):
         print("Initializing...")
 
-        if not os.path.exists(config.drive_dir):
-            google.colab.drive.mount(config.drive_dir)
+        if not os.path.exists(config.data_dir):
+            google.colab.drive.mount(config.data_dir)
 
         if not os.path.exists(config.tasks_done_dir):
             os.makedirs(config.tasks_done_dir, exist_ok=True)
