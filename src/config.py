@@ -1,5 +1,7 @@
 import os
 
+import torch
+
 data_dir = "data"
 base_dir = data_dir
 input_dir = os.path.join(base_dir, "input")
@@ -9,6 +11,6 @@ tasks_done_dir = os.path.join(base_dir, "tasks/done")
 tasks_error_dir = os.path.join(base_dir, "tasks/error")
 
 seed = 123
-device = "cuda"
+device = "cuda" if torch.cuda.is_available() else "mps"
 
 instruct_pix2pix_batch_size = 2
