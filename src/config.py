@@ -11,4 +11,4 @@ tasks_error_dir = os.path.join(base_dir, "tasks/error")
 seed = 123
 device = "cuda"
 
-instruct_pix2pix_batch_size = 8
+instruct_pix2pix_batch_size = 2
