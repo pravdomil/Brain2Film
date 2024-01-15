@@ -71,7 +71,7 @@ def compute_frame_indexes_and_fps(a: task.InstructPix2Pix, fps: float) -> tuple[
 
 def compute_size(size: tuple[float, float]) -> tuple[int, int]:
     width, height = size
-    factor = 768 / max(width, height)
+    factor = 512 / max(width, height)
     return int(width * factor), int(height * factor)
 
 
