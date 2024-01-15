@@ -1,7 +1,7 @@
 import os
 
-data_dir = "/content/drive"
-base_dir = os.path.join(data_dir, "MyDrive/Brain2Film")
+data_dir = "data"
+base_dir = data_dir
 input_dir = os.path.join(base_dir, "input")
 output_dir = os.path.join(base_dir, "output")
 tasks_dir = os.path.join(base_dir, "tasks")
