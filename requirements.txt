@@ -19,3 +19,4 @@ librosa~=0.10.0
 scipy~=1.11.1
 realesrgan~=0.3.0
 basicsr~=1.4.2
+gmflow@ git+https://github.com/pravdomil/gmflow.git
