@@ -20,7 +20,6 @@ def main(arg: tuple[str, task.RerenderAVideo]):
     capture = cv2.VideoCapture(input_filepath)
 
     frame_indexes, fps = compute_frame_indexes_and_fps(a, capture.get(cv2.CAP_PROP_FPS))
-    batches = group_by(frame_indexes, config.instruct_pix2pix_batch_size)
     size = compute_size((capture.get(cv2.CAP_PROP_FRAME_WIDTH), capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
     pipe = diffusers.StableDiffusionRerenderAVideoPipeline.from_pretrained("timbrooks/instruct-pix2pix", safety_checker=None).to(config.device)
 
@@ -33,25 +32,24 @@ def main(arg: tuple[str, task.RerenderAVideo]):
         ffmpeg_params=["-crf", "15", "-metadata", "title=" + "\n".join(task.to_info(task.Task(a)))],
     )
 
-    for batch in batches:
-        input_images: list[PIL.Image] = []
-        for i in batch:
-            image = capture_read_image(capture, i)
-            resized_image = PIL.ImageOps.fit(image, size, method=PIL.Image.LANCZOS)
-            input_images.append(resized_image)
+    input_images: list[PIL.Image] = []
+    for i in frame_indexes:
+        image = capture_read_image(capture, i)
+        resized_image = PIL.ImageOps.fit(image, size, method=PIL.Image.LANCZOS)
+        input_images.append(resized_image)
 
-        output_images = instruct_pix2pix2(
-            pipe,
-            input_images,
-            a.prompt,
-            15,
-            config.seed,
-            a.text_cfg if a.text_cfg is not None else 7,
-            a.image_cfg if a.image_cfg is not None else 1,
-        )
+    output_images = instruct_pix2pix2(
+        pipe,
+        input_images,
+        a.prompt,
+        15,
+        config.seed,
+        a.text_cfg if a.text_cfg is not None else 7,
+        a.image_cfg if a.image_cfg is not None else 1,
+    )
 
-        for image in output_images:
-            writer.write_frame(image)
+    for image in output_images:
+        writer.write_frame(image)
 
     capture.release()
     writer.close()
