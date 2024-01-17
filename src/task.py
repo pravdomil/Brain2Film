@@ -22,6 +22,18 @@ class InstructPix2Pix:
 
 @beartype
 @dataclass
+class RerenderAVideo:
+    name: str
+    input_filename: str
+    clip_start: tuple[int, int]
+    clip_duration: tuple[int, int]
+
+    prompt: str
+    fps: Union[float, None]
+
+
+@beartype
+@dataclass
 class FateZero:
     name: str
     input_filename: str
@@ -77,7 +89,7 @@ class Audiocraft:
 @beartype
 @dataclass
 class Task:
-    type: Union[InstructPix2Pix, FateZero, RealESRGAN, BarkText2Voice, BarkVoice2Voice, AudioLDM, Audiocraft]
+    type: Union[InstructPix2Pix, RerenderAVideo, FateZero, RealESRGAN, BarkText2Voice, BarkVoice2Voice, AudioLDM, Audiocraft]
 
 
 def encode(a: Task) -> object:
