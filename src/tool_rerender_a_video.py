@@ -21,7 +21,13 @@ def main(arg: tuple[str, task.RerenderAVideo]):
 
     frame_indexes, fps = compute_frame_indexes_and_fps(a, capture.get(cv2.CAP_PROP_FPS))
     size = compute_size((capture.get(cv2.CAP_PROP_FRAME_WIDTH), capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
-    pipe = diffusers.StableDiffusionRerenderAVideoPipeline.from_pretrained("timbrooks/instruct-pix2pix", safety_checker=None).to(config.device)
+    pipe = diffusers.DiffusionPipeline.from_pretrained(
+        "runwayml/stable-diffusion-v1-5",
+        controlnet=controlnet,
+        custom_pipeline=os.path.join(os.path.dirname(__file__), "tool_rerender_a_video/pipeline.py"),
+        safety_checker=None,
+        device=config.device,
+    )
 
     print("RerenderAVideo: \"" + a.prompt.replace("\n", "\\n") + "\", " + str(len(frame_indexes)) + " frames")
 
