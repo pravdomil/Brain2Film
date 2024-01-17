@@ -262,6 +262,8 @@ def to_info(a: Task) -> list[str]:
 def name(a: Task) -> str:
     if isinstance(a.type, InstructPix2Pix):
         return a.type.name
+    elif isinstance(a.type, RerenderAVideo):
+        return a.type.name
     elif isinstance(a.type, FateZero):
         return a.type.name
     elif isinstance(a.type, RealESRGAN):
