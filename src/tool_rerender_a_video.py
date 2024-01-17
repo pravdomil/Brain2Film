@@ -38,15 +38,14 @@ def main(arg: tuple[str, task.RerenderAVideo]):
         resized_image = PIL.ImageOps.fit(image, size, method=PIL.Image.LANCZOS)
         input_images.append(resized_image)
 
-    output = pipe(
+    output_images = pipe(
         [a.prompt] * len(input_images),
         image=input_images,
         guidance_scale=(a.text_cfg if a.text_cfg is not None else 7),
         image_guidance_scale=(a.image_cfg if a.image_cfg is not None else 1),
         num_inference_steps=15,
         generator=torch.manual_seed(config.seed),
-    )
-    output_images = output.images
+    ).images
 
     for image in output_images:
         writer.write_frame(image)
