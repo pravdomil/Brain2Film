@@ -82,7 +82,3 @@ def capture_read_image(a, index: int) -> PIL.Image.Image:
         return PIL.Image.fromarray(rgb_image)
     else:
         raise Exception("Cannot read video frame.")
-
-
-def group_by(a: list, size: int):
-    return [a[i:i + size] for i in range(0, len(a), size)]
