@@ -23,7 +23,7 @@ def main(arg: tuple[str, task.RerenderAVideo]):
     size = compute_size((capture.get(cv2.CAP_PROP_FRAME_WIDTH), capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
     pipe = diffusers.StableDiffusionRerenderAVideoPipeline.from_pretrained("timbrooks/instruct-pix2pix", safety_checker=None).to(config.device)
 
-    print("RerenderAVideo: \"" + a.prompt.replace("\n", "\\n") + "\", " + str(len(batches)) + " batches")
+    print("RerenderAVideo: \"" + a.prompt.replace("\n", "\\n") + "\", " + str(len(frame_indexes)) + " frames")
 
     writer = moviepy.video.io.ffmpeg_writer.FFMPEG_VideoWriter(
         os.path.join(config.output_dir, task.output_filename((id_, task.Task(a)), "mov")),
