@@ -210,6 +210,13 @@ def to_info(a: Task) -> list[str]:
             str(a.type.image_cfg),
         ]
 
+    elif isinstance(a.type, RerenderAVideo):
+        return [
+            "RerenderAVideo",
+            str(a.type.prompt),
+            str(a.type.fps),
+        ]
+
     elif isinstance(a.type, FateZero):
         return [
             "FateZero",
