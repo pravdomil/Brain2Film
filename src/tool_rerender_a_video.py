@@ -11,7 +11,7 @@ import config
 import task
 
 
-def main(arg: tuple[str, task.InstructPix2Pix]):
+def main(arg: tuple[str, task.RerenderAVideo]):
     id_, a = arg
 
     input_filepath = os.path.join(config.input_dir, a.input_filename)
@@ -22,9 +22,9 @@ def main(arg: tuple[str, task.InstructPix2Pix]):
     frame_indexes, fps = compute_frame_indexes_and_fps(a, capture.get(cv2.CAP_PROP_FPS))
     batches = group_by(frame_indexes, config.instruct_pix2pix_batch_size)
     size = compute_size((capture.get(cv2.CAP_PROP_FRAME_WIDTH), capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
-    pipe = diffusers.StableDiffusionInstructPix2PixPipeline.from_pretrained("timbrooks/instruct-pix2pix", safety_checker=None).to(config.device)
+    pipe = diffusers.StableDiffusionRerenderAVideoPipeline.from_pretrained("timbrooks/instruct-pix2pix", safety_checker=None).to(config.device)
 
-    print("InstructPix2Pix: \"" + a.prompt.replace("\n", "\\n") + "\", " + str(len(batches)) + " batches")
+    print("RerenderAVideo: \"" + a.prompt.replace("\n", "\\n") + "\", " + str(len(batches)) + " batches")
 
     writer = moviepy.video.io.ffmpeg_writer.FFMPEG_VideoWriter(
         os.path.join(config.output_dir, task.output_filename((id_, task.Task(a)), "mov")),
@@ -57,7 +57,7 @@ def main(arg: tuple[str, task.InstructPix2Pix]):
     writer.close()
 
 
-def compute_frame_indexes_and_fps(a: task.InstructPix2Pix, fps: float) -> tuple[list[int], float]:
+def compute_frame_indexes_and_fps(a: task.RerenderAVideo, fps: float) -> tuple[list[int], float]:
     if a.fps is None:
         frame_skip = 1
         final_fps = fps
