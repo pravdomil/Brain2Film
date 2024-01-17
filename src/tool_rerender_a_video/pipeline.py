@@ -939,6 +939,7 @@ class RerenderAVideoPipeline(StableDiffusionControlNetImg2ImgPipeline):
 
         # 5. Process each frame
         for idx in range(1, len(frames)):
+            print(str(idx) + "/" + str(len(frames)))
             image = frames[idx]
             prev_image = frames[idx - 1]
             control_image = control_frames[idx]
