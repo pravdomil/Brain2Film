@@ -21,6 +21,7 @@ def main(arg: tuple[str, task.RerenderAVideo]):
 
     frame_indexes, fps = compute_frame_indexes_and_fps(a, capture.get(cv2.CAP_PROP_FPS))
     size = compute_size((capture.get(cv2.CAP_PROP_FRAME_WIDTH), capture.get(cv2.CAP_PROP_FRAME_HEIGHT)))
+    controlnet = diffusers.ControlNetModel.from_pretrained("lllyasviel/sd-controlnet-canny")
     pipe = diffusers.DiffusionPipeline.from_pretrained(
         "runwayml/stable-diffusion-v1-5",
         controlnet=controlnet,
