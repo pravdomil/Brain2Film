@@ -38,15 +38,15 @@ def main(arg: tuple[str, task.RerenderAVideo]):
         resized_image = PIL.ImageOps.fit(image, size, method=PIL.Image.LANCZOS)
         input_images.append(resized_image)
 
-    output_images = instruct_pix2pix2(
-        pipe,
-        input_images,
-        a.prompt,
-        15,
-        config.seed,
-        a.text_cfg if a.text_cfg is not None else 7,
-        a.image_cfg if a.image_cfg is not None else 1,
+    output = pipe(
+        [a.prompt] * len(input_images),
+        image=input_images,
+        guidance_scale=(a.text_cfg if a.text_cfg is not None else 7),
+        image_guidance_scale=(a.image_cfg if a.image_cfg is not None else 1),
+        num_inference_steps=15,
+        generator=torch.manual_seed(config.seed),
     )
+    output_images = output.images
 
     for image in output_images:
         writer.write_frame(image)
@@ -73,27 +73,6 @@ def compute_size(size: tuple[float, float]) -> tuple[int, int]:
     width, height = size
     factor = 512 / max(width, height)
     return int(width * factor), int(height * factor)
-
-
-def instruct_pix2pix2(
-        pipe,
-        images: list[PIL.Image.Image],
-        prompt: str,
-        steps: int,
-        seed: int,
-        text_cfg: float,
-        image_cfg: float,
-) -> list[PIL.Image.Image]:
-    output = pipe(
-        [prompt] * len(images),
-        image=images,
-        guidance_scale=text_cfg,
-        image_guidance_scale=image_cfg,
-        num_inference_steps=steps,
-        generator=torch.manual_seed(seed),
-        )
-
-    return output.images
 
 
 def capture_read_image(a, index: int) -> PIL.Image.Image:
