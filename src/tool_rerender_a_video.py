@@ -46,13 +46,25 @@ def main(arg: tuple[str, task.RerenderAVideo]):
         input_images.append(resized_image)
 
     output_images = pipe(
-        [a.prompt] * len(input_images),
-        image=input_images,
-        guidance_scale=(a.text_cfg if a.text_cfg is not None else 7),
-        image_guidance_scale=(a.image_cfg if a.image_cfg is not None else 1),
-        num_inference_steps=15,
+        prompt=a.prompt,
+        frames=input_images,
+        control_frames=input_images,
+        strength=0.5,
+        num_inference_steps=20,
+        guidance_scale=7.5,
+        controlnet_conditioning_scale=0.8,
+        guess_mode=False,
+        control_guidance_start=0.0,
+        control_guidance_end=1.0,
+        warp_start=0.0,
+        warp_end=0.3,
+        mask_start=0.5,
+        mask_end=0.8,
+        smooth_boundary=True,
+        mask_strength=0.5,
+        inner_strength=0.9,
         generator=torch.manual_seed(config.seed),
-    ).images
+    ).frames
 
     for image in output_images:
         writer.write_frame(image)
